@@ -1,3 +1,119 @@
+Code and documentation in this repositiory is copyright © 2019-2021 by Andrew Somers and Myndex™. All Rights Reserved.
+
+# — LICENSE —
+
+### The Short Summary:
+Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-based content only, and not for any other use.
+
+______________
+
+## W3 VERSION LICENSE:
+
+All Files in this Repository are licensed to the W3.org under their cooperative license agreement(s):
+
+- Reports in this Repository are licensed under the
+[W3C Software and Document License](http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
+
+- Contributions to Specifications are made under the
+[W3C CLA](https://www.w3.org/community/about/agreements/cla/).
+
+- Contributions to Test Suites are made under the
+[W3C 3-clause BSD License](https://www.w3.org/Consortium/Legal/2008/03-bsd-license.html)
+
+Any files, or use cases of files, not under the W3 cooperative agreement are licensed under the AGPU v3 License, subject to disclaimers.
+
+-----
+## W3/AGWG/WCAG VERSION DISCLAIMER AND RESTRICTIONS
+
+_**DISCLAIMER AND LIMITATIONS OF USE:**_       
+**apca-w3** is an embodiment of certain suprathreshold contrast
+prediction technologies and it is licensed to the W3 on a
+limited basis for use in WCAG accessibility guidelines
+for web content only. **apca-w3**  may be used for 
+predicting contrast for web content used for that
+specific purpose without royalty.
+
+Said license excludes other use cases
+not related to web content. Prohibited uses include
+medical, clinical evaluation, human safety related,
+aerospace, transportation, military applications, 
+and uses which are not specific to web-based content
+presented on self-illuminated displays or devices.
+
+_**NO ALTERATION; KEEP CURRENT**_     
+Any **apca-w3** files in this repositiory may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibnility guidelines, and such use must be without modification to the essential elements of the code or specific approved contstnats, except as required to port to a given language.
+
+- Deveopers incorporating this code into their applications, widgets, or other tools, have a duty to ensure that the most recent version of this code is used in their current or any future release. 
+
+- Breaking change exception:
+    - developers do not need to incorporate a future version of **apca-w3** that have breaking changes when their release is only a minor or patch version per sematic versioning.
+    - developers with minor or patch revisions are still obligated to use the latest non-breaking branch of **apca-w3**.
+    - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
+
+_**USE OF THE APCA LOGO AND TRADEMARK**_     
+Use of the APCA or "Powered by APCA" logos or trademearks are prohibited without written consent from Myndex™ Techniologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
+- Developers wishing to use the APCA or "Powered by APCA" logos or trademearks must submit their application or tools for qualification to be granted a limited license to use the APCA or "Powered by APCA" logos or trademearks.
+- Formal details on the APCA and "Powered by APCA" qualification process are pending. In the interim, make a qualification request in the discussion tab of this repo.
+
+
+## GENERAL DISCLAIMER
+
+**_DISCLAIMER AND LIMITATIONS OF USE:_**
+
+APCA is an embodiment of certain suprathreshold contrast
+prediction technologies. Versions marked as licensed to 
+the W3 are strictly limited to web content use only for 
+supporting certain accessibility guidelines.
+
+APCA code listed here is provided as is, with no 
+warrantees expressed nor implied. We accept no 
+liability for any use or misuse of the code. 
+Suitability of  purpose resides with the 
+integrator or end user.
+
+Commercial use is prohibited without a written 
+and signed commercial license agreement, except 
+as provided by the W3 cooperative agreement for 
+web content only.
+
+Non-commercial use is permitted only for 
+predicting contrast for web content, no 
+other use case is authorized.
+
+License excludes other use cases not related to web 
+content. Prohibited uses include and are not limited 
+to medical, clinical evaluation, human safety related, 
+aerospace, transportation, military applications, and 
+uses which are not specific to web-based content 
+presented on self-illuminated displays or devices.
+
+### Other licensing information
+
+All Files _in this Repository_ that do not fall under the W3 cooperative agreement, if they exist, may have different license terms. Files, code, or other assets related to SAPC, APCA, Perceptex, or Myndex Perception Research, that are not _currently_ in this repository are not available for license or use without a written agreement.
+
+## WITHDRAWN ASSETS
+ONLY files that are currently in this repository are available for use under these license terms.
+
+As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propogating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
+
+#### The current assets shall be in:
+    /dist/    
+    /src/
+#### Non breaking earlier versions shall be placed in:
+    /LEGACY/
+
+#### Breaking and deprecated versions shall be placed in:
+    /DEPRECATED/
+#### Breaking, invalid, and revoked versions shall be placed in:
+    /OBSOLETE/    
+    /OBSOLETE/PENDING_DELETE/
+
+### Misc Licensing
+Any files that do not fall under the above categories are hereby licensed under AGPL v3.
+
+### The AGPU v3 License
+
+```text
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
 
@@ -617,37 +733,34 @@ Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 
                      END OF TERMS AND CONDITIONS
+```
 
-            How to Apply These Terms to Your New Programs
+### How to Apply These Terms to Your New Programs
 
-  If you develop a new program, and you want it to be of the greatest
+If you develop a new program, and you want it to be of the greatest
 possible use to the public, the best way to achieve this is to make it
 free software which everyone can redistribute and change under these terms.
 
-  To do so, attach the following notices to the program.  It is safest
-to attach them to the start of each source file to most effectively
-state the exclusion of warranty; and each file should have at least
-the "copyright" line and a pointer to where the full notice is found.
+To do so, attach the following notices to the program:
 
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) <year>  <name of author>
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published
+by the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published
-    by the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+CONTACT: For APCA or SAPC Please use the DISCUSSIONS tab at:
+https://github.com/Myndex/apca-w3  or     
+https://github.com/Myndex/SAPC-APCA
 
-Also add information on how to contact you by electronic and paper mail.
-
-  If your software can interact with users remotely through a computer
+If your software can interact with users remotely through a computer
 network, you should also make sure that it provides a way for users to
 get its source.  For example, if your program is a web application, its
 interface could display a "Source" link that leads users to an archive
@@ -655,7 +768,8 @@ of the code.  There are many ways you could offer source, and different
 solutions will be better for different programs; see section 13 for the
 specific requirements.
 
-  You should also get your employer (if you work as a programmer) or school,
+You should also get your employer (if you work as a programmer) or school,
 if any, to sign a "copyright disclaimer" for the program, if necessary.
 For more information on this, and how to apply and follow the GNU AGPL, see
 <https://www.gnu.org/licenses/>.
+
