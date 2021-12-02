@@ -13,6 +13,7 @@ All Files in this Repository are licensed to the W3.org under their cooperative 
 
 - Reports in this Repository are licensed under the
 [W3C Software and Document License](http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
+[LOCAL COPY](https://github.com/Myndex/apca-w3/blob/master/LICENSE.md#w3c-software-and-document-notice-and-license)
 
 - Contributions to Specifications are made under the
 [W3C CLA](https://www.w3.org/community/about/agreements/cla/).
@@ -112,6 +113,8 @@ As some code herein is early beta, and there is a clear interest to prevent obso
 ### Misc Licensing
 Any files that do not fall under the above categories are per the license as indicated in each file.
 
+-----
+-----
 
 ## W3C SOFTWARE AND DOCUMENT NOTICE AND LICENSE
 This work is being provided by the copyright holders under the following license.
