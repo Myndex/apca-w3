@@ -31,7 +31,13 @@ Current Version: **0.0.98G-4g**-betafish
 
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
------
+### QuickStart
+***Usage:***
+
+First color must be text, second color must be the background.
+
+    Lc = APCAcontrast(sRGBtoY(textColor),sRGBtoY(backgroundColor));
+
 ### Font Use Lookup Table
 Latest Lookup Table: November 17 2021
 
@@ -52,10 +58,10 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
   
   ColorSpace = { sRco: 0.2126729,    sGco: 0.7151522,    sBco: 0.0721750, };
     
-  Clamps =     { blkThrs: 0.022,     blkClmp: 1.414,     loClip: 0.001,     deltaYmin: 0.0005, };
+  Clamps =     { blkThrs: 0.022,     blkClmp: 1.414,     loClip: 0.1,     deltaYmin: 0.0005, };
         
-  Scalers =    { scaleBoW: 1.14,     loBoWthresh: 0.08,  loBoWfactor: 1.0,  loBoWoffset: 0.027, 
-                 scaleWoB: 1.14,     loWoBthresh: 0.08,  loWoBfactor: 1.0,  loWoBoffset: 0.027, };	
+  Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
+                 scaleWoB: 1.14,     loWoBoffset: 0.027, };	
 ```    
 
 ----- 
