@@ -1,0 +1,42 @@
+<!DOCTYPE html><head>
+<base lang="en-US" title="APCA TEST">
+<title>APCA TEST</title>
+</head>
+<body style="margin: 2em; font-family: sans-serif; font-size: 1.2em; background: #429; color:#eee;">
+<h1>APCA Script Test</h1>
+<h3>Usage:</h3>
+<p>First color must be text, second color must be the background.</p>
+<code>Lc = APCAcontrast(sRGBtoY(textColor),sRGBtoY(backgroundColor));</code>
+<div id="test">Enable Javascript </div>
+</body>
+
+<script src="./apca-w3-v.0.0.98g-4g.js"></script>
+
+<script>
+// import  { sRGBtoY, APCAcontrast }  from './apca-w3-v.0.0.98g-4g.js';
+
+let outputText = document.getElementById('test');
+
+outputText.innerHTML = '<h3>TEST COLORS</h3>';
+
+outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
+let color1 = '#123456', color2 = 'aliceblue', color3 = 'rgb(240,200,120)', color4 = 0x808080;
+
+let contrast1 = APCAcontrast(sRGBtoY(color1),sRGBtoY(color2)),
+    contrast2 = APCAcontrast(sRGBtoY(color2),sRGBtoY(color3)),
+    contrast3 = APCAcontrast(sRGBtoY(color3),sRGBtoY(color4)),
+    contrast4 = APCAcontrast(sRGBtoY(color2),sRGBtoY(color4)),
+    contrast5 = APCAcontrast(sRGBtoY(color3),sRGBtoY(color2));
+
+outputText.innerHTML += '<pre>color 1: ' + color1 +' • color 2: ' + color2
+                     + ' <br>color 3: ' + color3 +' • color 4: ' + color4
+                     + ' <br><br>Lc  ' + contrast1 + ' • Y 1: ' + sRGBtoY(color1) + ' • Y 2: ' + sRGBtoY(color2)
+                     + ' <br><br>Lc  ' + contrast2 + ' • Y 2: ' + sRGBtoY(color2)+ ' • Y 3: ' + sRGBtoY(color3)
+                     + ' <br><br>Lc ' + contrast3 + ' • Y 3: ' + sRGBtoY(color3)+ ' • Y 4: ' + sRGBtoY(color4)
+                     + ' <br><br>Lc ' + contrast4 + ' • Y 2: ' + sRGBtoY(color2)+ ' • Y 1: ' + sRGBtoY(color1)
+                     + ' <br><br>Lc ' + contrast5 + ' • Y 3: ' + sRGBtoY(color3)+ ' • Y 2: ' + sRGBtoY(color2)
+                     + '</pre>';
+</script>
+
+
+
