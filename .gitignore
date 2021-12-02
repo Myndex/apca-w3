@@ -2,14 +2,14 @@
 *.class
 
 # HTML
-*.html
-*.htm
+index.html
 
 # DEPRECATED
 DEPRECIATED/
 DEPRECATED/
 OBSOLETE/
 OBSOLETE/PendingDelete/
+IGNORE/
 temp
 
 # macOS DS file
