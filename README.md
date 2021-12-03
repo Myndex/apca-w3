@@ -1,33 +1,41 @@
-# APCA • _THE REVOLUTION WILL BE READABLE™_
+<h1 align="center">APCA • <em>THE REVOLUTION WILL BE READABLE</em><sup>™</sup></h1>
 
 <p align="center">
+  <a href="https://github.com/Myndex/SAPC-APCA">
+    <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
+  </a> &nbsp;&nbsp;  
   <a href="https://npmjs.org/package/apca-w3">
     <img src="https://badgen.net/npm/v/apca-w3?color=3000c0&icon=npm" alt="version" />
   </a> &nbsp;&nbsp;
-  <a href="https://npmjs.org/package/apca-w3">
-    <img src="https://badgen.net/npm/dt/apca-w3?color=6000b0&icon=npm" alt="downloads" />
-  </a> &nbsp;&nbsp;
-  <a href="https://github.com/Myndex/apca-w3">
-    <img src="https://badgen.net/github/last-commit/Myndex/apca-w3/?icon=github" alt="last commit" />
+  <a href="https://github.com/Myndex/apca-w3/src/">
+    <img src="https://badgen.net/badge/JS/Vanilla/889900" alt="plain vanilla JS" />
   </a> &nbsp;&nbsp;
   <a href="https://github.com/Myndex/apca-w3/blob/master/LICENSE.md">
     <img src="https://badgen.net/badge/license/W3 • Web Use?icon=github&color=BB5FD1" alt="license" />
   </a> &nbsp;&nbsp;
+</p>
+<p align="center">
+  <a href="https://github.com/Myndex/apca-w3">
+    <img src="https://badgen.net/github/last-commit/Myndex/apca-w3/?icon=github" alt="last commit" />
+  </a> &nbsp;&nbsp;
+  <a href="https://npmjs.org/package/apca-w3">
+    <img src="https://badgen.net/npm/dt/apca-w3?color=6000b0&icon=npm" alt="downloads" />
+  </a> &nbsp;&nbsp;
   <a href="https://twitter.com/MyndexResearch">
     <img src="https://badgen.net/badge/@/MyndexResearch?icon=twitter" alt="twitter" />
   </a> &nbsp;&nbsp;
-  <a href="">
-    <img src="https://badgen.net/badge/JS/Vanilla/889900" alt="CSS level 3" />
-  </a>
+  <a href="https://github.com/Myndex/SAPC-APCA">
+    <img src="https://badgen.net/badge/APCA/Live Tool/db6b0b" alt="APCA/Live Tool/" />
+  </a> &nbsp;&nbsp;    
 </p>
 
 
 ## apca-w3
-The APCA in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
+The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
 
 ### Advanced Perceptual Contrast Algorithm
 
-Current Version: **0.0.98G-4g**-betafish
+Current Version: **0.0.98G-4g-w3**-betafish
 
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
