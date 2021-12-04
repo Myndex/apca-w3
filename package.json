@@ -18,6 +18,10 @@
   "bugs": {
     "url": "https://github.com/Myndex/SAPC-APCA/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Myndex/apca-w3.git"
+  },  
   "homepage": "https://www.myndex.com/APCA/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
