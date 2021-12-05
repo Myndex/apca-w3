@@ -1,6 +1,6 @@
-<h1 align="center">APCA • <em>THE REVOLUTION WILL BE READABLE</em><sup>™</sup></h1>
-
 <p align="center">
+ <img src="images/APCAlogo.png"  alt="APCA The Revolution Will Be Readable"><br><br>
+    
   <a href="https://github.com/Myndex/SAPC-APCA">
     <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
   </a> &nbsp;&nbsp;  
@@ -29,7 +29,7 @@
   </a> &nbsp;&nbsp;    
 </p>
 
-
+# APCA for W3 & WCAG
 ## apca-w3
 The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
 
