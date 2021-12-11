@@ -2,36 +2,30 @@
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
 /////           Beta 0.0.98G-4g W3 • contrast function only
-/////           DIST: W3 Revision date: Nov 29, 2021
+/////           DIST: W3 Revision date: Dec 10, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
-/////    LICENSE:  W3 LICENSE
-/////    CONTACT: For SAPC/APCA Please use the ISSUES tab at:
+/////    LICENSE: W3 LICENSE
+/////    CONTACT: Please use the ISSUES or DISCUSSIONS tab at:
 /////    https://github.com/Myndex/SAPC-APCA/
-// */
+/////
 ///////////////////////////////////////////////////////////////////////////////
 /////
+/////    IMPORT:
+/////    import { APCAcontrast, sRGBtoY } from 'apca-w3';
+/////    
 /////    FORWARD CONTRAST USAGE:
-/////        Use sRGBtoY(color) to convert sRGB to Luminance (Y)
-/////        Then send Y-text and Y-background to APCAcontrast(Text, BG)
-/////
-/////    Lc = APCAcontrast( sRGBtoY(TEXTcolor) , sRGBtoY(BACKGNDcolor) );
+/////    Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
 /////
 /////    Live Demonstrator at https://www.myndex.com/APCA/
-/////
-/////    REVERSE CONTRAST USAGE:
-/////        Send desired Lc contrast, and the BG (or txt) Y, and return type
-/////        APCAreverse(Lc,BG,ReType='TXT', polarity='best') // TXT or BG
-/////
-/////    text = APCAreverse(60, sRGBtoY(BACKGNDcolor) ,'TXT');
+// */
 ///////////////////////////////////////////////////////////////////////////////
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name SAPCsRGB.98.min.js
-// @code_url https://www.myndex.com/SAPC/JS/SAPCsRGB.98.js
+// @output_file_name apca-w3-v.0.0.98g-4g.2.min.js
+// @code_url https://github.com/Myndex/apca-w3/blob/master/src/apca-w3-v.0.0.98g-4g.2.js
 // ==/ClosureCompiler==
-// https://closure-compiler.appspot.com/home#code%3D%252F%252F%2520%253D%253DClosureCompiler%253D%253D%250A%252F%252F%2520%2540compilation_level%2520SIMPLE_OPTIMIZATIONS%250A%252F%252F%2520%2540output_file_name%2520SAPCsRGB.98.min.js%250A%252F%252F%2520%2540code_url%2520https%253A%252F%252Fwww.myndex.com%252FSAPC%252FJS%252FSAPCsRGB.98.js%250A%252F%252F%2520%253D%253D%252FClosureCompiler%253D%253D%250A
 
 ////////////////////////////////////////////////////////////////////////////////
 /////
@@ -142,7 +136,8 @@ const sRco = 0.2126729,
 
     let r,g,b;
     // let a = 1.0; // for future use
-
+    
+//* STRING COMMENT SWITCH (remove first slash / to switch off)
     if (typeof sRGBcolor === 'string') {
         let rgba = parseString(sRGBcolor);
         if(rgba){
@@ -151,7 +146,8 @@ const sRco = 0.2126729,
           b = rgba[2];
           // a = rgba[3]; // for future use
         } else { return -1 } // return -1 on parse error 
-    } else if (typeof sRGBcolor === 'number') {
+    } else  // */ // END STRING COMMENT SWITCH 
+      if (typeof sRGBcolor === 'number') {
         r = (sRGBcolor & 0xFF0000) >> 16,
         g = (sRGBcolor & 0x00FF00) >> 8,
         b = (sRGBcolor & 0x0000FF);
@@ -228,7 +224,7 @@ function APCAcontrast (txtY,bgY) {
   if ( Math.abs(bgY - txtY) < deltaYmin ) { return 0.0; }
 
 
-//////////   APCA/SAPC CONTRAST   //////////////////////////////////////
+//////////   APCA/SAPC CONTRAST - LOW CLIP (W3 LICENSE)  ///////////////
 
   if ( bgY > txtY ) {  // For normal polarity, black text on white (BoW)
 
@@ -260,7 +256,9 @@ function APCAcontrast (txtY,bgY) {
 
 
 
+
 /////  ƒ  parseString()  ///////////////////////////////////////////////////
+//* /  PARSESTRING COMMENT SWITCH (remove first slash / to switch off)
 
 function parseString (colorString = '#abcdef') {
 
@@ -365,12 +363,18 @@ function parseString (colorString = '#abcdef') {
       r = channel[0] & 0xFF;
       g = channel[1] & 0xFF;
       b = channel[2] & 0xFF;
-      (isNaN(channel[3])) ? this.a = 255 : this.a = channel[3] & 0xFF;
+      (isNaN(channel[3])) ? a = 255 : a = channel[3] & 0xFF;
       
       return [r,g,b,a];
     }
   }
     return colorString //false; // return false due to error
+}
+// */ // END PARSESTRING COMMENT SWITCH
+
+module.exports = {
+   APCAcontrast,
+   sRGBtoY
 }
 
 ////\                                  /////////////////////////////////////////
