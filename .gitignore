@@ -1,3 +1,5 @@
+dist/
+
 # Compiled class file
 *.class
 
@@ -64,3 +66,6 @@ node_modules/
 
 # TernJS port file
 .tern-port
+
+# Build cache
+.parcel-cache

@@ -1,8 +1,13 @@
 {
   "name": "apca-w3",
-  "version": "0.0.98g-4g-w3",
+  "version": "0.1.0",
   "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3",
-  "main": "./dist/apca-w3-v.0.0.98g-4g.min.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "keywords": [
     "color",
     "colour",
@@ -21,9 +26,20 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Myndex/apca-w3.git"
-  },  
+  },
   "homepage": "https://www.myndex.com/APCA/",
   "scripts": {
+    "build": "npm run build:cjs; npm run build:esm; npm run build:umd",
+    "prebuild": "rimraf dist",
+    "build:cjs": "swc src -d dist/cjs -C module.type=commonjs",
+    "build:esm": "swc src -d dist/esm -C module.type=es6",
+    "build:umd": "swc src -d dist/umd -C module.type=umd",
+    "demo": "npx superstatic .",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.53",
+    "@swc/core": "^1.2.119",
+    "rimraf": "^3.0.2"
   }
 }
