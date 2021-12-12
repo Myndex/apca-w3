@@ -12,6 +12,38 @@ This APCA version is the version licensed to the W3/AGWG for use with web conten
 
 If you want to dive in fast, or you want the bare basics, this is the file for you. This only comes with the most basic color input parsing, and does not containt the automated lookup tables or advanced CIE processing. It is the base APCA algorithim only, with no bells or whistles. Send it two RGB numeric colors and it returns a numeric L<sup>c</sup> contrast value.
 
+### QuickStart
+
+```javascript
+    import { APCAcontrast, sRGBtoY } from 'apca-w3';
+```
+***Usage:***
+
+First color must be text, second color must be the background.
+```javascript
+    let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
+```
+The following are the available input types for sRGBtoY(), HSL is not implemented at the moment. All are automatically recognized:
+
+### INPUT as STRINGS:
+- **No Alpha**
+    - ` '#abc' ` or ` 'abc' ` (interpreted as ` 'aabbcc' `)
+    - ` '#abcdef' ` or ` 'abcdef' ` (hash is ignored)
+    - ` 'rgb(123, 45, 67)' `
+    - ` 'aquamarine' ` or ` 'magenta' ` (full CSS4 named colors list)
+
+- **With Alpha** _(alpha is NOT presently calculated, and assumed as fully opaque)_
+    - ` '#abcf' ` or ` 'abcf' ` (interpreted as ` 'aabbccff' `)
+    - ` '#123456ff' ` or ` '123456ff' ` (hash is ignored)
+    - ` 'rgba(123, 45, 67,255)' `
+
+### INPUT as NUMBER:
+- **As hex**
+    - ` 0xabcdef `
+- **As integer**
+    - ` 11259375 `
+
+
 The sRGBtoY() function takes two sRGB encoded colors, where each color is one of:
 - integer in RGB order, (i.e. 0xRRGGBB or 16777216).
 - a hex string such as #fff or aabbcc (hash # is not required)
@@ -68,6 +100,37 @@ you may round to a signed integer.
 
 
 Those should exercise the important constants.
+
+### Font Use Lookup Table
+Latest Lookup Table: November 17 2021
+
+<img width="639" alt="0.0.98G4gLUT" src="../images/0.0.98G4gLUT.png">
+
+<img width="596" alt="0.0.98G4gLUT legend" src="../images/0.0.98G4gLUT-legenf.png">
+
+```javascript
+// APCA FONT LOOKUP TABLE 0.98G-4g-b3
+// Font Size and Reference Font Weight
+
+const fontLUT = [
+[pt,px,100,200,300,400,500,600,700,800,900],
+[7.5,10,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
+[7.88,10.5,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
+[8.25,11,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
+[9,12,'⊘','⊘','©§™ 75','× 90','× 85','× 80','× 75','⊘','⊘'],
+[10.5,14,'⊘','⊘','©§™ 75',90,85,80,75,'⊘','⊘'],
+[12,16,'⊘','©§™ 75','©§™ 75',75,70,65,60,'× 55','⊘'],
+[13.5,18,'⊘','©§™ 75',90,70,65,60,55,'× 50','× 45'],
+[15.8,21,'⊘','©§™ 75',85,65,60,55,50,'× 45','× 40'],
+[18,24,'⊘',90,75,60,55,50,45,'× 40','× 35'],
+[24,32,'⊘',85,70,55,50,45,40,35,30],
+[31.5,42,90,75,60,50,45,40,35,30,30],
+[42,56,85,70,55,45,40,35,30,30,30],
+[54,72,75,60,50,40,35,30,30,30,30],
+[72,96,70,55,45,35,30,30,30,30,30],
+[96,128,60,45,40,30,30,30,30,30,30]
+];
+```
 
 -----
 Please let us know of any problems, ideas, comments, etc. in the discussion tab at the github repo.
