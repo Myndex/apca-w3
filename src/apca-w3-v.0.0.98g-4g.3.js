@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.0.98G-4g W3 • contrast function only
-/////           DIST: W3 Revision date: Dec 10, 2021
+/////           Beta 0.0.98G-4g.3 W3 • contrast function only
+/////           DIST: W3 • Revision date: Dec 11, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -12,10 +12,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 /////
 /////    IMPORT:
-/////    import { APCAcontrast, sRGBtoY } from 'apca-w3';
+/////    import {
+/////            APCAcontrast, sRGBtoY, displayP3toY, colorParsley
+/////            } from 'apca-w3';
 /////    
 /////    FORWARD CONTRAST USAGE:
 /////    Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
+/////
+/////    Where the colors are sent as an rgba array [0,0,0,255]
 /////
 /////    Live Demonstrator at https://www.myndex.com/APCA/
 // */
@@ -23,8 +27,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-v.0.0.98g-4g.2.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.2.js
+// @output_file_name apca-w3-v.0.0.98g-4g.3.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.3.js
 // ==/ClosureCompiler==
 
 // https://closure-compiler.appspot.com/home#code%3D%252F%252F%2520%253D%253DClosureCompiler%253D%253D%250A%252F%252F%2520%2540compilation_level%2520SIMPLE_OPTIMIZATIONS%250A%252F%252F%2520%2540output_file_name%2520apca-w3-v.0.0.98g-4g.2.min.js%250A%252F%252F%2520%2540code_url%2520https%253A%252F%252Fraw.githubusercontent.com%252FMyndex%252Fapca-w3%252Fmaster%252Fsrc%252Fapca-w3-v.0.0.98g-4g.2.js%250A%252F%252F%2520%253D%253D%252FClosureCompiler%253D%253D
@@ -119,69 +123,24 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN APCA 0.0.98G 4g W3 BLOCK  \///////////////////////////////////////
-////                                    \/////////////////////////////////////
-
-//////////  ƒ  sRGBtoY()  //////////////////////////////////////////////////
-//export 
-function sRGBtoY (sRGBcolor) { // send sRGB 8bpc (0xFFFFFF) or string
-
-/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
-
-const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
-    
-const sRco = 0.2126729, 
-      sGco = 0.7151522, 
-      sBco = 0.0721750; // sRGB coefficients
-
-///// Parse color /////
-
-    let r,g,b;
-    // let a = 1.0; // for future use
-    
-//* STRING COMMENT SWITCH (remove first slash / to switch off)
-    if (typeof sRGBcolor === 'string') {
-        let rgba = parseString(sRGBcolor);
-        if(rgba){
-          r = rgba[0];
-          g = rgba[1];
-          b = rgba[2];
-          // a = rgba[3]; // for future use
-        } else { return -1 } // return -1 on parse error 
-    } else  // */ // END STRING COMMENT SWITCH 
-      if (typeof sRGBcolor === 'number') {
-        r = (sRGBcolor & 0xFF0000) >> 16,
-        g = (sRGBcolor & 0x00FF00) >> 8,
-        b = (sRGBcolor & 0x0000FF);
-    } else { return -2; }; // return -2 on type error 
-
-         // linearize r, g, or b then apply coefficients
-        // and sum then return the resulting luminance
-
-  function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
-
-  return sRco * simpleExp(r) + sGco * simpleExp(g) + sBco * simpleExp(b);
-
-} // End sRGBtoY()
-
-
-
+/////  BEGIN APCA  0.0.98G-4g.3  BLOCK  \//////////////////////////////////////
+////                                     \////////////////////////////////////
 
 
 //////////  ƒ  APCAcontrast()  /////////////////////////////////////////////
 //export 
-function APCAcontrast (txtY,bgY) {
+function APCAcontrast (txtY,bgY,places=0) {
                  // send linear Y (luminance) for text and background.
                 // txtY and bgY must be between 0.0-1.0
                // IMPORTANT: Do not swap, polarity is important.
- 
+
   const icp = [0.0,1.1];     // input range clamp / input error check
 
   if(isNaN(txtY)||isNaN(bgY)||Math.min(txtY,bgY)<icp[0]||Math.max(txtY,bgY)>icp[1]){
     return 0;  // return zero on error
     // return 'error'; // optional string return for error
   };
-  
+
 //////////   APCA 0.0.98 G - 4g - W3 Constants   ///////////////////////
 
   const normBG = 0.56, 
@@ -199,12 +158,12 @@ function APCAcontrast (txtY,bgY) {
         deltaYmin = 0.0005;
 
 //////////   SAPC LOCAL VARS   /////////////////////////////////////////
-  
+
   let SAPC = 0.0;            // For raw SAPC values
   let outputContrast = 0.0; // For weighted final values
-  
+
   // TUTORIAL
-  
+
   // Use Y for text and BG, and soft clamp black,
   // return 0 for very close luminances, determine
   // polarity, and calculate SAPC raw contrast
@@ -259,13 +218,110 @@ function APCAcontrast (txtY,bgY) {
 
 
 
+//////////  ƒ  sRGBtoY()  //////////////////////////////////////////////////
+//export 
+function sRGBtoY (rgba = [0,0,0,255]) { // send sRGB 8bpc (0xFFFFFF) or string
+
+/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
+
+const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
+    
+const sRco = 0.2126729, 
+      sGco = 0.7151522, 
+      sBco = 0.0721750; // sRGB coefficients
+      
+// Future:
+// 0.2126478133913640	0.7151791475336150	0.0721730390750208
+// Derived from:
+// xW	yW	K	xR	yR	xG	yG	xB	yB
+// 0.312720	0.329030	6504	0.640	0.330	0.300	0.600	0.150	0.060
+
+         // linearize r, g, or b then apply coefficients
+        // and sum then return the resulting luminance
+
+  function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
+
+  return sRco * simpleExp(rgba[0]) +
+         sGco * simpleExp(rgba[1]) +
+         sBco * simpleExp(rgba[2]);
+         
+} // End sRGBtoY()
+
+
+
+
+
+
+//////////  ƒ  displayP3toY()  //////////////////////////////////////////////////
+//export 
+function displayP3toY (rgba = [0,0,0,255]) { // send rgba array
+
+/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
+
+const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
+                    // Pending evaluation, because, Apple...
+    
+const sRco = 0.2289829594805780, 
+      sGco = 0.6917492625852380, 
+      sBco = 0.0792677779341829; // displayP3 coefficients
+
+// Derived from:
+// xW	yW	K	xR	yR	xG	yG	xB	yB
+// 0.312720	0.329030	6504	0.680	0.320	0.265	0.690	0.150	0.060
+
+         // linearize r, g, or b then apply coefficients
+        // and sum then return the resulting luminance
+
+  function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
+
+  return sRco * simpleExp(rgba[0]) +
+         sGco * simpleExp(rgba[1]) +
+         sBco * simpleExp(rgba[2]);
+
+} // End displayP3toY()
+
+
+
+///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
+
+//* // PARSESTRING COMMENT SWITCH //////////////////////////////////////////
+//  (add/remove first slash in the above line to toggle before compile)  //
+
+
+/////  ƒ  colorParsley()  ///////////////////////////////////////////////////
+//export
+function colorParsley (colorIn) {
+
+    if (typeof colorIn === 'string') {
+        return parseString(colorIn);
+    } else if (typeof colorIn === 'number') {
+        return [(colorIn & 0xFF0000) >> 16,
+                (colorIn & 0x00FF00) >> 8,
+                (colorIn & 0x0000FF), 255];
+    } else if (typeof colorIn === 'object') {
+       if (Array.isArray(colorIn)) {
+          return colorIn;
+       } else {
+          return [colorIn.r,
+                  colorIn.g,
+                  colorIn.b,
+                  colorIn.a]; // warning: make sure obj has r: g: b: a:
+       }
+    };
+    return -1; // return error -1
+}
+
+
+
+
+
+
 /////  ƒ  parseString()  ///////////////////////////////////////////////////
-//* /  PARSESTRING COMMENT SWITCH (remove first slash / to switch off)
 
 function parseString (colorString = '#abcdef') {
 
                   // strip spaces, #, & common junk and make a clean string
-    colorString = colorString.replace(/[\s `~!@#$%^&*<>?{}:;"'+=_-]/g,'');
+    colorString = colorString.replace(/[\s `~!@#$%^&*<>?{}:;"'+=_]/g,'');
     
     colorString = colorString.toLowerCase();   // set lowercase
 
@@ -295,6 +351,17 @@ function parseString (colorString = '#abcdef') {
           parseInt(slices[1]),
           parseInt(slices[2]),
           parseInt(slices[3])
+        ];
+      }
+    },
+    {
+      rex: /^rgbs\((\d{1,3}),(\d{1,3}),(\d{1,3})\),(\d{1,3})\)$/,
+      parseStr: function (slices){ // rgb(0,0,0)
+        return [
+          parseInt(slices[1]),
+          parseInt(slices[2]),
+          parseInt(slices[3]),
+          parseInt(slices[4])
         ];
       }
     },
@@ -372,13 +439,26 @@ function parseString (colorString = '#abcdef') {
   }
     return colorString //false; // return false due to error
 }
-// */ // END PARSESTRING COMMENT SWITCH
 
 module.exports = {
    APCAcontrast,
-   sRGBtoY
+   sRGBtoY,
+   displayP3toY,
+   colorParsley
 }
 
-////\                                  /////////////////////////////////////////
-/////\  END APCA 0.0.98G 4g W3 BLOCK  /////////////////////////////////////////
+
+/*////// PARSESTRING TOGGLE /////
+
+module.exports = {
+   APCAcontrast,
+   sRGBtoY,
+   displayP3toY
+}
+// */  ///// END PARSESTRING COMMENT SWITCH /////
+
+
+
+////\                                 //////////////////////////////////////////
+/////\  END APCA 0.0.98G-4g.3 BLOCK  //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
