@@ -29,28 +29,40 @@
   </a> &nbsp;&nbsp;    
 </p>
 
-# APCA for W3 & WCAG
+# APCA for W3 & WCAG\_3
 ## apca-w3
 The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
 
 ### Advanced Perceptual Contrast Algorithm
 
-Current Version: **0.0.98G-4g-w3**-betafish
+Current Version: **0.0.98G-4g.3** (w3) _betafish_
 
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
-### QuickStart
+## QuickStart
 
 ```javascript
-    import { APCAcontrast, sRGBtoY } from 'apca-w3';
+    import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
 ```
-***Usage:***
+### *Usage:*
+**BREAKING CHANGE:** _0.0.98G-4g.3_ NOW send rgba int **arrays** to sRGBtoY(), use the new colorParsley() if you need to parse a string first.
 
 First color must be text, second color must be the background.
 ```javascript
+    let textColor = [17,17,17,255];
+    let backgroundColor = [232,230,221,255];
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
-The following are the available input types for sRGBtoY(), HSL is not implemented at the moment. All are automatically recognized:
+
+If you need to parse, we've kept that, now called "colorParsley()" send it anything, it returns an rgba array. Relative to the above example:
+
+```javascript
+    let textColor = colorParsley('#111111');
+    let backgroundColor = colorParsley('e8e6dd');
+```
+
+
+The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
 
 ### INPUT as STRINGS:
 - **No Alpha**
@@ -72,10 +84,18 @@ The following are the available input types for sRGBtoY(), HSL is not implemente
 
 No alpha parsing for _numbers_ in part as there are big and little endian issues that need to be resolved.
 
-### UPCOMING POTENTIALLY BREAKING CHANGE:
- The parsing will be moved to a separate module, and sRGBtoY will then take an rgba array in the form of rgba = [0,0,0,255] this is in keeping with comments that the parsing is not always necessarry, and rather raw data is preferred.
+### _BREAKING CHANGE:_
+ The parsing was be moved to a separate function, colorParsley(), and sRGBtoY will now take only an rgba array in the form of rgba = [0,0,0,255] this is in keeping with comments that the parsing is not always necessarry, and rather raw data is preferred.
  
- We may simply make an alterate version of sRGBtoY() such as sRGBarrY() for the array only version. Please weigh in on the issue in discussions https://github.com/Myndex/SAPC-APCA/discussions/33
+ This should be the last "breaking" change for a while.
+ 
+### Parsing Removal
+in the src folder .js file, there is a ` /*/ ` type code toggle you can disable the entire set of parsing functions before minimizing. this changes the import to:
+
+```javascript
+             // import with parsing off:
+    import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
+```
 
 
 ### Font Use Lookup Table
@@ -83,30 +103,29 @@ Latest Lookup Table: November 17 2021
 
 <img width="639" alt="0.0.98G4gLUT" src="images/0.0.98G4gLUT.png">
 
-<img width="596" alt="0.0.98G4gLUT legend" src="images/0.0.98G4gLUT-legenf.png">
+<img width="596" alt="0.0.98G4gLUT legend" src="images/0.0.98G4gLUT-legend.png">
 
 ```javascript
 // APCA FONT LOOKUP TABLE 0.98G-4g-b3
 // Font Size and Reference Font Weight
+// THIS GRID FOR FLUENT TEXT USE CASE ONLY DEC 12 2021
 
-const fontLUT = [
-[pt,px,100,200,300,400,500,600,700,800,900],
-[7.5,10,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
-[7.88,10.5,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
-[8.25,11,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
-[9,12,'⊘','⊘','©§™ 75','× 90','× 85','× 80','× 75','⊘','⊘'],
-[10.5,14,'⊘','⊘','©§™ 75',90,85,80,75,'⊘','⊘'],
-[12,16,'⊘','©§™ 75','©§™ 75',75,70,65,60,'× 55','⊘'],
-[13.5,18,'⊘','©§™ 75',90,70,65,60,55,'× 50','× 45'],
-[15.8,21,'⊘','©§™ 75',85,65,60,55,50,'× 45','× 40'],
-[18,24,'⊘',90,75,60,55,50,45,'× 40','× 35'],
-[24,32,'⊘',85,70,55,50,45,40,35,30],
-[31.5,42,90,75,60,50,45,40,35,30,30],
-[42,56,85,70,55,45,40,35,30,30,30],
-[54,72,75,60,50,40,35,30,30,30,30],
-[72,96,70,55,45,35,30,30,30,30,30],
-[96,128,60,45,40,30,30,30,30,30,30]
-];
+const apcaFluentGrid = [
+   ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
+   ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
+   ["min", "min", "min", 95, 90, 85, 80, "min", "min"],
+   ["min", "min", "min", 90, 85, 80, 75, "min", "min"],
+   ["min", "min", 95, 75, 70, 65, 60, 55, "min"],
+   ["min", "min", 90, 70, 65, 60, 55, 50, 45],
+   ["min", 95, 85, 65, 60, 55, 50, 45, 40],
+   ["min", 90, 75, 60, 55, 50, 45, 40, 35],
+   ["min", 85, 70, 55, 50, 45, 40, 35, 30],
+   [90, 75, 60, 50, 45, 40, 35, 30, "max"],
+   [85, 70, 55, 45, 40, 35, 30, "max", "max"],
+   [75, 60, 50, 40, 35, 30, "max", "max", "max"],
+   [70, 55, 45, 35, 30, "max", "max", "max", "max"],
+   [60, 45, 40, 30, "max", "max", "max", "max", "max"],
+ ];
 ```
 
 -----

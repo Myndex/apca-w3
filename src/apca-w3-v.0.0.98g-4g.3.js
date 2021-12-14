@@ -31,7 +31,8 @@
 // @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.3.js
 // ==/ClosureCompiler==
 
-// https://closure-compiler.appspot.com/home#code%3D%252F%252F%2520%253D%253DClosureCompiler%253D%253D%250A%252F%252F%2520%2540compilation_level%2520SIMPLE_OPTIMIZATIONS%250A%252F%252F%2520%2540output_file_name%2520apca-w3-v.0.0.98g-4g.2.min.js%250A%252F%252F%2520%2540code_url%2520https%253A%252F%252Fraw.githubusercontent.com%252FMyndex%252Fapca-w3%252Fmaster%252Fsrc%252Fapca-w3-v.0.0.98g-4g.2.js%250A%252F%252F%2520%253D%253D%252FClosureCompiler%253D%253D
+// https://closure-compiler.appspot.com/home#code%3D%252F%252F%2520%253D%253DClosureCompiler%253D%253D%250A%252F%252F%2520%2540compilation_level%2520SIMPLE_OPTIMIZATIONS%250A%252F%252F%2520%2540output_file_name%2520apca-w3-v.0.0.98g-4g.3.min.js%250A%252F%252F%2520%2540code_url%2520https%253A%252F%252Fraw.githubusercontent.com%252FMyndex%252Fapca-w3%252Fmaster%252Fsrc%252Fapca-w3-v.0.0.98g-4g.3.js%250A%252F%252F%2520%253D%253D%252FClosureCompiler%253D%253D%250A
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /////
