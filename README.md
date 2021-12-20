@@ -35,33 +35,43 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 
 ### Advanced Perceptual Contrast Algorithm
 
-Current Version: **0.0.98G-4g.3** (w3) _betafish_
+Current Version: **0.0.98G-4g.4** (w3) _betafish_
 
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
 ## QuickStart
+### _Install_
 
+```javascript
+    npm i apca-w3
+```
+
+### _Import_
 ```javascript
     import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
 ```
-### *Usage:*
-**BREAKING CHANGE:** _0.0.98G-4g.3_ NOW send rgba int **arrays** to sRGBtoY(), use the new colorParsley() if you need to parse a string first.
+### _Usage:_
+PARSE:
+If you need to parse a color string or 24bit number, use the colorParsley() function:
+```javascript
+    let rgbaArray = colorParsley('aliceblue');
+```
+CONVERT TO Ys
+Send rgba INT array [123,123,123,1.0] to sRGBtoY() — this is a slightly different luminance Y that the IEC oiecewise.
 
-First color must be text, second color must be the background.
+```javascript
+    let Ys = sRGBtoY([123,123,123,1.0]);
+```
+FIND Lc CONTRAST
+First color _must_ be text, second color must be the background.
+
 ```javascript
     let textColor = [17,17,17,255];
     let backgroundColor = [232,230,221,255];
+    
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
-
-If you need to parse, we've kept that, now called "colorParsley()" send it anything, it returns an rgba array. Relative to the above example:
-
-```javascript
-    let textColor = colorParsley('#111111');
-    let backgroundColor = colorParsley('e8e6dd');
-```
-
-
+### _String Theory_
 The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
 
 ### INPUT as STRINGS:
@@ -84,16 +94,15 @@ The following are the available input types for colorParsley(), HSL is not imple
 
 No alpha parsing for _numbers_ in part as there are big and little endian issues that need to be resolved.
 
-### _BREAKING CHANGE:_
- The parsing was be moved to a separate function, colorParsley(), and sRGBtoY will now take only an rgba array in the form of rgba = [0,0,0,255] this is in keeping with comments that the parsing is not always necessarry, and rather raw data is preferred.
- 
- This should be the last "breaking" change for a while.
- 
 ### Parsing Removal
-in the src folder .js file, there is a ` /*/ ` type code toggle you can disable the entire set of parsing functions before minimizing. this changes the import to:
+The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant.
+
+In the src folder .js file, there is a ` /*/ ` type code toggle, see the comments just before the parsing fucntions. you can disable the entire set of parsing functions before minimizing if you like to go lean and clean.
+
+This changes the import you need to use to:
 
 ```javascript
-             // import with parsing off:
+             // import with parsing off/removed:
     import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
 ```
 
@@ -115,8 +124,8 @@ const apcaFluentGrid = [
    ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
    ["min", "min", "min", 95, 90, 85, 80, "min", "min"],
    ["min", "min", "min", 90, 85, 80, 75, "min", "min"],
-   ["min", "min", 95, 75, 70, 65, 60, 55, "min"],
-   ["min", "min", 90, 70, 65, 60, 55, 50, 45],
+   ["min", "min", 95, 80, 75, 65, 60, 55, "min"],
+   ["min", "min", 90, 75, 65, 60, 55, 50, 45],
    ["min", 95, 85, 65, 60, 55, 50, 45, 40],
    ["min", 90, 75, 60, 55, 50, 45, 40, 35],
    ["min", 85, 70, 55, 50, 45, 40, 35, 30],
