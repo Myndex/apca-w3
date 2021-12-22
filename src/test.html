@@ -14,7 +14,7 @@
 <div id="test">Enable Javascript </div>
 </body>
 
-<script src="./apca-w3-v.0.0.98g-4g.3.js"></script>
+<script src="./apca-w3-v.0.0.98g-4g.4.js"></script>
 
 <script>
 
@@ -26,7 +26,7 @@ outputText.innerHTML = '<h3>TEST COLORS</h3>';
 
 outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
 let color1 = '#123456', color2 = 'aliceblue', color3 = 'rgb(240,200,120)', color4 = 0x808080,
-    color5 = [123,145,67,255], color6 = {r: 123,g: 145,b: 67,a: 255};
+    color5 = [123,145,67,1.0], color6 = {r: 123,g: 145,b: 67,a: 1.0};
 
 let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
     contrast2 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color3))),
