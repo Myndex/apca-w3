@@ -1,5 +1,5 @@
 # APCA W3 JS Library Documentation
-### Updated Dec 1, 2021 for 0.98G-4g W3 npm release
+### Updated Dec 21, 2021 for 0.98G-4g W3 npm release
 
 This is a set of JS functions/objects to determine a contrast value for a color pair, using the SAPC/APCA methods. 
 
@@ -12,18 +12,40 @@ This APCA version is the version licensed to the W3/AGWG for use with web conten
 
 If you want to dive in fast, or you want the bare basics, this is the file for you. This only comes with the most basic color input parsing, and does not containt the automated lookup tables or advanced CIE processing. It is the base APCA algorithim only, with no bells or whistles. Send it two RGB numeric colors and it returns a numeric L<sup>c</sup> contrast value.
 
-### QuickStart
+## QuickStart
+### _Install_
 
 ```javascript
-    import { APCAcontrast, sRGBtoY } from 'apca-w3';
+    npm i apca-w3
 ```
-***Usage:***
 
-First color must be text, second color must be the background.
+### _Import_
 ```javascript
+    import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
+```
+### _Usage:_
+PARSE:
+If you need to parse a color string or 24bit number, use the colorParsley() function:
+```javascript
+    let rgbaArray = colorParsley('aliceblue');
+```
+CONVERT TO Ys
+Send rgba INT array [123,123,123,1.0] to sRGBtoY() — this is a slightly different luminance Y that the IEC oiecewise.
+
+```javascript
+    let Ys = sRGBtoY([123,123,123,1.0]);
+```
+FIND Lc CONTRAST
+First color _must_ be text, second color must be the background.
+
+```javascript
+    let textColor = [17,17,17,255];
+    let backgroundColor = [232,230,221,255];
+    
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
-The following are the available input types for sRGBtoY(), HSL is not implemented at the moment. All are automatically recognized:
+### _String Theory_
+The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
 
 ### INPUT as STRINGS:
 - **No Alpha**
@@ -43,33 +65,69 @@ The following are the available input types for sRGBtoY(), HSL is not implemente
 - **As integer**
     - ` 11259375 `
 
+No alpha parsing for _numbers_ in part as there are big and little endian issues that need to be resolved.
 
-The sRGBtoY() function takes two sRGB encoded colors, where each color is one of:
-- integer in RGB order, (i.e. 0xRRGGBB or 16777216).
-- a hex string such as #fff or aabbcc (hash # is not required)
-- a CSS named color such as 'aliceblue' or 'magenta'
-- as rgb(123,123,123)
-and then returns luminance (Y)
+### Parsing Removal
+The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant.
 
-The APCAcontrast() function takes the text and background luminance.
+In the src folder .js file, there is a ` /*/ ` type code toggle, see the comments just before the parsing fucntions. you can disable the entire set of parsing functions before minimizing if you like to go lean and clean.
 
-### API
-The API for "APCA_0_98G_4g_minimal" is trivially simple. Send text and background sRGB numeric values to the sRGBtoY() function, and send the resulting text-Y and background-Y to the APCAcontrast function, it returns a signed float of the numeric L<sup>c</sup> contrast result.
+This changes the import you need to use to:
 
-The two inputs are TEXT color and BACKGROUND color in that order. Each must be a numeric NOT a string, as this simple version has no string parsing utilities. 
-### EXAMPLE:
-```js
-     txtColor = 'darkslategrey'; // named color of the text, which is 2f4f4f
-     bgColor  = 0xabcdef; // numeric color for the background, as will be rendered
-
-     contrastLc = APCAcontrast( sRGBtoY(txtColor) , sRGBtoY(bgColor) );
+```javascript
+             // import with parsing off/removed:
+    import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
 ```
-Each color must be a 24bit color (8 bit per channel) as a single integer (or 0x) sRGB encoded color, i.e. White is either the integer 16777216 or the hex 0xffffff. A signed int is returned with a positive or negative value. Negative values mean light text and a dark background, positive values mean dark text and a light background. 60.0, or -60.0 is a contrast "sort of like" the old WCAG 2's 4.5:1. NOTE: the total range is now less than ± 110, so output can be rounded to a signed INT but DO NOT output an absolute value - **light text on dark BG should return a negative number**.
 
-### IMPORTANT: Do Not Mix Up Text and Background inputs.
-**APCA is polarity dependent, and correct results require that the TXT and BG are processed via the correct inputs.**
 
-**PARAMETER CHANGE for 0.98G:** The order in parameters is APCAcontrast(text,background) — THIS IS THE REVERSE OF SOME EARLIER VERSIONS. This is because there will be additional background colors in a near future version, such as` APCAcontrast(text, BGlocal, BGsurround, BGpage...) ` and the intention is to follow visible layer order, as a stack from top to bottom.
+### Font Use Lookup Table
+Latest Lookup Table: November 17 2021
+
+<img width="639" alt="0.0.98G4gLUT" src="images/0.0.98G4gLUT.png">
+
+<img width="596" alt="0.0.98G4gLUT legend" src="images/0.0.98G4gLUT-legend.png">
+
+```javascript
+// APCA FONT LOOKUP TABLE 0.98G-4g-b3
+// Font Size and Reference Font Weight
+// THIS GRID FOR FLUENT TEXT USE CASE ONLY DEC 12 2021
+
+const apcaFluentGrid = [
+   ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
+   ["min", "min", "min", "min", "min", "min", "min", "min", "min"],
+   ["min", "min", "min", 95, 90, 85, 80, "min", "min"],
+   ["min", "min", "min", 90, 85, 80, 75, "min", "min"],
+   ["min", "min", 95, 80, 75, 65, 60, 55, "min"],
+   ["min", "min", 90, 75, 65, 60, 55, 50, 45],
+   ["min", 95, 85, 65, 60, 55, 50, 45, 40],
+   ["min", 90, 75, 60, 55, 50, 45, 40, 35],
+   ["min", 85, 70, 55, 50, 45, 40, 35, 30],
+   [90, 75, 60, 50, 45, 40, 35, 30, "max"],
+   [85, 70, 55, 45, 40, 35, 30, "max", "max"],
+   [75, 60, 50, 40, 35, 30, "max", "max", "max"],
+   [70, 55, 45, 35, 30, "max", "max", "max", "max"],
+   [60, 45, 40, 30, "max", "max", "max", "max", "max"],
+ ];
+```
+
+-----
+## EXTRAS
+Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the SAPC repo.](https://github.com/Myndex/SAPC-APCA)
+
+### Current APCA Constants ( 0.0.98G 4g - W3 )
+**These constants are for use with the web standard sRGB colorspace.**
+```javascript
+ // 0.98G-4g-W3 constants (W3 license only):
+    
+  Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
+  
+  ColorSpace = { sRco: 0.2126729,    sGco: 0.7151522,    sBco: 0.0721750, };
+    
+  Clamps =     { blkThrs: 0.022,     blkClmp: 1.414,     loClip: 0.1,     deltaYmin: 0.0005, };
+        
+  Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
+                 scaleWoB: 1.14,     loWoBoffset: 0.027, };	
+```    
 
 -----
 
@@ -100,37 +158,6 @@ you may round to a signed integer.
 
 
 Those should exercise the important constants.
-
-### Font Use Lookup Table
-Latest Lookup Table: November 17 2021
-
-<img width="639" alt="0.0.98G4gLUT" src="../images/0.0.98G4gLUT.png">
-
-<img width="596" alt="0.0.98G4gLUT legend" src="../images/0.0.98G4gLUT-legenf.png">
-
-```javascript
-// APCA FONT LOOKUP TABLE 0.98G-4g-b3
-// Font Size and Reference Font Weight
-
-const fontLUT = [
-[pt,px,100,200,300,400,500,600,700,800,900],
-[7.5,10,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
-[7.88,10.5,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
-[8.25,11,'⊘','⊘','⊘','©§™ 60','©§™ 60','©§™ 60','©§™ 60','⊘','⊘'],
-[9,12,'⊘','⊘','©§™ 75','× 90','× 85','× 80','× 75','⊘','⊘'],
-[10.5,14,'⊘','⊘','©§™ 75',90,85,80,75,'⊘','⊘'],
-[12,16,'⊘','©§™ 75','©§™ 75',75,70,65,60,'× 55','⊘'],
-[13.5,18,'⊘','©§™ 75',90,70,65,60,55,'× 50','× 45'],
-[15.8,21,'⊘','©§™ 75',85,65,60,55,50,'× 45','× 40'],
-[18,24,'⊘',90,75,60,55,50,45,'× 40','× 35'],
-[24,32,'⊘',85,70,55,50,45,40,35,30],
-[31.5,42,90,75,60,50,45,40,35,30,30],
-[42,56,85,70,55,45,40,35,30,30,30],
-[54,72,75,60,50,40,35,30,30,30,30],
-[72,96,70,55,45,35,30,30,30,30,30],
-[96,128,60,45,40,30,30,30,30,30,30]
-];
-```
 
 -----
 Please let us know of any problems, ideas, comments, etc. in the discussion tab at the github repo.

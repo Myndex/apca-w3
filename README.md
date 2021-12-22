@@ -24,7 +24,7 @@
   <a href="https://twitter.com/MyndexResearch">
     <img src="https://badgen.net/badge/@/MyndexResearch?icon=twitter" alt="twitter" />
   </a> &nbsp;&nbsp;
-  <a href="https://github.com/Myndex/SAPC-APCA">
+  <a href="https://www.myndex.com/APCA/">
     <img src="https://badgen.net/badge/APCA/Live Tool/db6b0b" alt="APCA/Live Tool/" />
   </a> &nbsp;&nbsp;    
 </p>

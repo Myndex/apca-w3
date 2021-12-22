@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.0.98G-4g.3 W3 • contrast function only
-/////           DIST: W3 • Revision date: Dec 11, 2021
+/////           Beta 0.0.98G-4g.4 W3 • contrast function only
+/////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -27,11 +27,9 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-v.0.0.98g-4g.3.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.3.js
+// @output_file_name apca-w3-v.0.0.98g-4g.4.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.4.js
 // ==/ClosureCompiler==
-
-// https://closure-compiler.appspot.com/home#code%3D%252F%252F%2520%253D%253DClosureCompiler%253D%253D%250A%252F%252F%2520%2540compilation_level%2520SIMPLE_OPTIMIZATIONS%250A%252F%252F%2520%2540output_file_name%2520apca-w3-v.0.0.98g-4g.3.min.js%250A%252F%252F%2520%2540code_url%2520https%253A%252F%252Fraw.githubusercontent.com%252FMyndex%252Fapca-w3%252Fmaster%252Fsrc%252Fapca-w3-v.0.0.98g-4g.3.js%250A%252F%252F%2520%253D%253D%252FClosureCompiler%253D%253D%250A
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -124,13 +122,13 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN APCA  0.0.98G-4g.3  BLOCK  \//////////////////////////////////////
+/////  BEGIN APCA  0.0.98G-4g.4  BLOCK  \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
 //////////  ƒ  APCAcontrast()  /////////////////////////////////////////////
 //export 
-function APCAcontrast (txtY,bgY,places=0) {
+function APCAcontrast (txtY,bgY,places = -1) {
                  // send linear Y (luminance) for text and background.
                 // txtY and bgY must be between 0.0-1.0
                // IMPORTANT: Do not swap, polarity is important.
@@ -162,6 +160,7 @@ function APCAcontrast (txtY,bgY,places=0) {
 
   let SAPC = 0.0;            // For raw SAPC values
   let outputContrast = 0.0; // For weighted final values
+  let polCat = 'N';        // Alternate Polarity Indicator. N normal R reverse
 
   // TUTORIAL
 
@@ -209,9 +208,16 @@ function APCAcontrast (txtY,bgY,places=0) {
          // return Lc (lightness contrast) as a signed numeric value 
         // Round to the nearest whole number is optional.
        // Rounded can be a signed INT as output will be within ± 127 
-       
-  return  Math.round(outputContrast * 100.0);
-  
+      // places = -1 returns signed float, 0 returns rounded as string
+
+  if(places < 0 ){
+    return  outputContrast * 100.0;
+  } else if(places == 0 ){
+    return  Math.round(Math.abs(outputContrast)*100.0)+'<sub>'+polCat+'</sub>';
+  } else if(Number.isInteger(places)){
+    return  (outputContrast * 100.0).toFixed(places);
+  } else { throw 'Err-3'}
+
 } // End APCAcontrast()
 
 
@@ -221,7 +227,7 @@ function APCAcontrast (txtY,bgY,places=0) {
 
 //////////  ƒ  sRGBtoY()  //////////////////////////////////////////////////
 //export 
-function sRGBtoY (rgba = [0,0,0,255]) { // send sRGB 8bpc (0xFFFFFF) or string
+function sRGBtoY (rgba = [0,0,0,1.0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
 /////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
 
@@ -255,7 +261,7 @@ const sRco = 0.2126729,
 
 //////////  ƒ  displayP3toY()  //////////////////////////////////////////////////
 //export 
-function displayP3toY (rgba = [0,0,0,255]) { // send rgba array
+function displayP3toY (rgba = [0,0,0,1.0]) { // send rgba array
 
 /////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
 
@@ -298,7 +304,7 @@ function colorParsley (colorIn) {
     } else if (typeof colorIn === 'number') {
         return [(colorIn & 0xFF0000) >> 16,
                 (colorIn & 0x00FF00) >> 8,
-                (colorIn & 0x0000FF), 255];
+                (colorIn & 0x0000FF), 1.0];
     } else if (typeof colorIn === 'object') {
        if (Array.isArray(colorIn)) {
           return colorIn;
@@ -309,7 +315,7 @@ function colorParsley (colorIn) {
                   colorIn.a]; // warning: make sure obj has r: g: b: a:
        }
     };
-    return -1; // return error -1
+    throw 'Err-1' // return error -1
 }
 
 
@@ -342,11 +348,11 @@ function parseString (colorString = '#abcdef') {
 
     // ARRAY OF COLOR DEFINITION OBJECTS
     // objects with alpha are separated, and immediately
-    // follow the non-alpha version. Float rgb is not added yet.
+    // follow the non-alpha version.
     
   let colorDefs = [
     {
-      rex: /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/,
+      rex: /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/i,
       parseStr: function (slices){ // rgb(0,0,0)
         return [
           parseInt(slices[1]),
@@ -356,8 +362,8 @@ function parseString (colorString = '#abcdef') {
       }
     },
     {
-      rex: /^rgbs\((\d{1,3}),(\d{1,3}),(\d{1,3})\),(\d{1,3})\)$/,
-      parseStr: function (slices){ // rgb(0,0,0)
+      rex: /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3})\),([01]?[0.1]\d{0,42})\)$/i,
+      parseStr: function (slices){ // rgba(123,123,123,1.0)
         return [
           parseInt(slices[1]),
           parseInt(slices[2]),
@@ -411,15 +417,12 @@ function parseString (colorString = '#abcdef') {
   ];
 
   // REGEX SEARCH CASCADE TO DETERMINE INPUT TYPE
-  // NEW: Alpha Inputs and the new "2 Char Hex"
-  // Which auto-makes grey based on the first
-  // two characters typed. (f4 becomes f4f4f4)
-  // this.r etc are type INT
+
   
   let colorDefLen = colorDefs.length;
   let rexInput, slicesInput;
   let r,g,b;
-  let a = 255, i = 0;
+  let a = 1.0, i = 0;
 
     // Loop stops once valid color is found
   for (; i < colorDefLen; i++) {
@@ -433,7 +436,7 @@ function parseString (colorString = '#abcdef') {
       r = channel[0] & 0xFF;
       g = channel[1] & 0xFF;
       b = channel[2] & 0xFF;
-      (isNaN(channel[3])) ? a = 255 : a = channel[3] & 0xFF;
+      a = (isNaN(channel[3])) ? 1.0 : Math.min(Math.max(channel[3],0.0),1.0);
       
       return [r,g,b,a];
     }
@@ -461,5 +464,5 @@ module.exports = {
 
 
 ////\                                 //////////////////////////////////////////
-/////\  END APCA 0.0.98G-4g.3 BLOCK  //////////////////////////////////////////
+/////\  END APCA 0.0.98G-4g.4 BLOCK  //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
