@@ -39,11 +39,12 @@ FIND Lc CONTRAST
 First color _must_ be text, second color must be the background.
 
 ```javascript
-    let textColor = [17,17,17,255];
-    let backgroundColor = [232,230,221,255];
+    let textColor = [17,17,17,1.0];
+    let backgroundColor = [232,230,221,1.0];
     
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
-```
+````
+
 ### _String Theory_
 The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
 
@@ -57,7 +58,7 @@ The following are the available input types for colorParsley(), HSL is not imple
 - **With Alpha** _(alpha is NOT presently calculated, and assumed as fully opaque)_
     - ` '#abcf' ` or ` 'abcf' ` (interpreted as ` 'aabbccff' `)
     - ` '#123456ff' ` or ` '123456ff' ` (hash is ignored)
-    - ` 'rgba(123, 45, 67,255)' `
+    - ` 'rgba(123, 45, 67, 1.0)' `
 
 ### INPUT as NUMBER:
 - **As hex**
@@ -72,20 +73,15 @@ The function is called "colorParsley()" because what is that useless leafy thing
 
 In the src folder .js file, there is a ` /*/ ` type code toggle, see the comments just before the parsing fucntions. you can disable the entire set of parsing functions before minimizing if you like to go lean and clean.
 
-This changes the import you need to use to:
+This changes the import to:
 
-```javascript
+````javascript
              // import with parsing off/removed:
     import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
-```
+````
 
 
 ### Font Use Lookup Table
-Latest Lookup Table: November 17 2021
-
-<img width="639" alt="0.0.98G4gLUT" src="images/0.0.98G4gLUT.png">
-
-<img width="596" alt="0.0.98G4gLUT legend" src="images/0.0.98G4gLUT-legend.png">
 
 ```javascript
 // APCA FONT LOOKUP TABLE 0.98G-4g-b3
@@ -164,7 +160,7 @@ Please let us know of any problems, ideas, comments, etc. in the discussion tab 
 
 Thank you!
 
-_Andrew Somers     
+_Andrew Somers
 (User Myndex)_
 
 You can see the current working version at https://www.myndex.com/APCA/

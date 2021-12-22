@@ -66,8 +66,8 @@ FIND Lc CONTRAST
 First color _must_ be text, second color must be the background.
 
 ```javascript
-    let textColor = [17,17,17,255];
-    let backgroundColor = [232,230,221,255];
+    let textColor = [17,17,17,1.0];
+    let backgroundColor = [232,230,221,1.0];
     
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
@@ -84,7 +84,7 @@ The following are the available input types for colorParsley(), HSL is not imple
 - **With Alpha** _(alpha is NOT presently calculated, and assumed as fully opaque)_
     - ` '#abcf' ` or ` 'abcf' ` (interpreted as ` 'aabbccff' `)
     - ` '#123456ff' ` or ` '123456ff' ` (hash is ignored)
-    - ` 'rgba(123, 45, 67,255)' `
+    - ` 'rgba(123, 45, 67,1.0)' `
 
 ### INPUT as NUMBER:
 - **As hex**
@@ -108,11 +108,6 @@ This changes the import you need to use to:
 
 
 ### Font Use Lookup Table
-Latest Lookup Table: November 17 2021
-
-<img width="639" alt="0.0.98G4gLUT" src="images/0.0.98G4gLUT.png">
-
-<img width="596" alt="0.0.98G4gLUT legend" src="images/0.0.98G4gLUT-legend.png">
 
 ```javascript
 // APCA FONT LOOKUP TABLE 0.98G-4g-b3
