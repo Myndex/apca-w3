@@ -86,7 +86,7 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   APCA 0.0.98 G 4g USAGE  //////////////////////////////////////////////
+//////////   APCA 0.0.98 G 4g USAGE  ///////////////////////////////////////////
 ///
 ///  The API for "APCA_0_0_98G_4g_minimal" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
@@ -136,7 +136,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
   const icp = [0.0,1.1];     // input range clamp / input error check
 
   if(isNaN(txtY)||isNaN(bgY)||Math.min(txtY,bgY)<icp[0]||Math.max(txtY,bgY)>icp[1]){
-    return 0;  // return zero on error
+    return 0.0;  // return zero on error
     // return 'error'; // optional string return for error
   };
 
@@ -160,7 +160,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
 
   let SAPC = 0.0;            // For raw SAPC values
   let outputContrast = 0.0; // For weighted final values
-  let polCat = 'N';        // Alternate Polarity Indicator. N normal R reverse
+  let polCat = 'BoW';        // Alternate Polarity Indicator. N normal R reverse
 
   // TUTORIAL
 
@@ -199,6 +199,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
 
   } else {  // For reverse polarity, light text on dark (WoB)
            // WoB should always return negative value.
+	polCat = 'WoB';
 
     SAPC = ( Math.pow(bgY, revBG) - Math.pow(txtY, revTXT) ) * scaleWoB;
 
@@ -208,7 +209,8 @@ function APCAcontrast (txtY,bgY,places = -1) {
          // return Lc (lightness contrast) as a signed numeric value 
         // Round to the nearest whole number is optional.
        // Rounded can be a signed INT as output will be within ± 127 
-      // places = -1 returns signed float, 0 returns rounded as string
+      // places = -1 returns signed float, 1 or more set that many places
+     // 0 returns rounded string, uses BoW or WoB instead of minus sign
 
   if(places < 0 ){
     return  outputContrast * 100.0;
@@ -216,7 +218,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
     return  Math.round(Math.abs(outputContrast)*100.0)+'<sub>'+polCat+'</sub>';
   } else if(Number.isInteger(places)){
     return  (outputContrast * 100.0).toFixed(places);
-  } else { throw 'Err-3'}
+  } else { return 0.0 }
 
 } // End APCAcontrast()
 
@@ -259,7 +261,7 @@ const sRco = 0.2126729,
 
 
 
-//////////  ƒ  displayP3toY()  //////////////////////////////////////////////////
+//////////  ƒ  displayP3toY()  /////////////////////////////////////////////
 //export 
 function displayP3toY (rgba = [0,0,0,1.0]) { // send rgba array
 
@@ -315,7 +317,7 @@ function colorParsley (colorIn) {
                   colorIn.a]; // warning: make sure obj has r: g: b: a:
        }
     };
-    throw 'Err-1' // return error -1
+     return 0.0  // return 0 for error
 }
 
 
@@ -441,7 +443,7 @@ function parseString (colorString = '#abcdef') {
       return [r,g,b,a];
     }
   }
-    return colorString //false; // return false due to error
+    return 0.0; // colorString //false; // return false due to error
 }
 
 module.exports = {

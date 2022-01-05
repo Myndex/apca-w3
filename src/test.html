@@ -1,8 +1,13 @@
 <!DOCTYPE html><head>
 <base lang="en-US" title="APCA TEST">
 <title>APCA TEST</title>
+
+
 </head>
+
 <body style="margin: 2em; font-family: sans-serif; font-size: 1.2em; background: #429; color:#eee;">
+
+
 <h1>APCA Script Test</h1>
 <h3>Usage:</h3>
 <p>First color must be text, second color must be the background.</p>
@@ -12,6 +17,32 @@
 <code>colorParsley()</code> takes anything and parses it to an RGB color array</p>
 <code>Lc = APCAcontrast(sRGBtoY(textColor),sRGBtoY(backgroundColor));</code>
 <div id="test">Enable Javascript </div>
+
+
+<h2>TESTING YOUR IMPLEMENTATION</h2>
+
+<p>If you've implemented the code and want a quick sanity check, Here are some keystone checks with no rounding. The first color is TEXT and the second color is BACKGROUND:
+
+<p>Test Values for the 0.0.98G 4g constants, normal and reverse float values for each color pair.
+
+
+<p>First number is TEXT second number is BACKGROUND.
+
+<h3>    TEXT vs BKGND •  EXPECTED RESULT for 0.1.0 and 0.0.98 G-4g</h3>
+<code><pre>
+    #888 vs #fff  •  63.056469930209424
+    #fff vs #888  • -68.54146436644962  
+
+    #000 vs #aaa  •  58.146262578561334
+    #aaa vs #000  • -56.24113336839742
+    
+    #123 vs #def  •  91.66830811481631
+    #def vs #123  • -93.06770049484275
+
+    #123 vs #444  •   8.32326136957393
+    #234 vs #444  •  -7.526878460278154
+    </pre></code>
+These exercise all the important constants.
 </body>
 
 <script src="./apca-w3-v.0.0.98g-4g.4.js"></script>
@@ -22,11 +53,52 @@
 
 let outputText = document.getElementById('test');
 
-outputText.innerHTML = '<h3>TEST COLORS</h3>';
+    outputText.innerHTML = '<h3>TEST COLORS</h3>';
+
+
+//*  ////   TOGGLE SWITCH
+
+    outputText.innerHTML += '<p>This is a test with the standardized test values</p> '
+
+let color1 = '#888', color2 = '#fff', color3 = '#000', color4 = '#aaa',
+    color5 = '#123', color6 = '#def', color7 = '#444'
+
+let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
+    contrast2 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color1))),
+    contrast3 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color4))),
+    contrast4 = APCAcontrast(sRGBtoY(colorParsley(color4)),sRGBtoY(colorParsley(color3))),
+    contrast5 = APCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color6))),
+    contrast6 = APCAcontrast(sRGBtoY(colorParsley(color6)),sRGBtoY(colorParsley(color5))),
+    contrast7 = APCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color7))),
+    contrast8 = APCAcontrast(sRGBtoY(colorParsley(color7)),sRGBtoY(colorParsley(color5)));
+  
+outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(color1)
+                     + ' <br>color 2: ' + color2 + '	 parsed: ' + colorParsley(color2)
+                     + ' <br>color 3: ' + color3 + '	 parsed: ' + colorParsley(color3)
+                     + ' <br>color 4: ' + color4 + '	 parsed: ' + colorParsley(color4)
+                     + ' <br>color 5: ' + color5 + '	 parsed: ' + colorParsley(color5)
+                     + ' <br>color 6: ' + color6 + '	 parsed: ' + colorParsley(color6)
+                     + ' <br>color 7: ' + color7 + '	 parsed: ' + colorParsley(color7)
+
+                     + '<br><br>sRGB APCA results • match the expected result'
+                     + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast1 
+                     + '<br>Colors 2 & 1   sRGB Lc ' + contrast2 
+                     + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast3 
+                     + '<br>Colors 4 & 3   sRGB Lc ' + contrast4 
+                     + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast5 
+                     + '<br>Colors 6 & 5   sRGB Lc ' + contrast6 
+                     + '<br><br>Colors 5 & 7   sRGB Lc ' + contrast7 
+                     + '<br>Colors 7 & 5   sRGB Lc ' + contrast8 
+                     + '</pre>';
+
+/*/ /// Mid Toggle Do Not Delete
+
+
 
 outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
-let color1 = '#123456', color2 = 'aliceblue', color3 = 'rgb(240,200,120)', color4 = 0x808080,
-    color5 = [123,145,67,1.0], color6 = {r: 123,g: 145,b: 67,a: 1.0};
+let color1 = '#123', color2 = '#def', color3 = '#123' ; //'rgb(240,200,120)',
+let color4 = 0x808080,
+    color5 = [123,145,67,1.0], color6 = 'aliceblue'; //{r: 123,g: 145,b: 67,a: 1.0};
 
 let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
     contrast2 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color3))),
@@ -70,6 +142,12 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '         \t parsed: ' + colo
                      + '<br><br>Colors 6 & 3   sRGB Lc ' + contrast7 + '  \t P3 Lc ' + contrastP7
                      + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast8 + '  \t P3 Lc ' + contrastP8
                      + '</pre>';
+
+
+
+//  */ //// END TOGGLE
+
+
 </script>
 
 
