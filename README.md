@@ -1,5 +1,5 @@
 <p align="center">
- <img src="images/APCAlogo.png"  alt="APCA The Revolution Will Be Readable" width="420"><br><br>
+ <img src="images/APCAcolor4.png"  alt="APCA The Revolution Will Be Readable" width="420"><br><br>
     
   <a href="https://github.com/Myndex/SAPC-APCA">
     <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
