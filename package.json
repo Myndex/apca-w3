@@ -23,13 +23,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Myndex/apca-w3.git"
-  },  
+  },
   "homepage": "https://www.myndex.com/APCA/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "colorparsley": ">=0.1.0"
+    "colorparsley": ">=0.1.0",
+    "npm": "^8.3.0"
   }
-  
 }
