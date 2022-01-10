@@ -26,8 +26,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-v.0.1.0.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.1.0.js
+// @output_file_name apca-w3-0.1.0.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-0.1.0.js
 // ==/ClosureCompiler==
 
 
