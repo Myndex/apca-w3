@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.0.98G-4g.4 W3 • contrast function only
+/////           Beta 0.1.0 W3 • contrast function only
 /////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
@@ -11,11 +11,10 @@
 /////
 ///////////////////////////////////////////////////////////////////////////////
 /////
-/////    IMPORT:
-/////    import {
-/////            APCAcontrast, sRGBtoY, displayP3toY, colorParsley
-/////            } from 'apca-w3';
-/////    
+/////    IMPORTS:
+/////    import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
+/////    import { colorParsley } from 'colorparsley';
+/////
 /////    FORWARD CONTRAST USAGE:
 /////    Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
 /////
@@ -27,8 +26,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-v.0.0.98g-4g.4.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.0.98g-4g.4.js
+// @output_file_name apca-w3-v.0.1.0.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-v.0.1.0.js
 // ==/ClosureCompiler==
 
 
@@ -46,7 +45,6 @@
 /////     others — see refs at https://www.myndex.com/WEB/WCAG_CE17polarity
 /////   • Bruce Bailey of USAccessBoard for his encouragement, ideas, & feedback
 /////   • Chris Loiselle of Oracle for getting us back on track in a pandemic
-/////   • Chris Lilley of W3 for his early and continued comments & feedback.
 /////   • The many volunteer test subjects for participating in the studies.
 /////   • Principal research conducted at Myndex by A.Somers.
 /////
@@ -56,7 +54,7 @@
 /////
 /////   *****  SAPC BLOCK  *****
 /////
-/////   For Evaluations, refer to this as: SAPC-8, v0.0.98 G-series constant 4g
+/////   For Evaluations, refer to this as: SAPC-8, v0.1.0 G-series constant 4g
 /////            SAPC • S-LUV Advanced Predictive Color
 /////
 /////   SIMPLE VERSION — Only the basic APCA contrast predictor.
@@ -86,9 +84,9 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   APCA 0.0.98 G 4g USAGE  ///////////////////////////////////////////
+//////////   APCA 0.1.0  G 4g USAGE  ///////////////////////////////////////////
 ///
-///  The API for "APCA_0_0_98G_4g_minimal" is trivially simple.
+///  The API for "APCA 0.1.0" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
 ///  and send the resulting text-Y and background-Y to the APCAcontrast function,
 ///  it returns a signed float with the numeric Lc contrast result.
@@ -122,7 +120,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN APCA  0.0.98G-4g.4  BLOCK  \//////////////////////////////////////
+/////  BEGIN APCA  0.1.0  BLOCK         \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
@@ -140,7 +138,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
     // return 'error'; // optional string return for error
   };
 
-//////////   APCA 0.0.98 G - 4g - W3 Constants   ///////////////////////
+//////////   APCA 0.1.0   G - 4g - W3 Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -207,12 +205,12 @@ function APCAcontrast (txtY,bgY,places = -1) {
   }
 
          // return Lc (lightness contrast) as a signed numeric value 
-        // Round to the nearest whole number is optional.
+        // Round to the nearest whole number as string is optional.
        // Rounded can be a signed INT as output will be within ± 127 
       // places = -1 returns signed float, 1 or more set that many places
      // 0 returns rounded string, uses BoW or WoB instead of minus sign
 
-  if(places < 0 ){
+  if(places < 0 ){  // Default (-1) number out, all others are strings
     return  outputContrast * 100.0;
   } else if(places == 0 ){
     return  Math.round(Math.abs(outputContrast)*100.0)+'<sub>'+polCat+'</sub>';
@@ -231,7 +229,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
 //export 
 function sRGBtoY (rgba = [0,0,0,1.0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
-/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
+/////   APCA 0.1.0   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
     
@@ -265,7 +263,7 @@ const sRco = 0.2126729,
 //export 
 function displayP3toY (rgba = [0,0,0,1.0]) { // send rgba array
 
-/////   APCA 0.0.98 G - 4g - W3 Constants   ////////////////////////
+/////   APCA 0.1.1   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
                     // Pending evaluation, because, Apple...
@@ -291,10 +289,43 @@ const sRco = 0.2289829594805780,
 
 
 
-///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
 
-//* // PARSESTRING COMMENT SWITCH //////////////////////////////////////////
-//  (add/remove first slash in the above line to toggle before compile)  //
+
+//////////  ƒ  adobeRGBtoY()  /////////////////////////////////////////////
+//export 
+function adobeRGBtoY (rgba = [0,0,0,1.0]) { // send rgba array
+
+/////   APCA 0.1.0   G - 4g - W3 Constants   ////////////////////////
+
+const mainTRC = 2.35; // 2.35 exponent emulates actual monitor perception
+                     // Pending evaluation...
+    
+const sRco = 0.2973550227113810, 
+      sGco = 0.6273727497145280, 
+      sBco = 0.0752722275740913; // adobeRGB coefficients
+
+// Derived from:
+// xW	yW	K	xR	yR	xG	yG	xB	yB
+// 0.312720	0.329030	6504	0.640	0.330	0.210	0.710	0.150	0.060
+
+         // linearize r, g, or b then apply coefficients
+        // and sum then return the resulting luminance
+
+  function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
+
+  return sRco * simpleExp(rgba[0]) +
+         sGco * simpleExp(rgba[1]) +
+         sBco * simpleExp(rgba[2]);
+
+} // End displayP3toY()
+
+
+
+///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
+//// As of APCA 0.1.0 colorParsley() is a separate package  ///////////////////
+
+/* // PARSESTRING COMMENT SWITCH ////////////////////////////////////////////
+//  (add/remove first slash in the above line to toggle before compile) ////
 
 
 /////  ƒ  colorParsley()  ///////////////////////////////////////////////////
@@ -466,5 +497,5 @@ module.exports = {
 
 
 ////\                                 //////////////////////////////////////////
-/////\  END APCA 0.0.98G-4g.4 BLOCK  //////////////////////////////////////////
+/////\  END APCA 0.1.0  G-4g  BLOCK  //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
