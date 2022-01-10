@@ -1,5 +1,8 @@
 # APCA W3 JS Library Documentation
-### Updated Dec 21, 2021 for 0.98G-4g W3 npm release
+
+### Updated Jan 10, 2022 for 0.1.0 W3 npm release
+
+NOTE: colorParsley is now a dependency in its own package.
 
 This is a set of JS functions/objects to determine a contrast value for a color pair, using the SAPC/APCA methods. 
 
@@ -7,7 +10,7 @@ These are based on research iteration SAPC-8, developed through a lengthy series
 
 -----
 
-## apca-w3-v.0.0.98g-4g.min.js — SIMPLE QUICK START
+## apca-w3-0.1.0.min.js — SIMPLE QUICK START
 This APCA version is the version licensed to the W3/AGWG for use with web content accessibility standards, WCAG 3.
 
 If you want to dive in fast, or you want the bare basics, this is the file for you. This only comes with the most basic color input parsing, and does not containt the automated lookup tables or advanced CIE processing. It is the base APCA algorithim only, with no bells or whistles. Send it two RGB numeric colors and it returns a numeric L<sup>c</sup> contrast value.
@@ -110,7 +113,7 @@ const apcaFluentGrid = [
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.0.98G 4g - W3 )
+### Current APCA Constants ( 0.1.0 - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
  // 0.98G-4g-W3 constants (W3 license only):
@@ -127,7 +130,7 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 
 -----
 
-## TESTING YOUR IMPLEMENTATION • APCA 0.98 G-4g
+## TESTING YOUR IMPLEMENTATION • APCA 0.1.0 G-4g
 
 If you've implemented the code and want a quick sanity check,
 Here are four keystone checks with no rounding, where the
@@ -138,7 +141,7 @@ the pair to check polarity. And obviously rounding is
 turned off for this check, however for production
 you may round to a signed integer. 
 
-    TEXT vs BKGND •  EXPECTED RESULT for 0.98 G-4g
+    TEXT vs BKGND •  EXPECTED RESULT for 0.1.0 G-4g
     
     #888 vs #fff  •  63.056469930209424
     #fff vs #888  • -68.54146436644962  

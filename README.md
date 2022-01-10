@@ -35,7 +35,10 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 
 ### Advanced Perceptual Contrast Algorithm
 
-Current Version: **0.0.98G-4g.4** (w3) _betafish_
+### CHANGE:
+colorParsley() is now in its own package and must be imported separately.
+
+#### Current Version: **0.1.0** G (w3) _beta_
 
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
