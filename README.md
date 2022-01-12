@@ -35,13 +35,29 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 
 ### Advanced Perceptual Contrast Algorithm
 
-### CHANGE:
+### Current Version: **0.1.1** G (w3) _beta_
+
+#### CHANGE for 0.1.1:
+**NEW!! Alpha channels! AdobeRGB!!**
+
+#### CHANGE for 0.1.0:
+NEW! displayP3!     
 colorParsley() is now in its own package and must be imported separately.
 
-#### Current Version: **0.1.0** G (w3) _beta_
 
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
+
+## Font Lookup Table
+Current as of January 11, 2022
+
+<img src="./images/Jan2022LOOKUPTABLE.jpg" alt="January 11, 2022 Font Lookup Table">
+
+<img src="./images/Jan2022LOOKUPTABLELEGEND.jpg" alt="January 11, 2022 Font Lookup Table">
+
+
+
+------
 ## QuickStart
 ### _Install_
 
@@ -51,16 +67,33 @@ APCA is a contrast assessment method for predicting the perceived contrast betwe
 
 ### _Import_
 ```javascript
-    import { APCAcontrast, sRGBtoY, displayP3toY, colorParsley } from 'apca-w3';
+<script type="module">
+ import { APCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA } from './apca-w3';
+ import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley';  // optional string parsing
+</script>
 ```
+
 ### _Usage:_
 PARSE:
 If you need to parse a color string or 24bit number, use the colorParsley() function:
+
 ```javascript
     let rgbaArray = colorParsley('aliceblue');
 ```
+ALPHA BLEND
+Intended for blending the foreground color into the background. Only the foreground has an alpha. There is no conversion to linear space, so blending takes place is the working colorspace, as is standard.
+
+```javascript
+                       // Send 0-255 arrays alphaBlend(FG, BG)
+    let alphaBlended = alphaBlend([0,0,0,0.6],colorParsley([255,255,255])),
+
+                       // Send 0-1.0 float arrays for displayP3toY, 5th element
+                      // is bool (false for floats): alphaBlend(FG, BG, false)
+    let alphaBlended = alphaBlend([0.7,1.0,1.0,0.33],colorParsley([0,0,0]),false);
+```
+
 CONVERT TO Ys
-Send rgba INT array [123,123,123,1.0] to sRGBtoY() — this is a slightly different luminance Y that the IEC oiecewise.
+Send rgba INT array `[123,123,123,1.0] ` to ` sRGBtoY() ` — this is a slightly different luminance Y that the IEC piecewise.
 
 ```javascript
     let Ys = sRGBtoY([123,123,123,1.0]);
@@ -74,6 +107,25 @@ First color _must_ be text, second color must be the background.
     
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
+Example using everything together, including alphaBlend:
+
+```javascript
+
+  let colorTEXT =  rgb(12,23,34,0.65);
+  let colorBG =  #e6e0dd;
+  
+  let Lc = APCAcontrast(sRGBtoY( alphaBlend(colorParsley(colorTEXT), colorParsley(colorBG)) ),
+                        sRGBtoY( colorParsley(colorBG) ));
+```
+#### SHORTCUT ALIAS
+The long complete line shown above is aliased into a function ` calcAPCA() `. Alpha for the text is automatically detected, and ignored if 1 or ''. The input type is also auto detected (string, king of string, number, array, object). By default returns a signed float -108.0 to 106.0 (approx)
+
+```javascript
+    let Lc = calcAPCA(colorTEXT,colorBG);
+```
+
+
+
 ### _String Theory_
 The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
 
@@ -97,26 +149,38 @@ The following are the available input types for colorParsley(), HSL is not imple
 
 No alpha parsing for _numbers_ in part as there are big and little endian issues that need to be resolved.
 
-### Parsing Removal
-The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant.
 
-In the src folder .js file, there is a ` /*/ ` type code toggle, see the comments just before the parsing fucntions. you can disable the entire set of parsing functions before minimizing if you like to go lean and clean.
 
-This changes the import you need to use to:
 
-```javascript
-             // import with parsing off/removed:
-    import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
-```
+### colorParsley() string Parsing Removed, now a dependency
+The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant...
+
+So, colorParsley() is removed from the APCA-W3 file, and is now its own package, listed as a dependency here.
+
+**colorParsley() is required for the shorthand ` calcAPCA() `**
+
+
+### Two Secret Parameters
+There are two extra parameters for calcAPCA(), and one extra for APCAcontrast.
+
+    calcAPCA( text, BG, places, isInt )
+    APCAcontrast ( txYs, bgYs, places )
+    alphaBlend( txt, BG, isInt )
+
+` places ` defaults to -1, but you can send it 0 and the Lc is returned as a rounded value, and instead of a minus sign for polarity, 'WoB' for white on black is returned.
+
+` isInt ` defaults to true, as we assume the RGB tuples are 0-255. If you are sending float such as for displayP3, then set ` isInt = false ``
+
+_NOTE: neither of these are "official" and may change, move, or vanish._
 
 -----
 ## EXTRAS
-Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the SAPC repo.](https://github.com/Myndex/SAPC-APCA)
+Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.0.98G 4g - W3 )
+### Current APCA Constants ( 0.1.1 G - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
- // 0.98G-4g-W3 constants (W3 license only):
+ // 0.1.1 - W3 constants (W3 license only):
     
   Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
   
@@ -126,7 +190,7 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
         
   Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
                  scaleWoB: 1.14,     loWoBoffset: 0.027, };	
-```    
+```
 
 ----- 
 ### [LIVE VERSION][APCAsite]

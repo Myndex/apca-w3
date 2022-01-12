@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.1.0 W3 • contrast function only
+/////           Beta 0.1.1 W3 • contrast function only
 /////           DIST: W3 • Revision date: Dec 21, 2021
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
@@ -26,8 +26,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-0.1.0.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-0.1.0.js
+// @output_file_name apca-w3-0.1.1.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-0.1.1.js
 // ==/ClosureCompiler==
 
 
@@ -54,7 +54,7 @@
 /////
 /////   *****  SAPC BLOCK  *****
 /////
-/////   For Evaluations, refer to this as: SAPC-8, v0.1.0 G-series constant 4g
+/////   For Evaluations, refer to this as: SAPC-8, v0.1.1 G-series constant 4g
 /////            SAPC • S-LUV Advanced Predictive Color
 /////
 /////   SIMPLE VERSION — Only the basic APCA contrast predictor.
@@ -84,9 +84,9 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   APCA 0.1.0  G 4g USAGE  ///////////////////////////////////////////
+//////////   APCA 0.1.1  G 4g USAGE  ///////////////////////////////////////////
 ///
-///  The API for "APCA 0.1.0" is trivially simple.
+///  The API for "APCA 0.1.1" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
 ///  and send the resulting text-Y and background-Y to the APCAcontrast function,
 ///  it returns a signed float with the numeric Lc contrast result.
@@ -120,7 +120,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN APCA  0.1.0  BLOCK         \//////////////////////////////////////
+/////  BEGIN APCA  0.1.1  BLOCK         \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 
@@ -138,7 +138,7 @@ function APCAcontrast (txtY,bgY,places = -1) {
     // return 'error'; // optional string return for error
   };
 
-//////////   APCA 0.1.0   G - 4g - W3 Constants   ///////////////////////
+//////////   APCA 0.1.1   G - 4g - W3 Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -227,9 +227,11 @@ function APCAcontrast (txtY,bgY,places = -1) {
 
 //////////  ƒ  sRGBtoY()  //////////////////////////////////////////////////
 //export 
-function sRGBtoY (rgba = [0,0,0,1.0]) { // send sRGB 8bpc (0xFFFFFF) or string
+function sRGBtoY (rgb = [0,0,0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
-/////   APCA 0.1.0   G - 4g - W3 Constants   ////////////////////////
+// NOTE: Currently expects 0-255
+
+/////   APCA 0.1.1   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
     
@@ -248,9 +250,9 @@ const sRco = 0.2126729,
 
   function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
 
-  return sRco * simpleExp(rgba[0]) +
-         sGco * simpleExp(rgba[1]) +
-         sBco * simpleExp(rgba[2]);
+  return sRco * simpleExp(rgb[0]) +
+         sGco * simpleExp(rgb[1]) +
+         sBco * simpleExp(rgb[2]);
          
 } // End sRGBtoY()
 
@@ -261,7 +263,9 @@ const sRco = 0.2126729,
 
 //////////  ƒ  displayP3toY()  /////////////////////////////////////////////
 //export 
-function displayP3toY (rgba = [0,0,0,1.0]) { // send rgba array
+function displayP3toY (rgb = [0,0,0]) { // send rgba array
+
+// NOTE: Currently Apple has the tuple as 0.0 to 1.0, NOT 255
 
 /////   APCA 0.1.1   G - 4g - W3 Constants   ////////////////////////
 
@@ -279,11 +283,11 @@ const sRco = 0.2289829594805780,
          // linearize r, g, or b then apply coefficients
         // and sum then return the resulting luminance
 
-  function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
+  function simpleExp (chan) { return Math.pow(chan, mainTRC); };
 
-  return sRco * simpleExp(rgba[0]) +
-         sGco * simpleExp(rgba[1]) +
-         sBco * simpleExp(rgba[2]);
+  return sRco * simpleExp(rgb[0]) +
+         sGco * simpleExp(rgb[1]) +
+         sBco * simpleExp(rgb[2]);
 
 } // End displayP3toY()
 
@@ -293,9 +297,11 @@ const sRco = 0.2289829594805780,
 
 //////////  ƒ  adobeRGBtoY()  /////////////////////////////////////////////
 //export 
-function adobeRGBtoY (rgba = [0,0,0,1.0]) { // send rgba array
+function adobeRGBtoY (rgb = [0,0,0]) { // send rgba array
 
-/////   APCA 0.1.0   G - 4g - W3 Constants   ////////////////////////
+// NOTE: Currently expects 0-255
+
+/////   APCA 0.1.1   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.35; // 2.35 exponent emulates actual monitor perception
                      // Pending evaluation...
@@ -313,13 +319,45 @@ const sRco = 0.2973550227113810,
 
   function simpleExp (chan) { return Math.pow(chan/255.0, mainTRC); };
 
-  return sRco * simpleExp(rgba[0]) +
-         sGco * simpleExp(rgba[1]) +
-         sBco * simpleExp(rgba[2]);
+  return sRco * simpleExp(rgb[0]) +
+         sGco * simpleExp(rgb[1]) +
+         sBco * simpleExp(rgb[2]);
 
 } // End displayP3toY()
 
 
+
+
+//////////  ƒ  alphaBlend()  /////////////////////////////////////////////
+//export 
+                      // send rgba array for top, rgb for bottom.
+                     // Only foreground has alpha of 0.0 to 1.0 
+                    // This blends using gamma encoded space (standard)
+                   // rounded 0-255 or set isInt false for float 0.0-1.0
+function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], isInt = true ) {
+	
+	rgbaFG[3] = Math.max(Math.min(rgbaFG[3], 1.0), 0.0); // clamp alpha
+	let compBlend = 1.0 - rgbaFG[3];
+	let rgbOut = [0,0,0]; // or just use rgbBG to retain other elements?
+	
+	for (i=0;i<3;i++) {
+		rgbOut[i] = rgbBG[i] * compBlend + rgbaFG[i] * rgbaFG[3];
+		if (isInt) rgbOut[i] = Math.min(Math.round(rgbOut[i]),255);
+	};
+  return rgbOut;
+} // End alphaBlend()
+
+
+function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
+
+	let bgClr = colorParsley(bgColor);
+	let txClr = colorParsley(textColor);
+	let hasAlpha = (txClr[3] != '' || txClr[3] < 1) ? true : false;
+
+	if (hasAlpha) { txClr = alphaBlend( txClr, bgClr, isInt); };
+	
+	return APCAcontrast( sRGBtoY(txClr), sRGBtoY(bgClr), places)
+}
 
 ///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
 //// As of APCA 0.1.0 colorParsley() is a separate package  ///////////////////
@@ -481,21 +519,28 @@ module.exports = {
    APCAcontrast,
    sRGBtoY,
    displayP3toY,
-   colorParsley
+   colorParsley,
+   adobeRGBtoY,
+   alphaBlend,
+   calcAPCA   
 }
-
 
 /*////// PARSESTRING TOGGLE /////
 
+
+//* // MOD.EXP COMMENT SWITCH LOCAL TESTING /////
 module.exports = {
-   APCAcontrast,
-   sRGBtoY,
-   displayP3toY
-}
+	   APCAcontrast,
+	   sRGBtoY,
+	   displayP3toY,
+	   adobeRGBtoY,
+	   alphaBlend,
+	   calcAPCA
+};
 // */  ///// END PARSESTRING COMMENT SWITCH /////
 
 
 
 ////\                                 //////////////////////////////////////////
-/////\  END APCA 0.1.0  G-4g  BLOCK  //////////////////////////////////////////
+/////\  END APCA 0.1.1  G-4g  BLOCK  //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
