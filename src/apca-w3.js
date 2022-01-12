@@ -124,6 +124,7 @@
 ////                                     \////////////////////////////////////
 
 
+
 //////////  ƒ  APCAcontrast()  /////////////////////////////////////////////
 //export 
 function APCAcontrast (txtY,bgY,places = -1) {
@@ -348,8 +349,13 @@ function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], isInt = true ) {
 } // End alphaBlend()
 
 
-function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
 
+
+//////////  ƒ  calcAPCA()  /////////////////////////////////////////////
+//export 
+function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
+        
+        // Note that this function required colorParsley !!
 	let bgClr = colorParsley(bgColor);
 	let txClr = colorParsley(textColor);
 	let hasAlpha = (txClr[3] != '' || txClr[3] < 1) ? true : false;
@@ -357,7 +363,12 @@ function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
 	if (hasAlpha) { txClr = alphaBlend( txClr, bgClr, isInt); };
 	
 	return APCAcontrast( sRGBtoY(txClr), sRGBtoY(bgClr), places)
-}
+} // End calcAPCA()
+
+
+
+
+
 
 ///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
 //// As of APCA 0.1.0 colorParsley() is a separate package  ///////////////////
@@ -529,6 +540,7 @@ module.exports = {
 
 
 //* // MOD.EXP COMMENT SWITCH LOCAL TESTING /////
+
 module.exports = {
 	   APCAcontrast,
 	   sRGBtoY,
@@ -537,6 +549,9 @@ module.exports = {
 	   alphaBlend,
 	   calcAPCA
 };
+
+// import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley.min.js';
+
 // */  ///// END PARSESTRING COMMENT SWITCH /////
 
 
