@@ -1,9 +1,9 @@
 import { APCAcontrast, sRGBtoY } from "apca-w3";
 import { colorParsley } from "colorparsley";
 
-const shouldUseDarkText = (color) => {
+const shouldUseDarkText = (color, darkText = "black", lightText = "white") => {
     const testColor = colorParsley(color)
-    return Math.abs(APCAcontrast(sRGBtoY(colorParsley("black")), sRGBtoY(testColor))) >= Math.abs(APCAcontrast(sRGBtoY(colorParsley("white")), sRGBtoY(testColor)))
+    return Math.abs(APCAcontrast(sRGBtoY(colorParsley(darkText)), sRGBtoY(testColor))) >= Math.abs(APCAcontrast(sRGBtoY(colorParsley(lightText)), sRGBtoY(testColor)))
 }
 
 export { shouldUseDarkText }
