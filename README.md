@@ -33,7 +33,14 @@
 ## apca-w3
 The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
 
-### Advanced Perceptual Contrast Algorithm
+## <s>Advanced</s> ... Accessible Perceptual Contrast Algorithm
+The "Advanced" was originally part of an internal code name "SAPC" that eventually becasme "APCA"... and the word "advanced" moved along with that...  realized that first "A" should - almost has to — be "Accessibility." And it's shockingly obvious now, LOL.
+
+Thus, from here on, APCA stands for:
+
+### _Accessible_ <br> Perceptual <br> Contrast <br> Algorithm
+
+-----
 
 ### Current Version: **0.1.1** G (w3) _beta_
 
