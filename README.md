@@ -29,11 +29,15 @@
   </a> &nbsp;&nbsp;    
 </p>
 
-# APCA for W3 & WCAG\_3
-## apca-w3
+# APCA™ for W3C & WCAG\_3
+## npm i apca-w3
 The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
 
-## <s>Advanced</s> ... Accessible Perceptual Contrast Algorithm
+### Questions/Comments?
+#### For comments and discussions, please see the main SAPC-APCA repo, [discussion area.]( https://github.com/Myndex/SAPC-APCA/discussions)
+
+-----
+## <s>Advanced</s> ... _Accessible_ Perceptual Contrast Algorithm
 The "Advanced" was originally part of an internal code name "SAPC" that eventually becasme "APCA"... and the word "advanced" moved along with that...  realized that first "A" should - almost has to — be "Accessibility." And it's shockingly obvious now, LOL.
 
 Thus, from here on, APCA stands for:
