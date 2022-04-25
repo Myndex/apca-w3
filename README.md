@@ -44,14 +44,13 @@ Thus, from here on, APCA stands for:
 
 <img width='250' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='240' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='220' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
 
------
-## NEW! _Draft Accessibility Statement for Beta Sites_
-Beta testers may wish to include the following statement in their sites boilerplate:
-### This website is beta testing the APCA guidelines for determining text and non-text contrast. It is well known that WCAG 2 contrast maths are not relevant toward human perception, and automated testing using WCAG 2 math may incorrectly indicate errors in some color pairs. The APCA guidelines are a substantial improvement over WCAG 2 contrast criterions, and therefore compliant with the ADA and also 508 rules under the alternative methods section. Any automated testing done to determine conformance of this site needs to be conducted using a perceptually accurate method such as APCA.
+### Current Version: **0.1.2** G (w3) _beta_
 
------
+#### 0.1.2 • April 23, 2022
+**NEW!** `fontLookupAPCA(Lc)` Live font lookup table — sent it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900).
 
-### Current Version: **0.1.1** G (w3) _beta_
+**NEW!** `reverseAPCA(Lc,Y,use,returnAs)` 
+New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
 
 #### CHANGE for 0.1.1:
 **NEW!! Alpha channels! AdobeRGB!!**
@@ -64,13 +63,20 @@ colorParsley() is now in its own package and must be imported separately.
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
 
+-----
+## _Accessibility Statement for Beta Sites_
+Beta testers may wish to include the following statement in their sites boilerplate:
+### This website is beta testing the APCA guidelines for determining text and non-text contrast. It is well known that WCAG 2 contrast maths are not accurate regarding human perception, and automated testing using WCAG 2 math may incorrectly indicate errors in some color pairs on this site. The APCA guidelines are a substantial improvement in accessibility over WCAG 2 contrast criterions, and therefore compliant with the ADA, and also 508 rules under the alternative methods section. Any automated or manual testing done to determine conformance of this site needs to be conducted using a perceptually accurate method such as APCA.
+
+-----
 ## Font Lookup Table
-Current as of January 11, 2022
+Current as of January 27, 2022
 
-<img src="./images/Jan2022LOOKUPTABLE.jpg" alt="January 11, 2022 Font Lookup Table">
+<img src="./images/Jan27_2022LUT_byFont.jpg" alt="January 27, 2022 Font Lookup Table">
 
-<img src="./images/Jan2022LOOKUPTABLELEGEND.jpg" alt="January 11, 2022 Font Lookup Table">
+<img src="./images/Jan27_2022LUT_legend.jpg" alt="January 27, 2022 Font Table Legend">
 
+<img src="./images/Jan27_2022LUT_byLc.jpg" alt="January 27, 2022 Font Lookup sorted by Lc">
 
 
 ------
@@ -84,7 +90,8 @@ Current as of January 11, 2022
 ### _Import_
 ```javascript
 <script type="module">
- import { APCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA } from './apca-w3';
+ import { APCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA
+ } from './apca-w3';
  import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley';  // optional string parsing
 </script>
 ```
@@ -140,6 +147,29 @@ The long complete line shown above is aliased into a function ` calcAPCA() `. Al
     let Lc = calcAPCA(colorTEXT,colorBG);
 ```
 
+### NEW! Font Size Array
+New in this version is an interpolated font size array. Send `fontLookupAPCA(contrast)` a contrast value, and it returns an array, with the contrast (Lc) as the zeroth element, then 9 font sizes in px corresponding to weights 100 thru 900:
+
+    ['LcValue',100,200,300,400,500,600,700,800,900]
+
+Example:
+
+	  fontArray = fontLookupAPCA(-68.541);
+
+    console.log(fontArray) // -68.541,67,40,28,20.5,18.5,16.5,15,416,418
+
+Thus the 400 weight font is indicating 20.5px
+
+### NEW! Reverse APCA 
+New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
+
+#### NOTES:
+1) Currently only returns a greyscale color
+2) If a color can not fit the contrast, or other error, returns false.
+    - A small overrun/underrun of a few percent is permitted.
+3) Can return a hex string (default) or an array of RGBA values, with the fifth element a string indicating if the color is for text or bg.
+
+    reverseAPCA (Lc, knownY, knownType = 'bg', returnAs = 'hex')
 
 
 ### _String Theory_

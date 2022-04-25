@@ -1,6 +1,13 @@
 # APCA W3 JS Library Documentation
 
-Current Version: **0.1.1**
+Current Version: **0.1.2**
+
+#### 0.1.2 • April 23, 2022
+**NEW!** `fontLookupAPCA(Lc)` Live font lookup table — sent it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900).
+
+**NEW!** `reverseAPCA(Lc,Y,use,returnAs)` 
+New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
+
 
 #### 0.1.1 • Jan 11, 2022
 **NEW!** `AlphaBlending()` available! Also added `adobeRGBtoY()`, and a single shortcut function ` calcAPCA() `      
@@ -17,18 +24,22 @@ This is a set of JS functions/objects to determine a contrast value for a color 
 
 These are based on research iteration SAPC-8, developed through a lengthy series of experiments and investigations. They all have a soft black clamp for the darker color, and a basic set of constants for the power curve exponents to predict an estimated perceptual contrast under common use case environments. These are active beta and are receiving updates and changes regularly.
 
-
+## _Accessibility Statement for Beta Sites_
+Beta testers may wish to include the following statement in their sites boilerplate:
+### This website is beta testing the APCA guidelines for determining text and non-text contrast. It is well known that WCAG 2 contrast maths are not accurate regarding human perception, and automated testing using WCAG 2 math may incorrectly indicate errors in some color pairs on this site. The APCA guidelines are a substantial improvement in accessibility over WCAG 2 contrast criterions, and therefore compliant with the ADA, and also 508 rules under the alternative methods section. Any automated or manual testing done to determine conformance of this site needs to be conducted using a perceptually accurate method such as APCA.
 
 ## Font Lookup Table
-Current as of January 11, 2022
+Current as of January 27, 2022
 
-<img src="./images/Jan2022LOOKUPTABLE.jpg" alt="January 11, 2022 Font Lookup Table">
+<img src="./images/Jan27_2022LUT_byFont.jpg" alt="January 27, 2022 Font Lookup Table">
 
-<img src="./images/Jan2022LOOKUPTABLELEGEND.jpg" alt="January 11, 2022 Font Lookup Table">
+<img src="./images/Jan27_2022LUT_legend.jpg" alt="January 27, 2022 Font Table Legend">
+
+<img src="./images/Jan27_2022LUT_byLc.jpg" alt="January 27, 2022 Font Lookup sorted by Lc">
 
 -----
 
-## apca-w3-0.1.1.min.js — SIMPLE QUICK START
+## apca-w3.min.js — SIMPLE QUICK START
 This APCA version is the version licensed to the W3/AGWG for use with web content accessibility standards, WCAG 3.
 
 If you want to dive in fast, or you want the bare basics, this is the file for you. This only comes with the most basic color input parsing, and does not containt the automated lookup tables or advanced CIE processing. It is the base APCA algorithim only, with no bells or whistles. Send it two RGB numeric colors and it returns a numeric L<sup>c</sup> contrast value.
@@ -49,13 +60,13 @@ If you want to dive in fast, or you want the bare basics, this is the file for y
 ```
 
 ### _Usage:_
-PARSE:
+**PARSE:**
 If you need to parse a color string or 24bit number, use the colorParsley() function:
 
 ```javascript
     let rgbaArray = colorParsley('aliceblue');
 ```
-ALPHA BLEND
+**ALPHA BLEND**
 Intended for blending the foreground color into the background. Only the foreground has an alpha. There is no conversion to linear space, so blending takes place is the working colorspace, as is standard.
 
 ```javascript
@@ -67,13 +78,13 @@ Intended for blending the foreground color into the background. Only the foregro
     let alphaBlended = alphaBlend([0.7,1.0,1.0,0.33],colorParsley([0,0,0]),false);
 ```
 
-CONVERT TO Ys
+**CONVERT TO Ys**
 Send rgba INT array `[123,123,123,1.0] ` to ` sRGBtoY() ` — this is a slightly different luminance Y that the IEC piecewise.
 
 ```javascript
     let Ys = sRGBtoY([123,123,123,1.0]);
 ```
-FIND Lc CONTRAST
+**FIND Lc CONTRAST**
 First color _must_ be text, second color must be the background.
 
 ```javascript
@@ -82,7 +93,7 @@ First color _must_ be text, second color must be the background.
     
     let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
 ```
-Example using everything together, including alphaBlend:
+**Example using everything together, including alphaBlend:**
 
 ```javascript
 
@@ -99,7 +110,30 @@ The long complete line shown above is aliased into a function ` calcAPCA() `. Al
     let Lc = calcAPCA(colorTEXT,colorBG);
 ```
 
+### NEW! Live Font Array Lookup
+New in this version is an interpolated font size array. Send `fontLookupAPCA(contrast)` a contrast value, and it returns an array, with the contrast (Lc) as the zeroth element, then 9 font sizes in px corresponding to weights 100 thru 900:
 
+    ['LcValue',100,200,300,400,500,600,700,800,900]
+
+Example:
+
+	  fontArray = fontLookupAPCA(-68.541);
+
+    console.log(fontArray) // -68.541,67,40,28,20.5,18.5,16.5,15,416,418
+
+Thus the 400 weight font is indicating 20.5px
+
+
+### NEW! Reverse APCA 
+New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
+
+#### NOTES:
+1) Currently only returns a greyscale color
+2) If a color can not fit the contrast, or other error, returns false.
+    - A small overrun/underrun of a few percent is permitted.
+3) Can return a hex string (default) or an array of RGBA values, with the fifth element a string indicating if the color is for text or bg.
+
+    reverseAPCA (Lc, knownY, knownType = 'bg', returnAs = 'hex')
 
 ### _String Theory_
 The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
@@ -126,7 +160,6 @@ No alpha parsing for _numbers_ in part as there are big and little endian issues
 
 
 
-
 ### colorParsley() string Parsing Removed, now a dependency
 The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant...
 
@@ -139,7 +172,7 @@ So, colorParsley() is removed from the APCA-W3 file, and is now its own package,
 There are two extra parameters for calcAPCA(), and one extra for APCAcontrast.
 
     calcAPCA( text, BG, places, isInt )
-    APCAcontrast ( txYs, bgYs, places )
+    APCAcontrast( txYs, bgYs, places )
     alphaBlend( txt, BG, isInt )
 
 ` places ` defaults to -1, but you can send it 0 and the Lc is returned as a rounded value, and instead of a minus sign for polarity, 'WoB' for white on black is returned.
@@ -152,10 +185,10 @@ _NOTE: neither of these are "official" and may change, move, or vanish._
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.1.1 G - W3 )
+### Current APCA Constants ( 0.1.2 G - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
- // 0.1.1 - W3 constants (W3 license only):
+ // 0.1.2 - W3 constants (W3 license only):
     
   Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
   
@@ -164,7 +197,18 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
   Clamps =     { blkThrs: 0.022,     blkClmp: 1.414,     loClip: 0.1,     deltaYmin: 0.0005, };
         
   Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
-                 scaleWoB: 1.14,     loWoBoffset: 0.027, };	
+                 scaleWoB: 1.14,     loWoBoffset: 0.027, };
+                 
+///// MAGIC NUMBERS for UNCLAMP, used only with reverseAPCA() /////
+////  for use with blkThrs: 0.022 & blkClmp: 1.414 /////
+
+  const mFactor = 1.94685544331710;
+  const mFactInv = 1/mFactor;
+  const mOffsetIn = 0.03873938165714010;
+  const mExpAdj = 0.2833433964208690;
+  const mExp = mExpAdj / blkClmp;
+  const mOffsetOut = 0.3128657958707580;
+
 ```
 
 -----

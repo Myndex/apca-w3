@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.1.1 W3 • contrast function only
-/////           DIST: W3 • Revision date: Dec 21, 2021
+/////           Beta 0.1.2 W3 • contrast function only
+/////           DIST: W3 • Revision date: Apr 23, 2022
 /////    Function to parse color values and determine Lc contrast
-/////    Copyright © 2019-2021 by Andrew Somers. All Rights Reserved.
+/////    Copyright © 2019-2022 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
 /////    CONTACT: Please use the ISSUES or DISCUSSIONS tab at:
 /////    https://github.com/Myndex/SAPC-APCA/
@@ -12,13 +12,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 /////
 /////    IMPORTS:
-/////    import { APCAcontrast, sRGBtoY, displayP3toY } from 'apca-w3';
+/////    import { APCAcontrast, sRGBtoY, displayP3toY,
+/////             calcAPCA, fontLookupAPCA } from 'apca-w3';
 /////    import { colorParsley } from 'colorparsley';
 /////
 /////    FORWARD CONTRAST USAGE:
 /////    Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
-/////
 /////    Where the colors are sent as an rgba array [0,0,0,255]
+/////
+/////    Retrieving an array of font sizes for the contrast:
+/////    fontArray = fontLookupAPCA(Lc);
+/////
 /////
 /////    Live Demonstrator at https://www.myndex.com/APCA/
 // */
@@ -26,8 +30,8 @@
 
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3-0.1.1.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3-0.1.1.js
+// @output_file_name apca-w3.min.js
+// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3.js
 // ==/ClosureCompiler==
 
 
@@ -223,6 +227,79 @@ function APCAcontrast (txtY,bgY,places = -1) {
 
 
 
+//////////  ƒ  findBg()  //////////////////////////////////////////////////
+//export 
+function reverseAPCA (contrast = 0,knownY = 1.0,knownType = 'bg',returnAs = 'hex') {
+    
+  if (Math.abs(contrast) < 5) { return false }; // abs contrast must be > 5
+  
+  let unknownY = knownY;
+  
+  const mainTRCencode = 1/2.4,
+        normBG = 0.56, 
+        normTXT = 0.57,
+        revTXT = 0.62,
+        revBG = 0.65;  // G-4g constants for use with 2.4 exponent
+
+  const blkThrs = 0.022,
+        blkClmp = 1.414, 
+        scale = 1.14,
+        offset = contrast > 0 ? 0.027 : -0.027;
+
+///// MAGIC NUMBERS for UNCLAMP, for use with 0.022 & 1.414 /////
+  const mFactor = 1.94685544331710;
+  const mFactInv = 1/mFactor;
+  const mOffsetIn = 0.03873938165714010;
+  const mExpAdj = 0.2833433964208690;
+  const mExp = mExpAdj / blkClmp;
+  const mOffsetOut = 0.3128657958707580;
+
+    contrast = ( parseFloat(contrast) * 0.01 + offset ) / scale;
+
+              // Soft clamps Y if it is near black.
+    knownY = (knownY > blkThrs) ? knownY :
+                                  knownY + Math.pow(blkThrs - knownY, blkClmp);
+                                  
+       // set the known and unknown exponents
+    if (knownType == 'bg' || knownType == 'background') {
+        knownExp = contrast > 0 ? normBG : revBG;
+        unknownExp = contrast > 0 ? normTXT : revTXT;
+        unknownY = Math.pow( Math.pow(knownY,knownExp) - contrast, 1/unknownExp );
+        if (isNaN(unknownY)) return false;
+    } else if (knownType == 'txt' || knownType == 'text') {
+        knownExp = contrast > 0 ? normTXT : revTXT;
+        unknownExp = contrast > 0 ? normBG : revBG;
+        unknownY = Math.pow(contrast + Math.pow(knownY,knownExp), 1/unknownExp );
+        if (isNaN(unknownY)) return false;
+    } else { return false } // return false on error
+
+    //return contrast +'----'+unknownY;
+
+    if (unknownY > 1.06 || unknownY < 0) { return false } // return false on overflow
+    // if (unknownY < 0) { return false } // return false on underflow
+    //unknownY = Math.max(unknownY,0.0);
+    
+                //  unclamp
+    unknownY = (unknownY > blkThrs) ? unknownY : 
+    (Math.pow(((unknownY + mOffsetIn) * mFactor), mExp) * mFactInv) - mOffsetOut;
+    
+//    unknownY - 0.22 * Math.pow(unknownY*0.5, 1/blkClmp);
+
+    unknownY = Math.max(Math.min(unknownY,1.0),0.0);
+
+  if (returnAs === 'hex') {
+    let hexB = ( Math.round(Math.pow(unknownY,mainTRCencode) * 255)
+                ).toString(16).padStart(2,'0');
+                
+    return  '#' + hexB + hexB + hexB;
+  } else if (returnAs === 'color') {
+    let colorB = Math.round(Math.pow(unknownY,mainTRCencode) * 255);
+    let retUse = (knownType == 'bg') ? 'txtColor' : 'bgColor'
+    return  [colorB,colorB,colorB,1,retUse];
+  } else if (returnAs === 'Y' || returnAs === 'y') {
+    return  Math.max(0.0,unknownY);
+  } else { return false } // return knownY on error
+}
 
 
 
@@ -350,15 +427,14 @@ function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], isInt = true ) {
 
 
 
-
 //////////  ƒ  calcAPCA()  /////////////////////////////////////////////
 //export 
 function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
         
-        // Note that this function required colorParsley !!
+        // Note that this function requires colorParsley !!
 	let bgClr = colorParsley(bgColor);
 	let txClr = colorParsley(textColor);
-	let hasAlpha = (txClr[3] != '' || txClr[3] < 1) ? true : false;
+	let hasAlpha = (txClr[3] == '' || txClr[3] == 1) ? false : true ;
 
 	if (hasAlpha) { txClr = alphaBlend( txClr, bgClr, isInt); };
 	
@@ -368,178 +444,156 @@ function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
 
 
 
-
-
-///// OPTIONAL STRING PARSING UTILITY //////////////////////////////////////////
-//// As of APCA 0.1.0 colorParsley() is a separate package  ///////////////////
-
-/* // PARSESTRING COMMENT SWITCH ////////////////////////////////////////////
-//  (add/remove first slash in the above line to toggle before compile) ////
-
-
-/////  ƒ  colorParsley()  ///////////////////////////////////////////////////
-//export
-function colorParsley (colorIn) {
-
-    if (typeof colorIn === 'string') {
-        return parseString(colorIn);
-    } else if (typeof colorIn === 'number') {
-        return [(colorIn & 0xFF0000) >> 16,
-                (colorIn & 0x00FF00) >> 8,
-                (colorIn & 0x0000FF), 1.0];
-    } else if (typeof colorIn === 'object') {
-       if (Array.isArray(colorIn)) {
-          return colorIn;
-       } else {
-          return [colorIn.r,
-                  colorIn.g,
-                  colorIn.b,
-                  colorIn.a]; // warning: make sure obj has r: g: b: a:
-       }
-    };
-     return 0.0  // return 0 for error
-}
-
-
-
-
-
-
-/////  ƒ  parseString()  ///////////////////////////////////////////////////
-
-function parseString (colorString = '#abcdef') {
-
-                  // strip spaces, #, & common junk and make a clean string
-    colorString = colorString.replace(/[\s `~!@#$%^&*<>?{}:;"'+=_]/g,'');
-    
-    colorString = colorString.toLowerCase();   // set lowercase
-
-///// CSS4 NAMED COLORS /////////////
-
-      // See if name is matched and overwrite the input
-  let namedColors = { aliceblue:'f0f8ff',antiquewhite:'faebd7',aqua:'00ffff',aquamarine:'7fffd4',azure:'f0ffff',beige:'f5f5dc',bisque:'ffe4c4',black:'000000',blanchedalmond:'ffebcd',blue:'0000ff',blueviolet:'8a2be2',brown:'a52a2a',burlywood:'deb887',cadetblue:'5f9ea0',chartreuse:'7fff00',chocolate:'d2691e',coral:'ff7f50',cornflowerblue:'6495ed',cornsilk:'fff8dc',crimson:'dc143c',cyan:'00ffff',darkblue:'00008b',darkcyan:'008b8b',darkgoldenrod:'b8860b',darkgray:'a9a9a9',darkgreen:'006400',darkgrey:'a9a9a9',darkkhaki:'bdb76b',darkmagenta:'8b008b',darkolivegreen:'556b2f',darkorange:'ff8c00',darkorchid:'9932cc',darkred:'8b0000',darksalmon:'e9967a',darkseagreen:'8fbc8f',darkslateblue:'483d8b',darkslategray:'2f4f4f',darkslategrey:'2f4f4f',darkturquoise:'00ced1',darkviolet:'9400d3',deeppink:'ff1493',deepskyblue:'00bfff',dimgray:'696969',dimgrey:'696969',dodgerblue:'1e90ff',firebrick:'b22222',floralwhite:'fffaf0',forestgreen:'228b22',fuchsia:'ff00ff',gainsboro:'dcdcdc',ghostwhite:'f8f8ff',gold:'ffd700',goldenrod:'daa520',gray:'808080',green:'008000',greenyellow:'adff2f',grey:'808080',honeydew:'f0fff0',hotpink:'ff69b4',indianred:'cd5c5c',indigo:'4b0082',ivory:'fffff0',khaki:'f0e68c',lavender:'e6e6fa',lavenderblush:'fff0f5',lawngreen:'7cfc00',lemonchiffon:'fffacd',lightblue:'add8e6',lightcoral:'f08080',lightcyan:'e0ffff',lightgoldenrodyellow:'fafad2',lightgray:'d3d3d3',lightgreen:'90ee90',lightgrey:'d3d3d3',lightpink:'ffb6c1',lightsalmon:'ffa07a',lightseagreen:'20b2aa',lightskyblue:'87cefa',lightslategray:'778899',lightslategrey:'778899',lightsteelblue:'b0c4de',lightyellow:'ffffe0',lime:'00ff00',limegreen:'32cd32',linen:'faf0e6',magenta:'ff00ff',maroon:'800000',mediumaquamarine:'66cdaa',mediumblue:'0000cd',mediumorchid:'ba55d3',mediumpurple:'9370db',mediumseagreen:'3cb371',mediumslateblue:'7b68ee',mediumspringgreen:'00fa9a',mediumturquoise:'48d1cc',mediumvioletred:'c71585',midnightblue:'191970',mintcream:'f5fffa',mistyrose:'ffe4e1',moccasin:'ffe4b5',navajowhite:'ffdead',navy:'000080',oldlace:'fdf5e6',olive:'808000',olivedrab:'6b8e23',orange:'ffa500',orangered:'ff4500',orchid:'da70d6',palegoldenrod:'eee8aa',palegreen:'98fb98',paleturquoise:'afeeee',palevioletred:'db7093',papayawhip:'ffefd5',peachpuff:'ffdab9',peru:'cd853f',pink:'ffc0cb',plum:'dda0dd',powderblue:'b0e0e6',purple:'800080',rebeccapurple:'663399',red:'ff0000',rosybrown:'bc8f8f',royalblue:'4169e1',saddlebrown:'8b4513',salmon:'fa8072',sandybrown:'f4a460',seagreen:'2e8b57',seashell:'fff5ee',sienna:'a0522d',silver:'c0c0c0',skyblue:'87ceeb',slateblue:'6a5acd',slategray:'708090',slategrey:'708090',snow:'fffafa',springgreen:'00ff7f',steelblue:'4682b4',tan:'d2b48c',teal:'008080',thistle:'d8bfd8',tomato:'ff6347',turquoise:'40e0d0',violet:'ee82ee',wheat:'f5deb3',white:'ffffff',whitesmoke:'f5f5f5',yellow:'ffff00',yellowgreen:'9acd32',gray1:'111111',gray2:'222222',gray3:'333333',gray4:'444444',gray5:'555555',gray6:'666666',gray7:'777777',gray8:'888888',gray9:'999999',graya:'aaaaaa',grayb:'bbbbbb',grayc:'cccccc',grayd:'dddddd',graye:'eeeeee',grey1:'111111',grey2:'222222',grey3:'333333',grey4:'444444',grey5:'555555',grey6:'666666',grey7:'777777',grey8:'888888',grey9:'999999',greya:'aaaaaa',greyb:'bbbbbb',greyc:'cccccc',greyd:'dddddd',greye:'eeeeee'};
-
-    for (let key in namedColors) {
-        if (colorString == key) {
-            colorString = namedColors[key];
-            break;
-        }
-    }
-
-    // end of named colors section
-
-    // ARRAY OF COLOR DEFINITION OBJECTS
-    // objects with alpha are separated, and immediately
-    // follow the non-alpha version.
-    
-  let colorDefs = [
-    {
-      rex: /^rgb\((\d{1,3}),(\d{1,3}),(\d{1,3})\)$/i,
-      parseStr: function (slices){ // rgb(0,0,0)
-        return [
-          parseInt(slices[1]),
-          parseInt(slices[2]),
-          parseInt(slices[3])
-        ];
-      }
-    },
-    {
-      rex: /^rgba\((\d{1,3}),(\d{1,3}),(\d{1,3})\),([01]?[0.1]\d{0,42})\)$/i,
-      parseStr: function (slices){ // rgba(123,123,123,1.0)
-        return [
-          parseInt(slices[1]),
-          parseInt(slices[2]),
-          parseInt(slices[3]),
-          parseInt(slices[4])
-        ];
-      }
-    },
-    {
-      rex: /^([0-9|a-f])([0-9|a-f])([0-9|a-f])$/i,
-      parseStr: function (slices){ // fff
-        return [
-          parseInt(slices[1]+slices[1],16),
-          parseInt(slices[2]+slices[2],16),
-          parseInt(slices[3]+slices[3],16)
-        ];
-      }
-    },
-    {
-      rex: /^([0-9|a-f])([0-9|a-f])([0-9|a-f])([0-9|a-f])$/i,
-      parseStr: function (slices){ // fffa
-        return [
-          parseInt(slices[1]+slices[1],16),
-          parseInt(slices[2]+slices[2],16),
-          parseInt(slices[3]+slices[3],16),
-          parseInt(slices[4]+slices[4],16)
-        ];
-      }
-    },
-    {
-      rex: /^([0-9|a-f]{2})([0-9|a-f]{2})([0-9|a-f]{2})$/i,
-      parseStr: function (slices){ // ffffff
-        return [
-          parseInt(slices[1],16),
-          parseInt(slices[2],16),
-          parseInt(slices[3],16)
-        ];
-      }
-    },
-    {
-      rex: /^([0-9|a-f]{2})([0-9|a-f]{2})([0-9|a-f]{2})([0-9|a-f]{2})$/i,
-      parseStr: function (slices){ // ffffffaa
-        return [
-          parseInt(slices[1],16),
-          parseInt(slices[2],16),
-          parseInt(slices[3],16),
-          parseInt(slices[4],16)
-        ];
-      }
-    }
-  ];
-
-  // REGEX SEARCH CASCADE TO DETERMINE INPUT TYPE
+//////////  ƒ  fontLookupAPCA()  ///////////////////////////////////////
+//export 
+function fontLookupAPCA (contrast) {
 
   
-  let colorDefLen = colorDefs.length;
-  let rexInput, slicesInput;
-  let r,g,b;
-  let a = 1.0, i = 0;
+  // APCA CONTRAST FONT LOOKUP TABLES
+  // Copyright © 2022 by Myndex Research and Andrew Somers. All Rights Reserved
+  // Public Beta 0.1.5b (G) • APRIL 23 2022 (minor cleanup)
+  // For the following arrays, the Y axis is contrastArrayLen
+  // The two x axis are weightArrayLen and scoreArrayLen
+  // APRIL 23  2022
+  const contrastArrayAscend = ['lc',0,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,120,];
+  const contrastArrayLenAsc = contrastArrayAscend.length; // Y azis
 
-    // Loop stops once valid color is found
-  for (; i < colorDefLen; i++) {
+  const weightArray = [0,100,200,300,400,500,600,700,800,900];
+  const weightArrayLen = weightArray.length; // X axis
 
-    rexInput = colorDefs[i].rex;
-    slicesInput = rexInput.exec(colorString);
+  let returnArray = [contrast.toFixed(3),0,0,0,0,0,0,0,0,0,];
+  const returnArrayLen = returnArray.length; // X axis
 
-    if (slicesInput) {
-      let channel = colorDefs[i].parseStr(slicesInput);
-      //  Shishado™ cleansing masks for that refreshing, clean feeling.
-      r = channel[0] & 0xFF;
-      g = channel[1] & 0xFF;
-      b = channel[2] & 0xFF;
-      a = (isNaN(channel[3])) ? 1.0 : Math.min(Math.max(channel[3],0.0),1.0);
-      
-      return [r,g,b,a];
+
+  contrast = Math.abs(contrast);
+  const factor = 0.2; // 1/5
+  let index = (contrast * factor) | 0 ; // n|0 is bw floor
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+/////  CONTRAST * FONT WEIGHT & SIZE  //////////////////////////////////////
+
+// Font size interpolations. Here the chart was re-ordered to put
+// the main contrast levels each on one line, instead of font size per line.
+// First column is LC value, then each following column is font size by weight
+
+// G G G G G G  UPDATED JAN 31 2022 
+// ADJUSTED FOR G Interpolation 
+
+// Lc values under 70 should have Lc 15 ADDED if used for body text
+// All font sizes are in px and reference font is Barlow
+
+// 999: prohibited - too low contrast
+// 777: NON TEXT at this minimum weight stroke
+// 666 - this is for spot text, not fluent-Things like copyright or placeholder.
+// 5xx - minimum font at this weight for content, 5xx % 500 for font-size
+// 4xx - minimum font at this weight for any purpose], 4xx % 400 for font-size
+
+// MAIN FONT SIZE LOOKUP Jan 31 2022  Sorted by Lc Value
+
+//// ASCENDING SORTED  APRIL 23 2022 ////
+//// Lc 45 * 0.2 = 9 which is the index for the row for Lc 45
+
+  const fontMatrixAscend = [
+  ['Lc',100,200,300,400,500,600,700,800,900],
+  [0,999,999,999,999,999,999,999,999,999],
+  [10,999,999,999,999,999,999,777,777,777],
+  [15,999,999,777,777,777,777,120,120,120],
+  [20,999,777,777,777,120,120,110,88,66],
+  [25,999,777,777,120,102,87,72,57.5,43],
+  [30,999,777,120,96,68,58,48,38.5,29],
+  [35,777,120,93.5,66,46.5,40,33,26.5,20],
+  [40,777,96,68,48,34,29,24,20,18],
+  [45,120,72,51,36,28,24,20,18,418],
+  [50,96.5,58,41,29,25,20,18,17,418],
+  [55,86.5,52,37,26,22,19.5,17,16,418],
+  [60,80,48,34,24,21,18,16,416,418],
+  [65,71.5,43,30.5,21.5,19.5,17,15,416,418],
+  [70,65,39,27.5,19.5,18,16,14.5,416,418],
+  [75,60,36,24,18,17,15,14,416,418],
+  [80,56.5,34,23,17,16,14.5,414,416,418],
+  [85,53.5,32,22,16,15,14,414,416,418],
+  [90,50,30,21,15,14.5,414,414,416,418],
+  [95,48.5,29,20.5,14.5,14,414,414,416,418],
+  [100,46.5,28,18,14,414,414,414,416,418],
+  [105,445,427,417,413.5,413.5,413.5,413.5,416,418],
+  [120,445,427,417,413.5,413.5,413.5,413.5,416,418],
+  ];
+
+  // G G G G G G UPDATED JAN 31 2022 
+  // interpolation G  
+  // MAIN FONT SIZE DELTA PRECALC
+//// ASCENDING SORTED  APRIL 23 2022 ////
+//// ROWS BELOW ////
+
+  const fontDeltaAscend = [ 
+  ['Lc∆h',100,200,300,400,500,600,700,800,900,],
+  [0,0,0,0,0,0,0,0,0,0,],
+  [10,0,0,0,0,0,0,0,0,0,],
+  [15,0,0,0,0,0,0,10,32,54,],
+  [20,0,0,0,0,18,33,38,30.5,23,],
+  [25,0,0,0,24,34,29,24,19,14,],
+  [30,0,0,26.5,30,21.5,18,15,12,9,],
+  [35,0,24,25.5,18,12.5,11,9,6.5,2,],
+  [40,0,24,17,12,6,5,4,2,0,],
+  [45,23.5,14,10,7,3,4,2,1,0,],
+  [50,10,6,4,3,3,0.5,1,1,0,],
+  [55,6.5,4,3,2,1,1.5,1,0,0,],
+  [60,8.5,5,3.5,2.5,1.5,1,1,0,0,],
+  [65,6.5,4,3,2,1.5,1,0.5,0,0,],
+  [70,5,3,3.5,1.5,1,1,0.5,0,0,],
+  [75,3.5,2,1,1,1,0.5,0,0,0,],
+  [80,3,2,1,1,1,0.5,0,0,0,],
+  [85,3.5,2,1,1,0.5,0,0,0,0,],
+  [90,1.5,1,0.5,0.5,0,0,0,0,0,],
+  [95,2,1,2.5,0.5,0,0,0,0,0,],
+  [100,1.5,1,1,0.5,0.5,0.5,0.5,0,0,],
+  [105,0,0,0,0,0,0,0,0,0,],
+  [120,0,0,0,0,0,0,0,0,0,],
+  ];
+
+///////////////////////////////////////////////////////////////////////////
+/////////  Font and Score Interpolation  \////////////////////////////////
+
+  let tempFont = 777;
+  let scoreAdj = 0.1;
+  let w = 0;
+
+  // populate returnArray with interpolated values
+
+  // returnArray[w] = contrast;
+  scoreAdj = (contrast - fontMatrixAscend[index][w]) * factor;
+  w++;
+  
+  for (; w < weightArrayLen; w++) {
+
+    tempFont = fontMatrixAscend[index][w]; 
+
+    if (tempFont > 400) {
+        returnArray[w] = tempFont;
+    } else if (contrast < 41.0 ) {
+        returnArray[w] = 666;
+    } else {
+                // INTERPOLATION OF FONT SIZE
+               // sets level for 0.5 size increments of smaller fonts
+              // Note bitwise (n|0) instead of floor
+      (tempFont > 24) ?
+        returnArray[w] = 
+            Math.round(tempFont - (fontDeltaAscend[index][w] * scoreAdj)) :
+        returnArray[w] = 
+            tempFont - ((2.0 * fontDeltaAscend[index][w] * scoreAdj) | 0) * 0.5;
+                                                            // (n|0) is bw floor
     }
   }
-    return 0.0; // colorString //false; // return false due to error
+/////////\  End Interpolation   ////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+  return returnArray
 }
 
-module.exports = {
-   APCAcontrast,
-   sRGBtoY,
-   displayP3toY,
-   colorParsley,
-   adobeRGBtoY,
-   alphaBlend,
-   calcAPCA   
-}
 
-/*////// PARSESTRING TOGGLE /////
-
-
-//* // MOD.EXP COMMENT SWITCH LOCAL TESTING /////
+//* // MOD.EXP COMMENT SWITCH FOR LOCAL TESTING /////
 
 module.exports = {
 	   APCAcontrast,
@@ -547,13 +601,13 @@ module.exports = {
 	   displayP3toY,
 	   adobeRGBtoY,
 	   alphaBlend,
-	   calcAPCA
+	   calcAPCA,
+	   fontLookupAPCA
 };
 
 // import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley.min.js';
 
-// */  ///// END PARSESTRING COMMENT SWITCH /////
-
+// */  ///// END COMMENT SWITCH /////
 
 
 ////\                                 //////////////////////////////////////////

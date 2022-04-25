@@ -1,6 +1,6 @@
 {
   "name": "apca-w3",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3",
   "main": "./dist/apca-w3.min.js",
   "keywords": [
@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/Myndex/SAPC-APCA/issues"
   },
+  "forum": {
+    "url": "https://github.com/Myndex/SAPC-APCA/discussion"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Myndex/apca-w3.git"
@@ -29,7 +32,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "colorparsley": ">=0.1.1",
-    "npm": "^8.3.0"
+    "colorparsley": ">=0.1.1"
   }
 }

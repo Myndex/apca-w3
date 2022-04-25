@@ -40,7 +40,9 @@
 <code>adobeRGBtoY()</code> requires an Adobe98 RGB color array 0-255<br>
 <code>colorParsley()</code> parses string to an RGB color array 0-255<br>
 <code>alphaBlend()</code> blends FG color with alpha to BG, returns array<br>
-<code>calcAPCA(textString,bgString)</code> shortcut, takes strings, text allows alpha</p>
+<code>calcAPCA(textString,bgString)</code> shortcut, takes strings, text allows alpha<br>
+<code>fontLookupAPCA(contrast)</code>returns an array of font sizes in px for the contrast<br>
+returnArray reference: <code>['LcValue',100,200,300,400,500,600,700,800,900]</code></p>
 
 <div class="hScroll">
 <code>Lc = APCAcontrast(sRGBtoY( alphaBlend(colorParsley(color8),colorParsley(color2)) ), sRGBtoY(colorParsley(color2)));
@@ -104,7 +106,7 @@ let outputText = document.getElementById('test');
 
     outputText.innerHTML += '<p>This is a test with the standardized test values</p> '
 
-let color1 = '#888', color2 = '#fff', color3 = '#000', color4 = '#aaa',
+let color1 = '#888', color2 = '#fff', color3 = '#000', color4 = '#aaa', color4rev = '#a4a4a4',
     color5 = '#123', color6 = '#def', color7 = '#444', color8 = '#0006';
 
 let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
@@ -145,9 +147,83 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(c
                      + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
                      + '<br><br>Colors 8 & 2   sRGBA Lc ' + contrast9
                      + '<br><br>calcAPCA(color8,color2) ' + contrastA
+                     + '<br><br>Contrast 1 ' + fontLookupAPCA(contrast1)
+                     + '<br>Contrast 2 ' + fontLookupAPCA(contrast2)
+                     + '<br>Contrast 3 ' + fontLookupAPCA(contrast3)
+                     + '<br>Contrast 4 ' + fontLookupAPCA(contrast4)
+                     + '<br>Contrast 5 ' + fontLookupAPCA(contrast5)
+                     + '<br>Contrast 6 ' + fontLookupAPCA(contrast6)
+                     + '<br>Contrast 7 ' + fontLookupAPCA(contrast7)
+                     + '<br>Contrast 8 ' + fontLookupAPCA(contrast8)
+                     + '<br>Contrast 9 ' + fontLookupAPCA(contrast9)
+                     + '<br>Contrast A ' + fontLookupAPCA(contrastA)
+                     + '<br><br>Reverse 1bt ' + reverseAPCA(contrast1,sRGBtoY(colorParsley(color2)))
+                     + '<br>Reverse 2bt ' + reverseAPCA(contrast2,sRGBtoY(colorParsley(color1)))
+                     + '<br>Reverse 3bt ' + reverseAPCA(contrast3,sRGBtoY(colorParsley(color4)))
+                     + '<br>Reverse 4bt ' + reverseAPCA(contrast4,sRGBtoY(colorParsley(color3)))                     + '<br>Reverse 5bt ' + reverseAPCA(contrast5,sRGBtoY(colorParsley(color6)))
+                     + '<br>Reverse 6bt ' + reverseAPCA(contrast6,sRGBtoY(colorParsley(color5)))                     + '<br>Reverse 7bt ' + reverseAPCA(contrast7,sRGBtoY(colorParsley(color7)))
+                     + '<br>Reverse 8bt ' + reverseAPCA(contrast8,sRGBtoY(colorParsley(color5)))
+   + '<br><br>Reverse 1tb ' + reverseAPCA(contrast1,sRGBtoY(colorParsley(color1)),'txt')
+   + '<br>Reverse 2tb ' + reverseAPCA(contrast2,sRGBtoY(colorParsley(color2)),'txt')
+   + '<br>Reverse 3tb ' + reverseAPCA(contrast3,sRGBtoY(colorParsley(color3)),'txt')
+   + '<br>Reverse 4tb ' + reverseAPCA(contrast4,sRGBtoY(colorParsley(color4)),'txt')                     + '<br>Reverse 5tb ' + reverseAPCA(contrast5,sRGBtoY(colorParsley(color5)),'txt')
+   + '<br>Reverse 6tb ' + reverseAPCA(contrast6,sRGBtoY(colorParsley(color6)),'txt')                     + '<br>Reverse 7tb ' + reverseAPCA(contrast7,sRGBtoY(colorParsley(color5)),'txt')
+   + '<br>Reverse 8tb ' + reverseAPCA(contrast8,sRGBtoY(colorParsley(color7)),'txt')
+   + '<br><br><br>Reverse Series: ' + color4rev + ' as bg'
+   + '<br>Reverse -60 ' + reverseAPCA(-60,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -55 ' + reverseAPCA(-55,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -53.5 ' + reverseAPCA(-53.5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -52.5 ' + reverseAPCA(-52.5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -50 ' + reverseAPCA(-50,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -40 ' + reverseAPCA(-40,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -30 ' + reverseAPCA(-30,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -20 ' + reverseAPCA(-20,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -10 ' + reverseAPCA(-10,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse -5 ' + reverseAPCA(-5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 0 ' + reverseAPCA(0,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 5 ' + reverseAPCA(5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 10 ' + reverseAPCA(10,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 20 ' + reverseAPCA(20,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 30 ' + reverseAPCA(30,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 40 ' + reverseAPCA(40,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 50 ' + reverseAPCA(50,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 52.5 ' + reverseAPCA(52.5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 55 ' + reverseAPCA(55,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 57.5 ' + reverseAPCA(57.5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 58.5 ' + reverseAPCA(58.5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 60 ' + reverseAPCA(60,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 62.5 ' + reverseAPCA(62.5,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 65 ' + reverseAPCA(65,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br>Reverse 70 ' + reverseAPCA(70,sRGBtoY(colorParsley(color4rev)),'bg','color')
+   + '<br><br><br>Reverse Series: ' + color4rev + ' as txt'
+   + '<br>Reverse -60 ' + reverseAPCA(-60,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -55 ' + reverseAPCA(-55,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -53.5 ' + reverseAPCA(-53.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -52.5 ' + reverseAPCA(-52.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -50 ' + reverseAPCA(-50,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -40 ' + reverseAPCA(-40,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -30 ' + reverseAPCA(-30,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -20 ' + reverseAPCA(-20,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -10 ' + reverseAPCA(-10,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse -5 ' + reverseAPCA(-5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 0 ' + reverseAPCA(0,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 5 ' + reverseAPCA(5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 10 ' + reverseAPCA(10,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 20 ' + reverseAPCA(20,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 30 ' + reverseAPCA(30,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 40 ' + reverseAPCA(40,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 42.5 ' + reverseAPCA(52.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 45 ' + reverseAPCA(55,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 47.5 ' + reverseAPCA(57.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 48.5 ' + reverseAPCA(58.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 50 ' + reverseAPCA(60,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 52.5 ' + reverseAPCA(62.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 55 ' + reverseAPCA(65,sRGBtoY(colorParsley(color4rev)),'txt','color')
+   + '<br>Reverse 60 ' + reverseAPCA(70,sRGBtoY(colorParsley(color4rev)),'txt','color')
                      + '<br><br></pre>';
 
 /*/ /// Mid Toggle Do Not Delete
+
 
 
 outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
