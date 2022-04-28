@@ -42,17 +42,17 @@ and uses which are not specific to web-based content
 presented on self-illuminated displays or devices.
 
 _**NO ALTERATION; KEEP CURRENT**_     
-Any **apca-w3** files in this repositiory may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibnility guidelines, and such use must be without modification to the essential elements of the code or specific approved contstnats, except as required to port to a given language.
+Any **apca-w3** files in this repositiory may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibility guidelines, and such use must be without modification to the essential elements of the code or specific approved constants, except as required to port to a given language.
 
 - Deveopers incorporating this code into their applications, widgets, or other tools, have a duty to ensure that the most recent version of this code is used in their current or any future release. 
 
 - Breaking change exception:
-    - developers do not need to incorporate a future version of **apca-w3** that have breaking changes when their release is only a minor or patch version per sematic versioning.
+    - developers do not need to incorporate future versions of **apca-w3** that have breaking changes when their release is only a minor or patch version per semantic versioning.
     - developers with minor or patch revisions are still obligated to use the latest non-breaking branch of **apca-w3**.
     - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
 
 _**USE OF THE APCA LOGO AND TRADEMARK**_     
-Use of the APCA or "Powered by APCA" logos or trademearks are prohibited without written consent from Myndex™ Techniologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
+Use of the APCA or "Powered by APCA" logos or trademearks are prohibited without written consent from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
 - Developers wishing to use the APCA or "Powered by APCA" logos or trademearks must submit their application or tools for qualification to be granted a limited license to use the APCA or "Powered by APCA" logos or trademearks.
 - Formal details on the APCA and "Powered by APCA" qualification process are pending. In the interim, make a qualification request in the discussion tab of this repo.
 
@@ -97,7 +97,7 @@ All Files _in this Repository_ that do not fall under the W3 cooperative agreeme
 ## WITHDRAWN ASSETS
 ONLY files that are currently in this repository are available for use under these license terms.
 
-As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propogating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
+As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propagating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
 
 #### The current assets shall be in:
     /dist/    
