@@ -1,8 +1,9 @@
 {
   "name": "apca-w3",
-  "version": "0.1.2",
-  "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3",
-  "main": "./dist/apca-w3.min.js",
+  "version": "0.1.3",
+  "type": "module",
+  "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3 and other standards",
+  "main": "./src/apca-w3.js",
   "keywords": [
     "color",
     "colour",
@@ -32,6 +33,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "colorparsley": "^0.1.5"
+    "colorparsley": "^0.1.6"
   }
 }

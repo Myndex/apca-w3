@@ -93,10 +93,13 @@ Current as of January 27, 2022
 
 ### _Import_
 ```javascript
+
 <script type="module">
- import { APCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA
- } from './apca-w3';
- import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley';  // optional string parsing
+
+import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from './apca-w3.js';
+
+import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';  // optional string parsing
+
 </script>
 ```
 
@@ -230,7 +233,7 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 ### Current APCA Constants ( 0.1.1 G - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
- // 0.1.1 - W3 constants (W3 license only):
+ // 0.1.3 - W3 constants (W3 license only):
     
   Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
   
@@ -240,6 +243,18 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
         
   Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
                  scaleWoB: 1.14,     loWoBoffset: 0.027, };	
+                 
+                 
+///// MAGIC NUMBERS for UNCLAMP, used only with reverseAPCA() /////
+////  for use with blkThrs: 0.022 & blkClmp: 1.414 /////
+
+  const mFactor = 1.94685544331710;
+  const mFactInv = 1/mFactor;
+  const mOffsetIn = 0.03873938165714010;
+  const mExpAdj = 0.2833433964208690;
+  const mExp = mExpAdj / blkClmp;
+  const mOffsetOut = 0.3128657958707580;
+
 ```
 
 ----- 

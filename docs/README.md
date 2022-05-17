@@ -1,6 +1,11 @@
 # APCA W3 JS Library Documentation
 
-Current Version: **0.1.2**
+Current Version: **0.1.3**
+
+
+#### 0.1.3 • May 17, 2022
+Fixed the module imports for colorparsley and apca-w3 so they play well together.
+No longer providing a minified version in the dist folder. Now just the file in the src folder.
 
 #### 0.1.2 • April 23, 2022
 **NEW!** `fontLookupAPCA(Lc)` Live font lookup table — sent it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900).
@@ -39,7 +44,7 @@ Current as of January 27, 2022
 
 -----
 
-## apca-w3.min.js — SIMPLE QUICK START
+## apca-w3.js — SIMPLE QUICK START
 This APCA version is the version licensed to the W3/AGWG for use with web content accessibility standards, WCAG 3.
 
 If you want to dive in fast, or you want the bare basics, this is the file for you. This only comes with the most basic color input parsing, and does not containt the automated lookup tables or advanced CIE processing. It is the base APCA algorithim only, with no bells or whistles. Send it two RGB numeric colors and it returns a numeric L<sup>c</sup> contrast value.
@@ -54,8 +59,11 @@ If you want to dive in fast, or you want the bare basics, this is the file for y
 ### _Import_
 ```javascript
 <script type="module">
- import { APCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA } from './apca-w3';
- import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley';  // optional string parsing
+
+import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from './apca-w3.js';
+
+import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';  // optional string parsing
+
 </script>
 ```
 
@@ -185,10 +193,10 @@ _NOTE: neither of these are "official" and may change, move, or vanish._
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.1.2 G - W3 )
+### Current APCA Constants ( 0.1.3 G - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
- // 0.1.2 - W3 constants (W3 license only):
+ // 0.1.3 - W3 constants (W3 license only):
     
   Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
   

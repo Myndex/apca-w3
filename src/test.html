@@ -79,32 +79,19 @@ returnArray reference: <code>['LcValue',100,200,300,400,500,600,700,800,900]</co
 These exercise all the important constants.
 </body>
 
-<!-- For Local Testing (non server) using script includes -->
-<script src="./apca-w3.js" ></script>
-<script src="../node_modules/colorparsley/dist/colorparsley.min.js" ></script>
-<!-- end -->
 
 <script type="module">
-// for server-based testing using module import add slash to next line
 
-/* // MOD.EXP COMMENT SWITCH LOCAL TESTING /////
- import { APCAcontrast, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend } from './apca-w3.js';
- import { colorParsley } from '../node_modules/colorparsley/dist/colorparsley.min.js';
-// */  ///// END PARSESTRING COMMENT SWITCH /////
-</script>
-
-
-
-<script>
+import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from './apca-w3.js';
+import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';
 
 let outputText = document.getElementById('test');
 
     outputText.innerHTML = '<h3>TEST COLORS</h3>';
 
-
 //*  ////   TOGGLE SWITCH
 
-    outputText.innerHTML += '<p>This is a test with the standardized test values</p> '
+    outputText.innerHTML += '<p>This is a test with the standardized test values</p> ';
 
 let color1 = '#888', color2 = '#FFF', color3 = '#000', color4 = '#aaa', color4rev = '#a4a4a4',
     color5 = '#123', color6 = '#def', color7 = '#444', color8 = '#0006';
@@ -117,12 +104,15 @@ let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(
     contrast6 = APCAcontrast(sRGBtoY(colorParsley(color6)),sRGBtoY(colorParsley(color5))),
     contrast7 = APCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color7))),
     contrast8 = APCAcontrast(sRGBtoY(colorParsley(color7)),sRGBtoY(colorParsley(color5))),
-    contrast9 = APCAcontrast(sRGBtoY(alphaBlend(colorParsley(color8),colorParsley(color2))),
+    contrast9 = APCAcontrast(sRGBtoY(
+                             alphaBlend(colorParsley(color8),
+                             colorParsley(color2))),
                              sRGBtoY(colorParsley(color2))),
     contrastA = calcAPCA(color8,color2);
   
 let alpha1 = alphaBlend([221,238,255,0.5],colorParsley(color3)),
     alpha2 = alphaBlend([0.86667,9.333,1.0,0.25],colorParsley(color3),false);
+
 
 outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(color1)
                      + ' <br>color 2: ' + color2 + '	 parsed: ' + colorParsley(color2)
@@ -156,7 +146,7 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(c
                      + '<br>Contrast 7 ' + fontLookupAPCA(contrast7)
                      + '<br>Contrast 8 ' + fontLookupAPCA(contrast8)
                      + '<br>Contrast 9 ' + fontLookupAPCA(contrast9)
-                     + '<br>Contrast A ' + fontLookupAPCA(contrastA)
+                     + '<br>Contrast A ' + fontLookupAPCA(contrastA)  
                      + '<br><br>reverseAPCA() testing'
                      + '<br><br>Reverse 1bt ' + reverseAPCA(contrast1,sRGBtoY(colorParsley(color2)))
                      + '<br>Reverse 2bt ' + reverseAPCA(contrast2,sRGBtoY(colorParsley(color1)))
@@ -222,63 +212,7 @@ outputText.innerHTML +='<pre>color 1: ' + color1 + '	 parsed: ' + colorParsley(c
    + '<br>Reverse 55 	' + reverseAPCA(65,sRGBtoY(colorParsley(color4rev)),'txt','color')
    + '<br>Reverse 60 	' + reverseAPCA(70,sRGBtoY(colorParsley(color4rev)),'txt','color')
                      + '<br><br></pre>';
-
-/*/ /// Mid Toggle Do Not Delete
-
-
-
-outputText.innerHTML += '<p>Colors may be a hex string, a named color, an rgb(), or just a number</p> '
-let color1 = '#123', color2 = '#def', color3 = '#123' ; //'rgb(240,200,120)',
-let color4 = 0x808080,
-    color5 = [123,145,67,1.0], color6 = 'aliceblue'; //{r: 123,g: 145,b: 67,a: 1.0};
-
-let contrast1 = APCAcontrast(sRGBtoY(colorParsley(color1)),sRGBtoY(colorParsley(color2))),
-    contrast2 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color3))),
-    contrast3 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color4))),
-    contrast4 = APCAcontrast(sRGBtoY(colorParsley(color2)),sRGBtoY(colorParsley(color4))),
-    contrast5 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color2))),
-    contrast6 = APCAcontrast(sRGBtoY(colorParsley(color3)),sRGBtoY(colorParsley(color5))),
-    contrast7 = APCAcontrast(sRGBtoY(colorParsley(color6)),sRGBtoY(colorParsley(color3))),
-    contrast8 = APCAcontrast(sRGBtoY(colorParsley(color5)),sRGBtoY(colorParsley(color6)));
-
-let contrastP1 = APCAcontrast(displayP3toY(colorParsley(color1)),displayP3toY(colorParsley(color2))),
-    contrastP2 = APCAcontrast(displayP3toY(colorParsley(color2)),displayP3toY(colorParsley(color3))),
-    contrastP3 = APCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color4))),
-    contrastP4 = APCAcontrast(displayP3toY(colorParsley(color2)),displayP3toY(colorParsley(color4))),
-    contrastP5 = APCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color2))),
-    contrastP6 = APCAcontrast(displayP3toY(colorParsley(color3)),displayP3toY(colorParsley(color5))),
-    contrastP7 = APCAcontrast(displayP3toY(colorParsley(color6)),displayP3toY(colorParsley(color3))),
-    contrastP8 = APCAcontrast(displayP3toY(colorParsley(color5)),displayP3toY(colorParsley(color6)));
-    
-outputText.innerHTML +='<pre>color 1: ' + color1 + '         \t parsed: ' + colorParsley(color1)
-                     + ' <br>color 2: ' + color2 + '       \t parsed: ' + colorParsley(color2)
-                     + ' <br>color 3: ' + color3 + '     \t parsed: ' + colorParsley(color3)
-                     + ' <br>color 4: ' + color4 + '         \t parsed: ' + colorParsley(color4)
-                     + ' <br>color 5: ' + color5 + '       \t parsed: ' + colorParsley(color5)
-                     + ' <br>color 6: ' + color6 + '       \t parsed: ' + colorParsley(color6)
-
-                     + ' <br>sRGBtoY 1: ' + sRGBtoY(colorParsley(color1))  + '	 displayP3toY 1: ' + displayP3toY(colorParsley(color1)) 
-                     + ' <br>sRGBtoY 2: ' + sRGBtoY(colorParsley(color2))  + '	 displayP3toY 2: ' + displayP3toY(colorParsley(color2)) 
-                     + ' <br>sRGBtoY 3: ' + sRGBtoY(colorParsley(color3))  + '	 displayP3toY 3: ' + displayP3toY(colorParsley(color3)) 
-                     + ' <br>sRGBtoY 4: ' + sRGBtoY(colorParsley(color4))  + '	 displayP3toY 4: ' + displayP3toY(colorParsley(color4)) 
-                     + ' <br>sRGBtoY 5: ' + sRGBtoY(colorParsley(color5))  + '	 displayP3toY 5: ' + displayP3toY(colorParsley(color5)) 
-                     + ' <br>sRGBtoY 6: ' + sRGBtoY(colorParsley(color6))  + '	 displayP3toY 6: ' + displayP3toY(colorParsley(color6)) 
-
-                     + '<br><br>sRGB vs displayP3 for the same hex values'
-                     + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast1 + '  \t P3 Lc ' + contrastP1
-                     + '<br><br>Colors 2 & 3   sRGB Lc ' + contrast2 + '  \t P3 Lc ' + contrastP2
-                     + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast3 + '  \t P3 Lc ' + contrastP3
-                     + '<br><br>Colors 2 & 4   sRGB Lc ' + contrast4 + '  \t P3 Lc ' + contrastP4
-                     + '<br><br>Colors 3 & 2   sRGB Lc ' + contrast5 + '  \t P3 Lc ' + contrastP5
-                     + '<br><br>Colors 3 & 5   sRGB Lc ' + contrast6 + '  \t P3 Lc ' + contrastP6
-                     + '<br><br>Colors 6 & 3   sRGB Lc ' + contrast7 + '  \t P3 Lc ' + contrastP7
-                     + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast8 + '  \t P3 Lc ' + contrastP8
-                     + '</pre>';
-
-//  */ //// END TOGGLE
-
-
+                    
 </script>
-
 
 
