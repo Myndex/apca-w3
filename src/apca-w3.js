@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.1.3 W3 • contrast function only
-/////           DIST: W3 • Revision date: Apr 23, 2022
+/////           Beta 0.1.4 W3 • contrast function only
+/////           DIST: W3 • Revision date: May 28, 2022
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2022 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -58,7 +58,7 @@
 /////
 /////   *****  SAPC BLOCK  *****
 /////
-/////   For Evaluations, refer to this as: SAPC-8, v0.1.3 G-series constant 4g
+/////   For Evaluations, refer to this as: SAPC-8, v0.1.4 G-series constant 4g
 /////            SAPC • S-LUV Advanced Predictive Color
 /////
 /////   SIMPLE VERSION — Only the basic APCA contrast predictor.
@@ -88,9 +88,9 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   APCA 0.1.3  G 4g USAGE  ///////////////////////////////////////////
+//////////   APCA 0.1.4  G 4g USAGE  ///////////////////////////////////////////
 ///
-///  The API for "APCA 0.1.3" is trivially simple.
+///  The API for "APCA 0.1.4" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
 ///  and send the resulting text-Y and background-Y to the APCAcontrast function,
 ///  it returns a signed float with the numeric Lc contrast result.
@@ -124,7 +124,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-/////  BEGIN APCA  0.1.3  BLOCK         \//////////////////////////////////////
+/////  BEGIN APCA  0.1.4  BLOCK         \//////////////////////////////////////
 ////                                     \////////////////////////////////////
 
 import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';
@@ -143,7 +143,7 @@ export function APCAcontrast (txtY,bgY,places = -1) {
     // return 'error'; // optional string return for error
   };
 
-//////////   APCA 0.1.3   G - 4g - W3 Constants   ///////////////////////
+//////////   APCA 0.1.4   G - 4g - W3 Constants   ///////////////////////
 
   const normBG = 0.56, 
         normTXT = 0.57,
@@ -307,7 +307,7 @@ export function sRGBtoY (rgb = [0,0,0]) { // send sRGB 8bpc (0xFFFFFF) or string
 
 // NOTE: Currently expects 0-255
 
-/////   APCA 0.1.3   G - 4g - W3 Constants   ////////////////////////
+/////   APCA 0.1.4   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
     
@@ -342,7 +342,7 @@ export function displayP3toY (rgb = [0,0,0]) { // send rgba array
 
 // NOTE: Currently Apple has the tuple as 0.0 to 1.0, NOT 255
 
-/////   APCA 0.1.3   G - 4g - W3 Constants   ////////////////////////
+/////   APCA 0.1.4   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.4; // 2.4 exponent emulates actual monitor perception
                     // Pending evaluation, because, Apple...
@@ -375,7 +375,7 @@ export function adobeRGBtoY (rgb = [0,0,0]) { // send rgba array
 
 // NOTE: Currently expects 0-255
 
-/////   APCA 0.1.3   G - 4g - W3 Constants   ////////////////////////
+/////   APCA 0.1.4   G - 4g - W3 Constants   ////////////////////////
 
 const mainTRC = 2.35; // 2.35 exponent emulates actual monitor perception
                      // Pending evaluation...
@@ -439,16 +439,22 @@ export function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
 
 
 
-//////////  ƒ  fontLookupAPCA()  ///////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+//////////  ƒ  fontLookupAPCA()  0.1.7 (G)  //////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
 export function fontLookupAPCA (contrast) {
 
   // APCA CONTRAST FONT LOOKUP TABLES
   // Copyright © 2022 by Myndex Research and Andrew Somers. All Rights Reserved
-  // Public Beta 0.1.5b (G) • APRIL 23 2022 (minor cleanup)
+  // Public Beta 0.1.7 (G) • MAY 28 2022
   // For the following arrays, the Y axis is contrastArrayLen
   // The two x axis are weightArrayLen and scoreArrayLen
-  // APRIL 23  2022
-  const contrastArrayAscend = ['lc',0,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,120,];
+
+  // MAY 28 2022
+  
+  
+  const contrastArrayAscend = ['lc',0,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,];
   const contrastArrayLenAsc = contrastArrayAscend.length; // Y azis
 
   const weightArray = [0,100,200,300,400,500,600,700,800,900];
@@ -457,6 +463,7 @@ export function fontLookupAPCA (contrast) {
   let returnArray = [contrast.toFixed(3),0,0,0,0,0,0,0,0,0,];
   const returnArrayLen = returnArray.length; // X axis
 
+//// Lc 45 * 0.2 = 9, and 9 is the index for the row for Lc 45
 
   contrast = Math.abs(contrast);
   const factor = 0.2; // 1/5
@@ -464,15 +471,13 @@ export function fontLookupAPCA (contrast) {
 
 
 ///////////////////////////////////////////////////////////////////////////////
-
 /////  CONTRAST * FONT WEIGHT & SIZE  //////////////////////////////////////
 
 // Font size interpolations. Here the chart was re-ordered to put
 // the main contrast levels each on one line, instead of font size per line.
 // First column is LC value, then each following column is font size by weight
 
-// G G G G G G  UPDATED JAN 31 2022 
-// ADJUSTED FOR G Interpolation 
+// G G G G G G  Public Beta 0.1.7 (G) • MAY 28 2022
 
 // Lc values under 70 should have Lc 15 ADDED if used for body text
 // All font sizes are in px and reference font is Barlow
@@ -483,68 +488,85 @@ export function fontLookupAPCA (contrast) {
 // 5xx - minimum font at this weight for content, 5xx % 500 for font-size
 // 4xx - minimum font at this weight for any purpose], 4xx % 400 for font-size
 
-// MAIN FONT SIZE LOOKUP Jan 31 2022  Sorted by Lc Value
+// MAIN FONT SIZE LOOKUP
 
-//// ASCENDING SORTED  APRIL 23 2022 ////
+//// ASCENDING SORTED  Public Beta 0.1.7 (G) • MAY 28 2022  ////
+
 //// Lc 45 * 0.2 = 9 which is the index for the row for Lc 45
 
-  const fontMatrixAscend = [
-  ['Lc',100,200,300,400,500,600,700,800,900],
-  [0,999,999,999,999,999,999,999,999,999],
-  [10,999,999,999,999,999,999,777,777,777],
-  [15,999,999,777,777,777,777,120,120,120],
-  [20,999,777,777,777,120,120,110,88,66],
-  [25,999,777,777,120,102,87,72,57.5,43],
-  [30,999,777,120,96,68,58,48,38.5,29],
-  [35,777,120,93.5,66,46.5,40,33,26.5,20],
-  [40,777,96,68,48,34,29,24,20,18],
-  [45,120,72,51,36,28,24,20,18,418],
-  [50,96.5,58,41,29,25,20,18,17,418],
-  [55,86.5,52,37,26,22,19.5,17,16,418],
-  [60,80,48,34,24,21,18,16,416,418],
-  [65,71.5,43,30.5,21.5,19.5,17,15,416,418],
-  [70,65,39,27.5,19.5,18,16,14.5,416,418],
-  [75,60,36,24,18,17,15,14,416,418],
-  [80,56.5,34,23,17,16,14.5,414,416,418],
-  [85,53.5,32,22,16,15,14,414,416,418],
-  [90,50,30,21,15,14.5,414,414,416,418],
-  [95,48.5,29,20.5,14.5,14,414,414,416,418],
-  [100,46.5,28,18,14,414,414,414,416,418],
-  [105,445,427,417,413.5,413.5,413.5,413.5,416,418],
-  [120,445,427,417,413.5,413.5,413.5,413.5,416,418],
-  ];
+// MAIN FONT LOOKUP May 25 2022 EXPANDED
+// Sorted by Lc Value
+// First row is standard weights 100-900
+// First column is font size in px
+// All other values are the Lc contrast 
+// 999 = too low. 777 = non-text and spot text only
 
-  // G G G G G G UPDATED JAN 31 2022 
-  // interpolation G  
-  // MAIN FONT SIZE DELTA PRECALC
-//// ASCENDING SORTED  APRIL 23 2022 ////
-//// ROWS BELOW ////
 
-  const fontDeltaAscend = [ 
-  ['Lc∆h',100,200,300,400,500,600,700,800,900,],
-  [0,0,0,0,0,0,0,0,0,0,],
-  [10,0,0,0,0,0,0,0,0,0,],
-  [15,0,0,0,0,0,0,10,32,54,],
-  [20,0,0,0,0,18,33,38,30.5,23,],
-  [25,0,0,0,24,34,29,24,19,14,],
-  [30,0,0,26.5,30,21.5,18,15,12,9,],
-  [35,0,24,25.5,18,12.5,11,9,6.5,2,],
-  [40,0,24,17,12,6,5,4,2,0,],
-  [45,23.5,14,10,7,3,4,2,1,0,],
-  [50,10,6,4,3,3,0.5,1,1,0,],
-  [55,6.5,4,3,2,1,1.5,1,0,0,],
-  [60,8.5,5,3.5,2.5,1.5,1,1,0,0,],
-  [65,6.5,4,3,2,1.5,1,0.5,0,0,],
-  [70,5,3,3.5,1.5,1,1,0.5,0,0,],
-  [75,3.5,2,1,1,1,0.5,0,0,0,],
-  [80,3,2,1,1,1,0.5,0,0,0,],
-  [85,3.5,2,1,1,0.5,0,0,0,0,],
-  [90,1.5,1,0.5,0.5,0,0,0,0,0,],
-  [95,2,1,2.5,0.5,0,0,0,0,0,],
-  [100,1.5,1,1,0.5,0.5,0.5,0.5,0,0,],
-  [105,0,0,0,0,0,0,0,0,0,],
-  [120,0,0,0,0,0,0,0,0,0,],
-  ];
+const fontMatrixAscend = [
+    ['Lc',100,200,300,400,500,600,700,800,900],
+    [0,999,999,999,999,999,999,999,999,999],
+    [10,999,999,999,999,999,999,999,999,999],
+    [15,777,777,777,777,777,777,777,777,777],
+    [20,777,777,777,777,777,777,777,777,777],
+    [25,777,777,777,120,120,108,96,96,96],
+    [30,777,777,120,108,108,96,72,72,72],
+    [35,777,120,108,96,72,60,48,48,48],
+    [40,120,108,96,60,48,42,32,32,32],
+    [45,108,96,72,42,32,28,24,24,24],
+    [50,96,72,60,32,28,24,21,21,21],
+    [55,80,60,48,28,24,21,18,18,18],
+    [60,72,48,42,24,21,18,16,16,18],
+    [65,68,46,32,21.75,19,17,15,16,18],
+    [70,64,44,28,19.5,18,16,14.5,16,18],
+    [75,60,42,24,18,16,15,14,16,18],
+    [80,56,38.25,23,17.25,15.81,14.81,14,16,18],
+    [85,52,34.5,22,16.5,15.625,14.625,14,16,18],
+    [90,48,32,21,16,15.5,14.5,14,16,18],
+    [95,45,28,19.5,15.5,15,14,13.5,16,18],
+    [100,42,26.5,18.5,15,14.5,13.5,13,16,18],
+    [105,39,25,18,14.5,14,13,12,16,18],
+    [110,36,24,18,14,13,12,11,16,18],
+    [115,34.5,22.5,17.25,12.5,11.875,11.25,10.625,14.5,16.5],
+    [120,33,21,16.5,11,10.75,10.5,10.25,13,15],
+    [125,32,20,16,10,10,10,10,12,14],
+    ];
+
+
+
+// ASCENDING SORTED  Public Beta 0.1.7 (G) • MAY 28 2022 ////
+
+// DELTA - MAIN FONT LOOKUP May 25 2022 EXPANDED
+//  EXPANDED  Sorted by Lc Value ••  DELTA
+// The pre-calculated deltas of the above array
+
+const fontDeltaAscend = [
+    ['∆Lc',100,200,300,400,500,600,700,800,900],
+    [0,0,0,0,0,0,0,0,0,0],
+    [10,0,0,0,0,0,0,0,0,0],
+    [15,0,0,0,0,0,0,0,0,0],
+    [20,0,0,0,0,0,0,0,0,0],
+    [25,0,0,0,12,12,12,24,24,24],
+    [30,0,0,12,12,36,36,24,24,24],
+    [35,0,12,12,36,24,18,16,16,16],
+    [40,12,12,24,18,16,14,8,8,8],
+    [45,12,24,12,10,4,4,3,3,3],
+    [50,16,12,12,4,4,3,3,3,3],
+    [55,8,12,6,4,3,3,2,2,0],
+    [60,4,2,10,2.25,2,1,1,0,0],
+    [65,4,2,4,2.25,1,1,0.5,0,0],
+    [70,4,2,4,1.5,2,1,0.5,0,0],
+    [75,4,3.75,1,0.75,0.188,0.188,0,0,0],
+    [80,4,3.75,1,0.75,0.188,0.188,0,0,0],
+    [85,4,2.5,1,0.5,0.125,0.125,0,0,0],
+    [90,3,4,1.5,0.5,0.5,0.5,0.5,0,0],
+    [95,3,1.5,1,0.5,0.5,0.5,0.5,0,0],
+    [100,3,1.5,0.5,0.5,0.5,0.5,1,0,0],
+    [105,3,1,0,0.5,1,1,1,0,0],
+    [110,1.5,1.5,0.75,1.5,1.125,0.75,0.375,1.5,1.5],
+    [115,1.5,1.5,0.75,1.5,1.125,0.75,0.375,1.5,1.5],
+    [120,1,1,0.5,1,0.75,0.5,0.25,1,1],
+    [125,0,0,0,0,0,0,0,0,0],
+    ];
 
 ///////////////////////////////////////////////////////////////////////////
 /////////  Font and Score Interpolation  \////////////////////////////////
@@ -587,5 +609,5 @@ export function fontLookupAPCA (contrast) {
 
 
 ////\                                 //////////////////////////////////////////
-/////\  END APCA 0.1.3  G-4g  BLOCK  //////////////////////////////////////////
+/////\  END APCA 0.1.4  G-4g  BLOCK  //////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
