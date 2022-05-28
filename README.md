@@ -37,18 +37,22 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 #### For comments and discussions, please see the main SAPC-APCA repo, [discussion area.]( https://github.com/Myndex/SAPC-APCA/discussions)
 
 -----
-## <s>Advanced</s> ... _Accessible_ Perceptual Contrast Algorithm
-The "Advanced" was originally part of an internal code name "SAPC" that eventually becasme "APCA"... and the word "advanced" moved along with that...  realized that first "A" should - almost has to — be "Accessibility." And it's shockingly obvious now, LOL.
+## APCA stands for:
 
-Thus, from here on, APCA stands for:
-
-### _Accessible_ <br> Perceptual <br> Contrast <br> Algorithm
+### _Accessible_ Perceptual Contrast Algorithm
 
 
 
 <img width='250' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='240' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='220' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
 
-### Current Version: **0.1.2** G (w3) _beta_
+### Current Version: **0.1.4** G (w3) _beta_
+
+#### 0.1.4 • May 27, 2022
+Updated the look-up tables for the fontLookupAPCA() function, and also added the data folder, where the raw data for the lookup tables can be found. Also some minor maintenance. (Note: the lookup tables are version 0.1.7 — will synchronize numbers on next publish).
+
+#### 0.1.3 • May 17, 2022
+Fixed the module imports for colorparsley and apca-w3 so they play well together.
+No longer providing a minified version in the dist folder. Now just the file in the src folder.
 
 #### 0.1.2 • April 23, 2022
 **NEW!** `fontLookupAPCA(Lc)` Live font lookup table — sent it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900).
@@ -74,14 +78,13 @@ Beta testers may wish to include the following statement in their sites boilerpl
 
 -----
 ## Font Lookup Table
-Current as of January 27, 2022
+Current as of May 27, 2022
 
-<img src="./images/Jan27_2022LUT_byFont.jpg" alt="January 27, 2022 Font Lookup Table">
-
-<img src="./images/Jan27_2022LUT_legend.jpg" alt="January 27, 2022 Font Table Legend">
-
-<img src="./images/Jan27_2022LUT_byLc.jpg" alt="January 27, 2022 Font Lookup sorted by Lc">
-
+<img width="400" alt="APCA Lookup Table" src="./images/APCAlookupByFont.jpeg">
+<br>
+<img width="400" alt="APCA Lookup table legend" src="./images/APCAtableLegend.jpeg">
+<br>
+<img width="400" alt="APCA Lookup Table" src="./images/APCAlookupByContrast.jpeg">
 
 ------
 ## QuickStart
@@ -230,7 +233,7 @@ _NOTE: neither of these are "official" and may change, move, or vanish._
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.1.1 G - W3 )
+### Current APCA Constants ( 0.1.3 G - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
  // 0.1.3 - W3 constants (W3 license only):
