@@ -233,10 +233,10 @@ _NOTE: neither of these are "official" and may change, move, or vanish._
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.1.3 G - W3 )
+### Current APCA Constants ( 0.1.4 G - W3 )
 **These constants are for use with the web standard sRGB colorspace.**
 ```javascript
- // 0.1.3 - W3 constants (W3 license only):
+ // 0.1.4 - W3 constants (W3 license only):
     
   Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
   
