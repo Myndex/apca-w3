@@ -268,6 +268,10 @@ There is a working version with examples and reference material on [the APCA sit
 
 [![](https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/images/Myndex_eye_cielabWide.png)](https://github.com/Myndex)
 
+### APCA Base Math
+_Click to Enlarge_     
+<img width="400" alt="the math for the basic APCA" src="./images/APCAcontrastPredictionEquation0.0.98G-4g-base.svg">
+
 ### APCA is the _Advanced Perceptual Contrast Algorithm_
 ## THE REVOLUTION WILL BE READABLE™
 
