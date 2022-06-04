@@ -45,7 +45,11 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 
 <img width='250' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='240' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='220' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
 
-### Current Version: **0.1.4** G (w3) _beta_
+### Current Algorithm Version: **0.0.98 G** (February 15, 2021) (w3) 
+This is the base algorithm version. The versions listed below are for the overal library file, as features and functions are added to aide in integration. These added features do not impact the base algorithm which is stable and undergoing public beta validation.
+
+
+### Current Library Version: **0.1.4** G (w3) _beta_
 
 #### 0.1.4 • May 27, 2022
 Updated the look-up tables for the fontLookupAPCA() function, and also added the data folder, where the raw data for the lookup tables can be found. Also some minor maintenance. (Note: the lookup tables are version 0.1.7 — will synchronize numbers on next publish).
@@ -60,10 +64,10 @@ No longer providing a minified version in the dist folder. Now just the file in 
 **NEW!** `reverseAPCA(Lc,Y,use,returnAs)` 
 New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
 
-#### CHANGE for 0.1.1:
+#### CHANGE for 0.1.1: 2021
 **NEW!! Alpha channels! AdobeRGB!!**
 
-#### CHANGE for 0.1.0:
+#### CHANGE for 0.1.0: 2021
 NEW! displayP3!     
 colorParsley() is now in its own package and must be imported separately.
 
@@ -233,10 +237,12 @@ _NOTE: neither of these are "official" and may change, move, or vanish._
 ## EXTRAS
 Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
 
-### Current APCA Constants ( 0.1.4 G - W3 )
+### Current APCA Constants ( 0.0.98G - W3 last changed Feb 15, 2021 )
 **These constants are for use with the web standard sRGB colorspace.**
+These are the current contrast for use with current library version 0.1.4
+
 ```javascript
- // 0.1.4 - W3 constants (W3 license only):
+ // 0.0.98G - W3 constants (W3 license only):
     
   Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
   
@@ -247,8 +253,8 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
   Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
                  scaleWoB: 1.14,     loWoBoffset: 0.027, };	
                  
-                 
-///// MAGIC NUMBERS for UNCLAMP, used only with reverseAPCA() /////
+---------------------------------------------------------------------------             
+///// 0.1.14G MAGIC NUMBERS for UNCLAMP, used only with reverseAPCA() /////
 ////  for use with blkThrs: 0.022 & blkClmp: 1.414 /////
 
   const mFactor = 1.94685544331710;
