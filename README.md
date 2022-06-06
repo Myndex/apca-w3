@@ -49,7 +49,12 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 This is the base algorithm version. The versions listed below are for the overal library file, as features and functions are added to aide in integration. These added features do not impact the base algorithm which is stable and undergoing public beta validation.
 
 
-### Current Library Version: **0.1.4** G (w3) _beta_
+### Current Library Version: **0.1.7** G (w3) _beta_
+
+#### 0.1.7 • May 27, 2022
+Version number set to match font lookup table version
+Added new test, run with ` npm test `
+Maintenance updates, adjusted alphaBlend for compliance with CSS4
 
 #### 0.1.4 • May 27, 2022
 Updated the look-up tables for the fontLookupAPCA() function, and also added the data folder, where the raw data for the lookup tables can be found. Also some minor maintenance. (Note: the lookup tables are version 0.1.7 — will synchronize numbers on next publish).
@@ -242,20 +247,56 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 These are the current contrast for use with current library version 0.1.4
 
 ```javascript
- // 0.0.98G - W3 constants (W3 license only):
-    
-  Exponents =  { mainTRC: 2.4,       normBG: 0.56,       normTXT: 0.57,     revTXT: 0.62,     revBG: 0.65, };
-  
-  ColorSpace = { sRco: 0.2126729,    sGco: 0.7151522,    sBco: 0.0721750, };
-    
-  Clamps =     { blkThrs: 0.022,     blkClmp: 1.414,     loClip: 0.1,     deltaYmin: 0.0005, };
-        
-  Scalers =    { scaleBoW: 1.14,     loBoWoffset: 0.027, 
-                 scaleWoB: 1.14,     loWoBoffset: 0.027, };	
-                 
----------------------------------------------------------------------------             
+/////  0.0.98G - W3 constants (W3 license only):                       /////
+////   These constants remain unchanged for apca-w3                    ////
+///    versions 0.1.0 (initial npm package) and later                  ///
+//                                                                     //
+
+  exponents =  { mainTRC: 2.4,    normBG: 0.56,    normTXT: 0.57,  revTXT: 0.62,  revBG: 0.65, };
+
+  colorSpace = { sRco: 0.2126729, sGco: 0.7151522, sBco: 0.0721750, };
+
+  clamps =     { blkThrs: 0.022,  blkClmp: 1.414,  loClip: 0.1,  deltaYmin: 0.0005, };
+
+  scalers =    { scaleBoW: 1.14,  loBoWoffset: 0.027, 
+                 scaleWoB: 1.14,  loWoBoffset: 0.027, };	
+
+// Note: loClip && deltaYmin do not affect lc in range & only clamp low Lc values
+
+---------------------------------------------------------------------------
+/////   0.1.1 Color space coefficients for P3 and Adobe                /////
+////    These are derived from the 1931 CIE standard observer          ////
+///     Using the equations found at BruceLindbloom.com                ///
+//      And using the current CIE D65                                  //
+
+/////  Display P3: /////
+
+const sRco = 0.2289829594805780, 
+      sGco = 0.6917492625852380, 
+      sBco = 0.0792677779341829; // displayP3 coefficients
+
+// Derived from 1931 CIE xyY:
+// xW       yW        K     xR    yR    xG    yG    xB    yB
+// 0.312720 0.329030  6504  0.680 0.320 0.265 0.690 0.150 0.060
+
+
+///// AdobeRGB: /////
+
+const mainTRC = 2.35; // Pending further evaluation:
+                     // 2.35 exponent to emulate actual monitor perception
+
+const sRco = 0.2973550227113810, 
+      sGco = 0.6273727497145280, 
+      sBco = 0.0752722275740913; // adobeRGB coefficients
+
+// Derived from 1931 CIE xyY:
+// xW       yW        K     xR    yR    xG    yG    xB    yB
+// 0.312720 0.329030  6504  0.640 0.330 0.210 0.710 0.150 0.060
+
+
+---------------------------------------------------------------------------
 ///// 0.1.14G MAGIC NUMBERS for UNCLAMP, used only with reverseAPCA() /////
-////  for use with blkThrs: 0.022 & blkClmp: 1.414 /////
+////  for use with blkThrs: 0.022 & blkClmp: 1.414                    ////
 
   const mFactor = 1.94685544331710;
   const mFactInv = 1/mFactor;

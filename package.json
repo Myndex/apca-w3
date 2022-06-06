@@ -1,6 +1,6 @@
 {
   "name": "apca-w3",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3 and other standards",
   "main": "./src/apca-w3.js",
@@ -30,9 +30,12 @@
   },
   "homepage": "https://www.myndex.com/APCA/",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava test/index.js"
+  },
+  "devDependencies": {
+    "ava": "^4.3.0"
   },
   "dependencies": {
-    "colorparsley": "^0.1.6"
+    "colorparsley": "^0.1.8"
   }
 }

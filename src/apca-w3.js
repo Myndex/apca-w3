@@ -193,7 +193,6 @@ export function APCAcontrast (txtY,bgY,places = -1) {
   if ( bgY > txtY ) {  // For normal polarity, black text on white (BoW)
 
            // Calculate the SAPC contrast value and scale
-      
     SAPC = ( Math.pow(bgY, normBG) - Math.pow(txtY, normTXT) ) * scaleBoW;
 
             // Low Contrast smooth rollout to prevent polarity reversal
@@ -202,7 +201,7 @@ export function APCAcontrast (txtY,bgY,places = -1) {
 
   } else {  // For reverse polarity, light text on dark (WoB)
            // WoB should always return negative value.
-	polCat = 'WoB';
+    polCat = 'WoB';
 
     SAPC = ( Math.pow(bgY, revBG) - Math.pow(txtY, revTXT) ) * scaleWoB;
 
@@ -408,15 +407,15 @@ const sRco = 0.2973550227113810,
                      // Only foreground has alpha of 0.0 to 1.0 
                     // This blends using gamma encoded space (standard)
                    // rounded 0-255 or set isInt false for float 0.0-1.0
-export function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], isInt = true ) {
+export function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], round = true ) {
 	
 	rgbaFG[3] = Math.max(Math.min(rgbaFG[3], 1.0), 0.0); // clamp alpha
 	let compBlend = 1.0 - rgbaFG[3];
-	let rgbOut = [0,0,0]; // or just use rgbBG to retain other elements?
+	let rgbOut = [0,0,0,1,true]; // or just use rgbBG to retain other elements?
 	
 	for (let i=0;i<3;i++) {
 		rgbOut[i] = rgbBG[i] * compBlend + rgbaFG[i] * rgbaFG[3];
-		if (isInt) rgbOut[i] = Math.min(Math.round(rgbOut[i]),255);
+		if (round) rgbOut[i] = Math.min(Math.round(rgbOut[i]),255);
 	};
   return rgbOut;
 } // End alphaBlend()
@@ -443,7 +442,7 @@ export function calcAPCA (textColor, bgColor, places = -1, isInt = true) {
 //////////  ƒ  fontLookupAPCA()  0.1.7 (G)  //////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////
 
-export function fontLookupAPCA (contrast) {
+export function fontLookupAPCA (contrast,places=3) {
 
   // APCA CONTRAST FONT LOOKUP TABLES
   // Copyright © 2022 by Myndex Research and Andrew Somers. All Rights Reserved
@@ -460,7 +459,7 @@ export function fontLookupAPCA (contrast) {
   const weightArray = [0,100,200,300,400,500,600,700,800,900];
   const weightArrayLen = weightArray.length; // X axis
 
-  let returnArray = [contrast.toFixed(3),0,0,0,0,0,0,0,0,0,];
+  let returnArray = [contrast.toFixed(places),0,0,0,0,0,0,0,0,0,];
   const returnArrayLen = returnArray.length; // X axis
 
 //// Lc 45 * 0.2 = 9, and 9 is the index for the row for Lc 45
@@ -494,7 +493,7 @@ export function fontLookupAPCA (contrast) {
 
 //// Lc 45 * 0.2 = 9 which is the index for the row for Lc 45
 
-// MAIN FONT LOOKUP May 25 2022 EXPANDED
+// MAIN FONT LOOKUP May 28 2022 EXPANDED
 // Sorted by Lc Value
 // First row is standard weights 100-900
 // First column is font size in px
@@ -535,7 +534,7 @@ const fontMatrixAscend = [
 
 // ASCENDING SORTED  Public Beta 0.1.7 (G) • MAY 28 2022 ////
 
-// DELTA - MAIN FONT LOOKUP May 25 2022 EXPANDED
+// DELTA - MAIN FONT LOOKUP May 28 2022 EXPANDED
 //  EXPANDED  Sorted by Lc Value ••  DELTA
 // The pre-calculated deltas of the above array
 
@@ -587,8 +586,10 @@ const fontDeltaAscend = [
 
     if (tempFont > 400) {
         returnArray[w] = tempFont;
-    } else if (contrast < 41.0 ) {
-        returnArray[w] = 666;
+    } else if (contrast < 14.0 ) {
+        returnArray[w] = 999;
+    } else if (contrast < 29.0 ) {
+        returnArray[w] = 777;
     } else {
                 // INTERPOLATION OF FONT SIZE
                // sets level for 0.5 size increments of smaller fonts
