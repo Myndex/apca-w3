@@ -317,7 +317,7 @@ There is a working version with examples and reference material on [the APCA sit
 
 ### APCA Base Math
 _Click to Enlarge_     
-<img width="400" alt="the math for the basic APCA" src="./images/APCAcontrastPredictionEquation0.0.98G-4g-base.svg">
+<img width="400" alt="the math for the basic APCA" src="./images/APCAw3_0.1.17_APCA0.0.98G.svg">
 
 ### APCA is the _Advanced Perceptual Contrast Algorithm_
 ## THE REVOLUTION WILL BE READABLE™
