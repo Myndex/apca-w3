@@ -45,7 +45,9 @@ and uses which are not specific to web-based content
 presented on self-illuminated displays or devices.
 
 _**NO ALTERATION; KEEP CURRENT**_     
-Any **apca-w3** files in this repositiory may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibility guidelines, and such use must be without modification to the essential elements of the code or specific approved constants, except as required to port to a given language.
+Any **apca-w3** files in this repository may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibility guidelines, and such use must be without modification to the essential elements of the code or specific approved constants, except as required to port to a given language.
+
+- Developers are highly encouraged to use the npm package(s) when possible:  ` npm i apca-w3 `
 
 - Deveopers incorporating this code into their applications, widgets, or other tools, have a duty to ensure that the most recent version of this code is used in their current or any future release. 
 
