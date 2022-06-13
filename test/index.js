@@ -1,3 +1,5 @@
+// APCA Test Script for 0.1.7
+
 import test from 'ava';
 
 import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from '../src/apca-w3.js';

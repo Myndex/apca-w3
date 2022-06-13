@@ -1,6 +1,6 @@
 {
   "name": "apca-w3",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "type": "module",
   "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3 and other standards",
   "main": "./src/apca-w3.js",

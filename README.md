@@ -45,38 +45,15 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 
 <img width='250' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='240' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='220' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
 
-### Current Algorithm Version: **0.0.98 G** (February 15, 2021) (w3) 
+### Current Algorithm Version: **0.0.98G-4g** (February 15, 2021) (w3) 
 This is the base algorithm version. The versions listed below are for the overal library file, as features and functions are added to aide in integration. These added features do not impact the base algorithm which is stable and undergoing public beta validation.
 
 
-### Current Library Version: **0.1.7** G (w3) _beta_
-
-#### 0.1.7 • May 27, 2022
-Version number set to match font lookup table version
-Added new test, run with ` npm test `
-Maintenance updates, adjusted alphaBlend for compliance with CSS4
-
-#### 0.1.4 • May 27, 2022
-Updated the look-up tables for the fontLookupAPCA() function, and also added the data folder, where the raw data for the lookup tables can be found. Also some minor maintenance. (Note: the lookup tables are version 0.1.7 — will synchronize numbers on next publish).
-
-#### 0.1.3 • May 17, 2022
-Fixed the module imports for colorparsley and apca-w3 so they play well together.
-No longer providing a minified version in the dist folder. Now just the file in the src folder.
-
-#### 0.1.2 • April 23, 2022
-**NEW!** `fontLookupAPCA(Lc)` Live font lookup table — sent it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900).
-
-**NEW!** `reverseAPCA(Lc,Y,use,returnAs)` 
-New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
-
-#### CHANGE for 0.1.1: 2021
-**NEW!! Alpha channels! AdobeRGB!!**
-
-#### CHANGE for 0.1.0: 2021
-NEW! displayP3!     
-colorParsley() is now in its own package and must be imported separately.
+### Current Library Version: **0.1.8** (w3) (98G4g) _beta_
+- See [Version History](#version-history) for details.
 
 
+### What is it?
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
 
@@ -88,6 +65,14 @@ Beta testers may wish to include the following statement in their sites boilerpl
 -----
 ## Font Lookup Table
 Current as of May 27, 2022
+
+Notes on the lookups:
+- This is a basic table for fluent readability of text. Text that is intended to be read (primary content) should meet or exceed the values on the table.
+- For body text, add Lc 15 for any value on the table lower than Lc 75.
+    - For instance, if using a 24px font, add Lc 15 to the minimum contrast value
+- For sub-fluent text (i.e. not primary content) Lc values can be lowered by Lc 15, but in no case less than Lc 30.
+- For non-fluent spot text (copyright bug, disabled text, placeholder) Lc values can be lowered by Lc25, but in no case less than Lc 30.
+- Fonts larger than 24px and weight 300 or more have a maximum contrast of Lc 90.
 
 <img width="400" alt="APCA Lookup Table" src="./images/APCAlookupByFont.jpeg">
 <br>
@@ -192,32 +177,9 @@ New in this version is a reverse contrast lookup. Specify a contrast, and one co
 
 
 ### _String Theory_
-The following are the available input types for colorParsley(), HSL is not implemented at the moment. All are automatically recognized:
+See the colorparsley package for documentation on the available string inputs.
 
-### INPUT as STRINGS:
-- **No Alpha**
-    - ` '#abc' ` or ` 'abc' ` (interpreted as ` 'aabbcc' `)
-    - ` '#abcdef' ` or ` 'abcdef' ` (hash is ignored)
-    - ` 'rgb(123, 45, 67)' `
-    - ` 'aquamarine' ` or ` 'magenta' ` (full CSS4 named colors list)
-
-- **With Alpha** _(alpha is NOT presently calculated, and assumed as fully opaque)_
-    - ` '#abcf' ` or ` 'abcf' ` (interpreted as ` 'aabbccff' `)
-    - ` '#123456ff' ` or ` '123456ff' ` (hash is ignored)
-    - ` 'rgba(123, 45, 67,1.0)' `
-
-### INPUT as NUMBER:
-- **As hex**
-    - ` 0xabcdef `
-- **As integer**
-    - ` 11259375 `
-
-No alpha parsing for _numbers_ in part as there are big and little endian issues that need to be resolved.
-
-
-
-
-### colorParsley() string Parsing Removed, now a dependency
+### colorParsley() string parsing moved to its own package
 The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant...
 
 So, colorParsley() is removed from the APCA-W3 file, and is now its own package, listed as a dependency here.
@@ -229,8 +191,8 @@ So, colorParsley() is removed from the APCA-W3 file, and is now its own package,
 There are two extra parameters for calcAPCA(), and one extra for APCAcontrast.
 
     calcAPCA( text, BG, places, isInt )
-    APCAcontrast ( txYs, bgYs, places )
-    alphaBlend( txt, BG, isInt )
+    APCAcontrast ( txYs, bgYs, places = -1 )
+    alphaBlend( txt, BG, round(bool) )
 
 ` places ` defaults to -1, but you can send it 0 and the Lc is returned as a rounded value, and instead of a minus sign for polarity, 'WoB' for white on black is returned.
 
@@ -244,7 +206,7 @@ Additional documentation, including a plain language walkthrough, LaTeX math, an
 
 ### Current APCA Constants ( 0.0.98G - W3 last changed Feb 15, 2021 )
 **These constants are for use with the web standard sRGB colorspace.**
-These are the current contrast for use with current library version 0.1.4
+These are the current contrast for use with current library version 0.1.8
 
 ```javascript
 /////  0.0.98G - W3 constants (W3 license only):                       /////
@@ -309,18 +271,62 @@ const sRco = 0.2973550227113810,
 
 ----- 
 ### [LIVE VERSION][APCAsite]
-There is a working version with examples and reference material on [the APCA site][APCAsite]
+There is a working version with examples and reference material on [the APCA demo tool site][APCAsite]
 
 [APCAsite]: https://www.myndex.com/APCA/
 
 [![](https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/images/Myndex_eye_cielabWide.png)](https://github.com/Myndex)
 
-### APCA Base Math
+### APCA Base Math (sRGB)
     
 <img width="480" alt="the math for the basic APCA" src="./images/APCAw3_0.1.17_APCA0.0.98G.svg">
 
-### APCA is the _Advanced Perceptual Contrast Algorithm_
-## THE REVOLUTION WILL BE READABLE™
 
+---
+
+## Version History
+
+#### 0.1.8 • June 5, 2022
+- Corrected the version numbering in the apca-w3.js file
+- Added a LaTeX math svg of the base algorithm to this README file
+- NOTE: the live tool at [www.myndex.com/APCA/][APCAsite] is now using a version of this apca-w3.js file, as well as colorparsley.
+
+#### 0.1.7 • June 5, 2022
+- Version number set to match font lookup table version
+- Added new test, run with ` npm test `
+- Maintenance updates, adjusted alphaBlend for compliance with CSS4
+
+#### 0.1.4 • May 27, 2022
+- Updated the look-up tables for the fontLookupAPCA() function, and also added the data folder, where the raw data for the lookup tables can be found.
+- Also some minor maintenance. (Note: the lookup tables are version 0.1.7 — will synchronize numbers on next publish).
+
+#### 0.1.3 • May 17, 2022
+- Fixed the module imports for colorparsley and apca-w3 so they play well together.
+- No longer providing a minified version in the dist folder. Now just the file in the src folder.
+
+#### 0.1.2 • April 23, 2022
+- **NEW!** `fontLookupAPCA(Lc)` Live font lookup table — send it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900).
+- **NEW!** `reverseAPCA(Lc,Y,use,returnAs)` New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
+
+#### CHANGE for 0.1.1: Jan 12, 2022
+- **NEW!! Alpha channels! AdobeRGB!!**
+
+#### CHANGE for 0.1.0: Jan 10, 2022
+- NEW! displayP3!       
+- colorParsley() is now in its own package and must be imported separately.      
+- Replaced alpha versioning with semantic versioning for public beta.
+    - NOTE: while the version of this library file increments as features are added, the base algorithm is beta-stable and constants remain fixed at 0.0.98G-4g, from Feb. 15th, 2021. 
+
+#### 0.0.98G-4g-4: Dec 21, 2021
+#### 0.0.98G-4g-3: Dec 13, 2021
+#### 0.0.98G-4g-2: Dec 11, 2021
+#### 0.0.98G-4g-betafish: Initial npm publish Dec 2, 2021
+This moved over the base APCA and G4g constants (from Feb. 15th, 2021) to an npm package.
+
+---
+### APCA is the _Accessible Perceptual Contrast Algorithm_
+## THE REVOLUTION WILL BE READABLE<sup>™</sup>
+
+---
 
 <sub>**Disclaimer:** _APCA is being evaluated as a replacement for WCAG 2 contrast math for future standards and guidelines, however, standards that will be incorporating APCA are still developmental. Because WCAG 2 contrast math does not accurately model human visual perception nor visual impairments, there will be discrepancies between WCAG 2 contrast math, and perceptually uniform models such as APCA. It is up to the end user to determine suitability of purpose for their region and conformance requirements._</sub>
