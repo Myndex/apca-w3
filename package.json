@@ -1,7 +1,9 @@
 {
   "name": "apca-w3",
-  "version": "0.1.0",
-  "description": "APCA the Advanced Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3",
+  "version": "0.1.9",
+  "type": "module",
+  "description": "APCA the Accessible Perceptual Contrast Algorithm, a modern contrast method developed for WCAG 3 and other standards",
+  "main": "./src/apca-w3.js",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "files": [
@@ -13,15 +15,20 @@
     "colour",
     "CSS",
     "contrast",
+    "perceptual contrast",
     "design tools",
-    "WCAG",
     "accessibility",
-    "readability"
+    "readability",
+    "WCAG",
+    "APCA"
   ],
   "author": "Andrew Somers",
   "license": "W3 License",
   "bugs": {
     "url": "https://github.com/Myndex/SAPC-APCA/issues"
+  },
+  "forum": {
+    "url": "https://github.com/Myndex/SAPC-APCA/discussion"
   },
   "repository": {
     "type": "git",
@@ -35,11 +42,15 @@
     "build:esm": "swc src -d dist/esm -C module.type=es6",
     "build:umd": "swc src -d dist/umd -C module.type=umd",
     "demo": "npx superstatic .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava test/index.js"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.53",
     "@swc/core": "^1.2.119",
     "rimraf": "^3.0.2"
+    "ava": "^4.3.0"
+  },
+  "dependencies": {
+    "colorparsley": "^0.1.8"
   }
 }

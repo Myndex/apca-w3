@@ -49,7 +49,7 @@ The APCA version in this repositiory is licensed to the W3/AGWG per the collabor
 This is the base algorithm version. The versions listed below are for the overal library file, as features and functions are added to aide in integration. These added features do not impact the base algorithm which is stable and undergoing public beta validation.
 
 
-### Current Library Version: **0.1.8** (w3) (98G4g) _beta_
+### Current Library Version: **0.1.9** (w3) (98G4g) _beta_
 - See [Version History](#version-history) for details.
 
 
@@ -285,6 +285,10 @@ There is a working version with examples and reference material on [the APCA dem
 ---
 
 ## Version History
+
+#### 0.1.9 • June 19, 2022
+- Incorporate build tools (thanks Alex Krolick!)
+- Fixes and documentation adjustments requested by Chris Lilly of W3
 
 #### 0.1.8 • June 5, 2022
 - Corrected the version numbering in the apca-w3.js file
