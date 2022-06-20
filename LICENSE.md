@@ -2,14 +2,17 @@ Code and documentation in this repositiory is copyright © 2019-2021 by Andrew S
 
 # — LICENSE —
 
-### The Short Summary:
-Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-based content only, and not for any other use.
+### The Short Summary, TL;DR:
+Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-delivered and web-based content only, and not for any other use.
 
+Use of the terms "APCA", "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", to describe any contrast method, app, or device, is only permitted for code that is maintained and up to date.
+
+--------------
 ______________
 
 ## W3 VERSION LICENSE:
 
-All Files in this Repository are licensed to the W3.org under their cooperative license agreement(s):
+All Files in this Repository are licensed to the W3.org under their cooperative license agreement(s), and subject to the further limitations as defined in this license agreement.
 
 - Reports in this Repository are licensed under the
 [W3C Software and Document License](http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
@@ -42,18 +45,23 @@ and uses which are not specific to web-based content
 presented on self-illuminated displays or devices.
 
 _**NO ALTERATION; KEEP CURRENT**_     
-Any **apca-w3** files in this repositiory may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibnility guidelines, and such use must be without modification to the essential elements of the code or specific approved contstnats, except as required to port to a given language.
+Any **apca-w3** files in this repository may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibility guidelines, and such use must be without modification to the essential elements of the code or specific approved constants, except as required to port to a given language.
+
+- Developers are highly encouraged to use the npm package(s) when possible:  ` npm i apca-w3 `
 
 - Deveopers incorporating this code into their applications, widgets, or other tools, have a duty to ensure that the most recent version of this code is used in their current or any future release. 
 
 - Breaking change exception:
-    - developers do not need to incorporate a future version of **apca-w3** that have breaking changes when their release is only a minor or patch version per sematic versioning.
+    - developers do not need to incorporate future versions of **apca-w3** that have breaking changes when their release is only a minor or patch version per semantic versioning.
     - developers with minor or patch revisions are still obligated to use the latest non-breaking branch of **apca-w3**.
     - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
 
+_**USE OF APCA TERMINOLOGY**_     
+- Use of the acronym APCA, the terms "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", "Readability Contrast", to describe any embodyment or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly using the APCA algorithm, version 0.0.98G-4g or later. **
+
 _**USE OF THE APCA LOGO AND TRADEMARK**_     
-Use of the APCA or "Powered by APCA" logos or trademearks are prohibited without written consent from Myndex™ Techniologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
-- Developers wishing to use the APCA or "Powered by APCA" logos or trademearks must submit their application or tools for qualification to be granted a limited license to use the APCA or "Powered by APCA" logos or trademearks.
+- Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademearks, **are prohibited without written consent** from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
+- Developers wishing to use the APCA or "Powered by APCA" logos or trademearks **must submit their application or tools for qualification** to be granted a limited license to use the APCA or "Powered by APCA" logos or trademearks in acssociation with their tools.
 - Formal details on the APCA and "Powered by APCA" qualification process are pending. In the interim, make a qualification request in the discussion tab of this repo.
 
 
@@ -97,7 +105,7 @@ All Files _in this Repository_ that do not fall under the W3 cooperative agreeme
 ## WITHDRAWN ASSETS
 ONLY files that are currently in this repository are available for use under these license terms.
 
-As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propogating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
+As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propagating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
 
 #### The current assets shall be in:
     /dist/    
@@ -113,7 +121,7 @@ As some code herein is early beta, and there is a clear interest to prevent obso
 ### Misc Licensing
 Any files that do not fall under the above categories are per the license as indicated in each file.
 
------
+
 -----
 
 ## W3C SOFTWARE AND DOCUMENT NOTICE AND LICENSE
