@@ -28,6 +28,8 @@
 // */
 ///////////////////////////////////////////////////////////////////////////////
 
+const { colorParsley } = require("colorparsley")
+
 // ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
 // @output_file_name apca-w3.min.js
