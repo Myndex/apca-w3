@@ -138,8 +138,7 @@
 // but are needed for the shortcut/alias calcAPCA(), and for the
 // inverseAPCA function, which examines hue.
 
-import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';
-
+import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';
 
 /////  Module Scope Object Containing Constants  /////
 /////   APCA   0.0.98G - 4g - W3 Compatible Constants
