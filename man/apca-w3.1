@@ -1,0 +1,369 @@
+.TH "APCA\-W3" "" "July 2022" "" ""
+.SH "NAME"
+\fBAPCA-W3\fR
+.P
+Accessible Perceptual Contrast Algorithm for W3C & WCAG3
+.SH SYNOPSIS
+.P
+APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor\. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability\.
+.P
+The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement with specific limitations and exclusions\. Please see the license file for details\. 
+.SH QUICKSTART
+.HR
+.SS Node Install
+.P
+.RS 2
+.nf
+npm i apca\-w3
+.fi
+.RE
+.SS Imports
+.P
+.RS 2
+.nf
+<script type="module">
+
+import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY,
+         alphaBlend, calcAPCA, fontLookupAPCA } from 'apca\-w3';
+
+import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';
+// optional string parsing, and a dependency only for calcAPCA()\.
+
+</script>
+.fi
+.RE
+.SH USAGE
+.P
+Parsing of color strings is handled by the colorparsley library\. The rgb colors are passed to the various helper functions as simple arrays\. APCAcontrast() takes a pre\-calculated Ys (estimated screen luminance)
+.SS Parsing:
+.P
+If you need to parse a color string or 24bit number, use the colorParsley() function:
+.P
+.RS 2
+.nf
+let rgbaArray = colorParsley('aliceblue');
+.fi
+.RE
+.SS Alpha Blend:
+.P
+Intended for blending the foreground color into the background\. Only the foreground has an alpha\. There is no conversion to linear space, so blending takes place is the working colorspace, as is standard\.
+.P
+.RS 2
+.nf
+                   // Send 0\-255 arrays alphaBlend(FG, BG)
+let alphaBlended = alphaBlend([0,0,0,0\.6],colorParsley([255,255,255])),
+
+                   // Send 0\-1\.0 float arrays for displayP3toY, 5th element
+                  // is bool (false for floats): alphaBlend(FG, BG, false)
+let alphaBlended = alphaBlend([0\.7,1\.0,1\.0,0\.33],colorParsley([0,0,0]),false);
+.fi
+.RE
+.SS Convert To Ys:
+.P
+Send rgba INT array \fB[123,123,123,1\.0] \fP to \fB sRGBtoY() \fP — this is a slightly different luminance Y that the IEC piecewise\.
+.P
+.RS 2
+.nf
+let Ys = sRGBtoY([123,123,123,1\.0]);
+.fi
+.RE
+.P
+Note that for for sRGB and Adobe98, the values in the array must be 0\.0\-255\.0 per CSS4 specs, but for displayP3toY(), the values must be 0\.0\-1\.0, per Apple and CSS4 specs\. 
+.SS Find Lc Contrast:
+.P
+First color \fImust\fR be text, second color must be the background\.
+.P
+.RS 2
+.nf
+let textColor = [17,17,17,1\.0];
+let backgroundColor = [232,230,221,1\.0];
+
+let contrastLc = APCAcontrast( sRGBtoY( textColor ), sRGBtoY( backgroundColor ) );
+.fi
+.RE
+.P
+Example using everything together, including alphaBlend:
+.P
+.RS 2
+.nf
+let colorTEXT =  rgb(12,23,34,0\.65);
+let colorBG =  #e6e0dd;
+
+let Lc = APCAcontrast(sRGBtoY( alphaBlend(colorParsley(colorTEXT),
+         colorParsley(colorBG)) ), sRGBtoY( colorParsley(colorBG) ));
+.fi
+.RE
+.SS Shortcut Alias:
+.P
+The long complete line shown above is aliased into a function \fB calcAPCA() \fP\|\. Alpha for the text is automatically detected, and ignored if 1 or ''\. The input type is also auto detected (string, kind of string, number, array, object)\. By default returns a signed float \-108\.0 to 106\.0 (approx)
+.P
+.RS 2
+.nf
+let Lc = calcAPCA(colorTEXT,colorBG);
+.fi
+.RE
+.SS Font Size Array:
+.P
+This version includes an interpolated font size array\.
+Send \fBfontLookupAPCA(contrast)\fP a contrast value, and it returns an array, with the contrast (Lc) as the zeroth element, then 9 font sizes in px corresponding to weights 100 thru 900:
+.P
+.RS 2
+.nf
+['LcValue',100,200,300,400,500,600,700,800,900]
+.fi
+.RE
+.P
+Example:
+.P
+.RS 2
+.nf
+fontArray = fontLookupAPCA(\-68\.541);    
+console\.log(fontArray) // \-68\.541,67,40,28,20\.5,18\.5,16\.5,15,416,418
+.fi
+.RE
+.P
+Thus the 400 weight font is indicating 20\.5px
+.SS Reverse APCA:
+.P
+New in this version is a reverse contrast lookup\. Specify a contrast, and one color (i\.e\. bg) and it will try to find a color with that contrast\.
+.P
+\fBNotes on reverseAPCA():\fR    
+.RS 0
+.IP 1. 3
+Currently only returns a greyscale color
+.IP 2. 3
+If a color can not fit the contrast, or other error, returns false\.
+.RS
+.IP \(bu 2
+A small overrun/underrun of a few percent is permitted\.
+
+.RE
+.IP 3. 3
+Can return a hex string (default) or an array of RGBA values, with the fifth element a string indicating if the color is for text or bg\.
+ reverseAPCA (Lc, knownY, knownType = 'bg', returnAs = 'hex')
+
+.RE
+.SS String Theory:
+.P
+See the colorparsley package for documentation on the available string inputs\.
+.P
+colorParsley() is a dependency for the shorthand \fB calcAPCA() \fP
+.SS Two Hidden Parameters
+.P
+There are two extra parameters for calcAPCA(), and one extra for APCAcontrast\.
+.P
+.RS 2
+.nf
+calcAPCA( text, BG, places, isInt(bool) )
+APCAcontrast ( txYs, bgYs, places = \-1 )
+alphaBlend( txt, BG, round(bool) )
+.fi
+.RE
+.P
+\fB places \fP defaults to \-1, but you can send it 0 and the Lc is returned as a rounded value, and instead of a minus sign for polarity, 'WoB' for white on black is returned\.
+.P
+\fB isInt \fP or \fBround\fP defaults to true, as we assume the RGB tuples are 0\-255\. If you are sending float such as for displayP3, then set ` round = false ``
+.P
+\fINOTE: neither of these are "official" and may change, move, or vanish\.\fR
+.HR
+.SH EXTRAS
+.SS Resources
+.P
+Visit git\.myndex\.com \fIhttps://git\.myndex\.com\fR for a catalog of resources, including articles, third party and peer reviews, additional documentation, white\-papers, and more\.
+.SS Questions & Comments
+.P
+For comments and discussions, please see the main SAPC\-APCA repo, discussion area\. \fIhttps://github\.com/Myndex/SAPC\-APCA/discussions\fR
+.SS LIVE VERSION \fIhttps://www\.myndex\.com/APCA/\fR
+.P
+There is a working version with examples and reference material on the APCA demo tool site \fIhttps://www\.myndex\.com/APCA/\fR
+.SH VERSION INFORMATION
+.P
+Current Algorithm Version: \fB0\.0\.98G\-4g\fR (February 15, 2021) (w3) 
+.P
+This is the base algorithm version\. The versions listed below are for the overall library file, as features and functions are added to aide in integration\. These added features do not impact the base algorithm which is stable and undergoing public beta validation\.
+.P
+Current Library Version: \fB0\.1\.9\fR (w3) (98G4g) \fIbeta\fR
+.RS 0
+.IP \(bu 2
+See Version History \fI#version\-history\fR for details\.
+
+.RE
+.SS Font Lookup Table
+.P
+Current as of May 27, 2022
+.P
+\fBNotes on the lookups:\fR
+.RS 0
+.IP \(bu 2
+This is a basic table for fluent readability of text\. Text that is intended to be read (primary content) should meet or exceed the values on the table\.
+.IP \(bu 2
+For body text, add Lc 15 for any value on the table lower than Lc 75\.
+.IP \(bu 2
+For instance, if using a 24px font, add Lc 15 to the minimum contrast value
+.IP \(bu 2
+For sub\-fluent text (i\.e\. not primary content) Lc values can be lowered by Lc 15, but in no case less than Lc 30\.
+.IP \(bu 2
+For non\-fluent spot text (copyright bug, disabled text, placeholder) Lc values can be lowered by Lc25, but in no case less than Lc 30\.
+.IP \(bu 2
+Fonts larger than 24px and weight 300 or more have a maximum contrast of Lc 90\.
+
+.RE
+.SS Current APCA Constants
+.P
+( 0\.0\.98G \- W3 last changed Feb 15, 2021 )
+.br
+\fBThese constants are for use with the web standard sRGB colorspace\.\fR
+These are the current constants for use with current library version 0\.1\.9+
+.P
+.RS 2
+.nf
+/////  0\.0\.98G \- W3 constants (W3 license only):                       /////
+////   These constants remain unchanged for apca\-w3                    ////
+///    versions 0\.1\.0 (initial npm package) and later                  ///
+//                                                                     //
+
+exponents =  { mainTRC: 2\.4,    normBG: 0\.56,    normTXT: 0\.57,
+                                revTXT: 0\.62,    revBG: 0\.65, };
+
+colorSpace = { sRco: 0\.2126729, sGco: 0\.7151522, sBco: 0\.0721750, };
+
+clamps =     { blkThrs: 0\.022,  blkClmp: 1\.414,  loClip: 0\.1,  deltaYmin: 0\.0005, };
+
+scalers =    { scaleBoW: 1\.14,  loBoWoffset: 0\.027, 
+             scaleWoB: 1\.14,  loWoBoffset: 0\.027, };    
+
+// Note: loClip && deltaYmin do not affect lc in range & only clamp low Lc values
+
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+/////   0\.1\.1 Color space coefficients for P3 and Adobe                /////
+////    These are derived from the 1931 CIE standard observer          ////
+///     Using the equations found at BruceLindbloom\.com                ///
+//      And using the current CIE D65                                  //
+
+/////  Display P3: /////
+
+const sRco = 0\.2289829594805780, 
+      sGco = 0\.6917492625852380, 
+      sBco = 0\.0792677779341829; // displayP3 coefficients
+
+// Derived from 1931 CIE xyY:
+// xW       yW        K     xR    yR    xG    yG    xB    yB
+// 0\.312720 0\.329030  6504  0\.680 0\.320 0\.265 0\.690 0\.150 0\.060
+
+
+///// AdobeRGB: /////
+
+const mainTRC = 2\.35; // Pending further evaluation:
+                     // 2\.35 exponent to emulate actual monitor perception
+
+const sRco = 0\.2973550227113810, 
+      sGco = 0\.6273727497145280, 
+      sBco = 0\.0752722275740913; // adobeRGB coefficients
+
+// Derived from 1931 CIE xyY:
+// xW       yW        K     xR    yR    xG    yG    xB    yB
+// 0\.312720 0\.329030  6504  0\.640 0\.330 0\.210 0\.710 0\.150 0\.060
+
+
+\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+///// 0\.1\.14G MAGIC NUMBERS for UNCLAMP, used only with reverseAPCA() /////
+////  for use with blkThrs: 0\.022 & blkClmp: 1\.414                    ////
+
+const mFactor = 1\.94685544331710;
+const mFactInv = 1/mFactor;
+const mOffsetIn = 0\.03873938165714010;
+const mExpAdj = 0\.2833433964208690;
+const mExp = mExpAdj / blkClmp;
+const mOffsetOut = 0\.3128657958707580;
+.fi
+.RE
+.SS Version History
+.P
+\fB0\.1\.8 \- June 5, 2022\fR
+.RS 0
+.IP \(bu 2
+Corrected the version numbering in the apca\-w3\.js file
+.IP \(bu 2
+Added a LaTeX math svg of the base algorithm to this README file
+.IP \(bu 2
+NOTE: the live tool at www\.myndex\.com/APCA/ \fIhttps://www\.myndex\.com/APCA/\fR is now using a version of this apca\-w3\.js file, as well as colorparsley\.
+
+.RE
+.P
+\fB0\.1\.7 \- June 5, 2022\fR
+.RS 0
+.IP \(bu 2
+Version number set to match font lookup table version
+.IP \(bu 2
+Added new test, run with \fB npm test \fP
+.IP \(bu 2
+Maintenance updates, adjusted alphaBlend for compliance with CSS4
+
+.RE
+.P
+\fB0\.1\.4 \- May 27, 2022\fR
+.RS 0
+.IP \(bu 2
+Updated the look\-up tables for the fontLookupAPCA() function, and also added the data folder, where the raw data for the lookup tables can be found\.
+.IP \(bu 2
+Also some minor maintenance\. (Note: the lookup tables are version 0\.1\.7 — will synchronize numbers on next publish)\.
+
+.RE
+.P
+\fB0\.1\.3 \- May 17, 2022\fR
+.RS 0
+.IP \(bu 2
+Fixed the module imports for colorparsley and apca\-w3 so they play well together\.
+.IP \(bu 2
+No longer providing a minified version in the dist folder\. Now just the file in the src folder\.
+
+.RE
+.P
+\fB0\.1\.2 \- April 23, 2022\fR
+.RS 0
+.IP \(bu 2
+\fBNEW!\fR \fBfontLookupAPCA(Lc)\fP Live font lookup table — send it a contrast, it returns an array of font sizes (in px) for each of 9 weights (100 to 900)\.
+.IP \(bu 2
+\fBNEW!\fR \fBreverseAPCA(Lc,Y,use,returnAs)\fP New in this version is a reverse contrast lookup\. Specify a contrast, and one color (i\.e\. bg) and it will try to find a color with that contrast\.
+
+.RE
+.P
+\fBCHANGE for 0\.1\.1: Jan 12, 2022\fR
+.RS 0
+.IP \(bu 2
+NEW!! Alpha channels! AdobeRGB!!
+
+.RE
+.P
+\fBCHANGE for 0\.1\.0: Jan 10, 2022\fR
+.RS 0
+.IP \(bu 2
+NEW! displayP3!       
+.IP \(bu 2
+colorParsley() is now in its own package and must be imported separately\.      
+.IP \(bu 2
+Replaced alpha versioning with semantic versioning for public beta\.
+.RS
+.IP \(bu 2
+NOTE: while the version of this library file increments as features are added, the base algorithm is beta\-stable and constants remain fixed at 0\.0\.98G\-4g, from Feb\. 15th, 2021\. 
+
+.RE
+
+.RE
+.P
+\fB0\.0\.98G\-4g\-4: Dec 21, 2021\fR
+.br
+\fB0\.0\.98G\-4g\-3: Dec 13, 2021\fR
+.br
+\fB0\.0\.98G\-4g\-2: Dec 11, 2021\fR
+.br
+\fB0\.0\.98G\-4g\-betafish: Initial npm publish Dec 2, 2021\fR
+.br
+This moved over the base APCA and G4g constants (from Feb\. 15th, 2021) to an npm package\.
+.SH APCA is the Accessible Perceptual Contrast Algorithm
+.P
+\|\.
+.SS Disclaimer:
+.P
+APCA is being evaluated as a replacement for WCAG 2 contrast math for future standards and guidelines, however, standards that will be incorporating APCA are still developmental\. Because WCAG 2 contrast math does not accurately model human visual perception nor visual impairments, there will be discrepancies between WCAG 2 contrast math, and perceptually uniform models such as APCA\. It is up to the end user to determine suitability of purpose for their region and conformance requirements\.
+

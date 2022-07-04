@@ -6,6 +6,30 @@
 /////  ——————————————————————————————————————————————————————————————————  /////
 ////////////////////////////////////////////////////////////////////////////////
 
+/////     TABLE OF CONTENTS     /////
+//
+//   A) Prepared Javascript Arrays  (line 62)
+//     1) Index arrays - just 1D prototypes of the Y or X axis
+//     2) Font Lookup Sorted by font size
+//     3) Font Lookup Sorted by Contrast Lc
+//     4) 'MAX' Font Lookup Sorted by Contrast Lc
+//     5) Use Case Score Adjust array sorted by Contrast Lc
+//     6) Font Lookup ASCENDING SORT by Contrast, as needed for APCA-W3
+//        a) This includes the font interpolator function from APCA-W3
+//
+//   B) Prepared HTML Visual Tables (line 648)
+//     1) Font Lookup Sorted by font size
+//     2) Font Lookup Sorted by Contrast Lc
+//
+//   C) Raw tab-delimited data from the development tool (line 1300)
+//     1) Font Lookup Sorted by font size
+//     2) Font Lookup Sorted by Contrast Lc
+//     3) 'MAX' Font Lookup
+//     4) Use Case Score Adjust
+//
+
+
+/////  INTRODUCTION /////
 
 // APCA CONTRAST FONT LOOKUP TABLES
 // Copyright © 2022 by Myndex Research and Andrew Somers. All Rights Reserved
@@ -32,30 +56,6 @@
 ////        Lc 45 * 0.2 = 9 
 ///      and 9 is the index for the row for Lc 45
 
-
-
-/////     TABLE OF CONTENTS     /////
-//
-//   A) Prepared Javascript Arrays
-//     1) Index arrays - just 1D prototypes of the Y or X axis
-//     2) Font Lookup Sorted by font size
-//     3) Font Lookup Sorted by Contrast Lc
-//     4) 'MAX' Font Lookup Sorted by Contrast Lc
-//     5) Use Case Score Adjust array sorted by Contrast Lc
-//     6) Font Lookup ASCENDING SORT by Contrast, as needed for APCA-W3
-//        a) This includes the font interpolator function from APCA-W3
-//
-//   B) Prepared HTML Visual Tables
-//     1) Font Lookup Sorted by font size
-//     2) Font Lookup Sorted by Contrast Lc
-//
-//   C) Raw tab-delimited data from the development tool
-//     1) Font Lookup Sorted by font size
-//     2) Font Lookup Sorted by Contrast Lc
-//     3) 'MAX' Font Lookup
-//     4) Use Case Score Adjust
-//
-//
 
 
 
@@ -637,6 +637,7 @@ const fontDeltaAscend = [
 ////////\                            ///////////////////////////////////////////
 /////////\   End fontLookupAPCA()   ///////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -1289,6 +1290,10 @@ const fontDeltaAscend = [
     </tr>
   </table>
 </div>
+
+
+
+
 
 
 

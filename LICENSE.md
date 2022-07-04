@@ -1,18 +1,20 @@
-Code and documentation in this repositiory is copyright © 2019-2021 by Andrew Somers and/or Myndex™. All Rights Reserved.
+Code and documentation in this repositiory is copyright © 2019-2022 by Andrew Somers and/or Myndex™. All Rights Reserved. Patent(s) pending.
 
 # — LICENSE —
 
+## _W3 License for Compliant Code Only_
 ### The Short Summary, TL;DR:
 Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-delivered and web-based content only, and not for any other use.
 
-Use of the terms "APCA", "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", to describe any contrast method, app, or device, is only permitted for code that is maintained and up to date.
+Use of the terms "SAPC", "SACAM", "APCA", "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", to describe any contrast method, app, or device, is only permitted for code that is correctly implemented, maintained, and up to date.
 
---------------
+Code or implementations found to be non-compliant with the correct operation and methodology as defined for APCA contrast, including but not limited to the correct indication of polarity, and use of the current approved constants, shall be deemed in breech of license and a copyright violation.
+
 ______________
 
 ## W3 VERSION LICENSE:
 
-All Files in this Repository are licensed to the W3.org under their cooperative license agreement(s), and subject to the further limitations as defined in this license agreement.
+All Files in this Repository are licensed to the W3.org under their cooperative license agreement(s), but subject to the further limitations as defined in this license agreement.
 
 - Reports in this Repository are licensed under the
 [W3C Software and Document License](http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
@@ -24,13 +26,13 @@ All Files in this Repository are licensed to the W3.org under their cooperative 
 - Contributions to Test Suites are made under the
 [W3C 3-clause BSD License](https://www.w3.org/Consortium/Legal/2008/03-bsd-license.html)
 
-Any files, or use cases of files, not under the W3 cooperative agreement are licensed under the AGPU v3 License, subject to disclaimers.
+Any files, or use cases of files, not under the W3 cooperative agreement are licensed under the AGPU v3 License, subject to limitations as cited in the disclaimers.
 
 -----
 ## W3/AGWG/WCAG VERSION DISCLAIMER AND RESTRICTIONS
 
 _**DISCLAIMER AND LIMITATIONS OF USE:**_       
-**apca-w3** is an embodiment of certain suprathreshold contrast
+**apca-w3** is an embodiment of certain supra-threshold contrast
 prediction technologies and it is licensed to the W3 on a
 limited basis for use in WCAG accessibility guidelines
 for web content only. **apca-w3**  may be used for 
@@ -49,7 +51,7 @@ Any **apca-w3** files in this repository may be used or incorporated only in too
 
 - Developers are highly encouraged to use the npm package(s) when possible:  ` npm i apca-w3 `
 
-- Deveopers incorporating this code into their applications, widgets, or other tools, have a duty to ensure that the most recent version of this code is used in their current or any future release. 
+- Developers incorporating this code into their applications, widgets, or other tools, have a duty to ensure that the most recent version of this code is used in their current or any future release. 
 
 - Breaking change exception:
     - developers do not need to incorporate future versions of **apca-w3** that have breaking changes when their release is only a minor or patch version per semantic versioning.
@@ -57,7 +59,7 @@ Any **apca-w3** files in this repository may be used or incorporated only in too
     - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
 
 _**USE OF APCA TERMINOLOGY**_     
-- Use of the acronym APCA, the terms "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", "Readability Contrast", to describe any embodyment or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly using the APCA algorithm, version 0.0.98G-4g or later. **
+- Use of the acronyms APCA or SAPC, or the terms "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", or "Readability Contrast", to describe any embodyment or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm version 0.0.98G-4g or later. **
 
 _**USE OF THE APCA LOGO AND TRADEMARK**_     
 - Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademearks, **are prohibited without written consent** from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
@@ -105,7 +107,7 @@ All Files _in this Repository_ that do not fall under the W3 cooperative agreeme
 ## WITHDRAWN ASSETS
 ONLY files that are currently in this repository are available for use under these license terms.
 
-As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propagating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
+As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propagating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a limited period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
 
 #### The current assets shall be in:
     /dist/    
@@ -133,6 +135,7 @@ Permission to copy, modify, and distribute this work, with or without modificati
 - The full text of this NOTICE in a location viewable to users of the redistributed or derivative work.
 - Any pre-existing intellectual property disclaimers, notices, or terms and conditions. If none exist, the W3C Software and Document Short Notice should be included.
 - Notice of any changes or modifications, through a copyright statement on the new code or document such as "This software or document includes material copied from or derived from [title and URI of the W3C document]. Copyright © [YEAR] W3C® (MIT, ERCIM, Keio, Beihang)."
+
 ### Disclaimers
 THIS WORK IS PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF THE SOFTWARE OR DOCUMENT WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.
 

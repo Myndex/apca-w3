@@ -1,87 +1,52 @@
-<p align="center">
- <img src="images/APCAcolor4.png"  alt="APCA The Revolution Will Be Readable" width="420"><br><br>
-    
-  <a href="https://github.com/Myndex/SAPC-APCA">
-    <img src="https://badgen.net/badge/SAPC/Main Repo/db6b0b" alt="SAPC/Main Repo" />
-  </a> &nbsp;&nbsp;  
-  <a href="https://npmjs.org/package/apca-w3">
-    <img src="https://badgen.net/npm/v/apca-w3?color=3000c0&icon=npm" alt="version" />
-  </a> &nbsp;&nbsp;
-  <a href="https://github.com/Myndex/apca-w3/src/">
-    <img src="https://badgen.net/badge/JS/Vanilla/889900" alt="plain vanilla JS" />
-  </a> &nbsp;&nbsp;
-  <a href="https://github.com/Myndex/apca-w3/blob/master/LICENSE.md">
-    <img src="https://badgen.net/badge/license/W3 • Web Use?icon=github&color=BB5FD1" alt="license" />
-  </a> &nbsp;&nbsp;
-</p>
-<p align="center">
-  <a href="https://github.com/Myndex/apca-w3">
-    <img src="https://badgen.net/github/last-commit/Myndex/apca-w3/?icon=github" alt="last commit" />
-  </a> &nbsp;&nbsp;
-  <a href="https://npmjs.org/package/apca-w3">
-    <img src="https://badgen.net/npm/dt/apca-w3?color=6000b0&icon=npm" alt="downloads" />
-  </a> &nbsp;&nbsp;
-  <a href="https://twitter.com/MyndexResearch">
-    <img src="https://badgen.net/badge/@/MyndexResearch?icon=twitter" alt="twitter" />
-  </a> &nbsp;&nbsp;
-  <a href="https://www.myndex.com/APCA/">
-    <img src="https://badgen.net/badge/APCA/Live Tool/db6b0b" alt="APCA/Live Tool/" />
-  </a> &nbsp;&nbsp;    
+<p align="left" class="por" style="margin: -36px 0 12px">
+<a href="https://git.myndex.com"><img src="https://badgen.net/badge/APCA/Resources/3300aa" alt="APCA Resources" /></a>&nbsp;
+<a href="https://github.com/Myndex/SAPC-APCA"><img src="https://badgen.net/badge/SAPC-APCA/Main Repo/db6b0b" alt="SAPC/Main Repo" /></a>&nbsp;
+<a href="https://github.com/Myndex/SAPC-APCA"><img src="https://badgen.net/github/stars/Myndex/SAPC-APCA/" alt="stars" /></a>&nbsp;
+<a href="https://twitter.com/MyndexResearch"><img src="https://badgen.net/badge/@/MyndexResearch?icon=twitter" alt="twitter" /></a>&nbsp;<br>
+<a href="https://npmjs.org/package/apca-w3"><img src="https://badgen.net/npm/v/apca-w3?color=3000c0&icon=npm" alt="version" /></a>&nbsp;
+<a href="https://github.com/Myndex/apca-w3/blob/master/LICENSE.md"><img src="https://badgen.net/badge/license/W3 • Web Use?icon=github&color=BB5FD1" alt="license" /></a>&nbsp;
+<a href="https://github.com/Myndex/apca-w3"><img src="https://badgen.net/github/last-commit/Myndex/apca-w3/?icon=github" alt="last commit" /></a>&nbsp;<br>
+<a href="https://npmjs.org/package/apca-w3"><img src="https://badgen.net/npm/dt/apca-w3?color=6000b0&icon=npm" alt="downloads" /></a>&nbsp;
+<a href="https://github.com/Myndex/apca-w3/src/"><img src="https://badgen.net/badge/JS/Vanilla/889900" alt="plain vanilla JS" /></a>&nbsp;
+<a href="https://www.myndex.com/CVD/"><img src="https://badgen.net/badge/Color Vision/Simulator/cc0044" alt="CVD Simulator" /></a>&nbsp;
+<a href="https://www.myndex.com/APCA/"><img src="https://badgen.net/badge/APCA/Live Tool/db6b0b" alt="APCA/Live Tool/" /></a>&nbsp;
 </p>
 
-# APCA™ for W3C & WCAG\_3
-## npm i apca-w3
-The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement.
+# [APC<span class="flipH">A</span>](https://github.com/Myndex/apca-w3)<sup>™</sup> [for W3C & WCAG3](https://github.com/Myndex/apca-w3)
 
-### Questions/Comments?
-#### For comments and discussions, please see the main SAPC-APCA repo, [discussion area.]( https://github.com/Myndex/SAPC-APCA/discussions)
+## _Welcome!_ 
+APCA is the **Accessible Perceptual Contrast Algorithm**, a new way to predict contrast for text and non-text content on self illuminated displays.
 
------
-## APCA stands for:
+<p align="center">
+<img width='220' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img  width='207' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img  width='193' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
+<br>
+</p>
 
-### _Accessible_ Perceptual Contrast Algorithm
-
-
-
-<img width='250' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  <img  width='240' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>   <img  width='220' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
-
-### Current Algorithm Version: **0.0.98G-4g** (February 15, 2021) (w3) 
-This is the base algorithm version. The versions listed below are for the overal library file, as features and functions are added to aide in integration. These added features do not impact the base algorithm which is stable and undergoing public beta validation.
-
-
-### Current Library Version: **0.1.8** (w3) (98G4g) _beta_
-- See [Version History](#version-history) for details.
-
-
-### What is it?
+## _WHAT IS IT?_
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
+The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement with specific limitations and exclusions. Please see the license file for details. 
 
------
-## _Accessibility Statement for Beta Sites_
-Beta testers may wish to include the following statement in their sites boilerplate:
-### This website is beta testing the APCA guidelines for determining text and non-text contrast. It is well known that WCAG 2 contrast maths are not accurate regarding human perception, and automated testing using WCAG 2 math may incorrectly indicate errors in some color pairs on this site. The APCA guidelines are a substantial improvement in accessibility over WCAG 2 contrast criterions, and therefore compliant with the ADA, and also 508 rules under the alternative methods section. Any automated or manual testing done to determine conformance of this site needs to be conducted using a perceptually accurate method such as APCA.
+### Current Library Version: **0.1.9** (w3) (98G4g) _beta_
+- See [Version Information](#version-information) for details.
 
------
-## Font Lookup Table
-Current as of May 27, 2022
+<p align="center"><img src="https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAcolor4.png"  alt="APCA The Revolution Will Be Readable" width="420"></p>
 
-Notes on the lookups:
-- This is a basic table for fluent readability of text. Text that is intended to be read (primary content) should meet or exceed the values on the table.
-- For body text, add Lc 15 for any value on the table lower than Lc 75.
-    - For instance, if using a 24px font, add Lc 15 to the minimum contrast value
-- For sub-fluent text (i.e. not primary content) Lc values can be lowered by Lc 15, but in no case less than Lc 30.
-- For non-fluent spot text (copyright bug, disabled text, placeholder) Lc values can be lowered by Lc25, but in no case less than Lc 30.
-- Fonts larger than 24px and weight 300 or more have a maximum contrast of Lc 90.
+## _GENERAL OVERVIEW_
 
-<img width="400" alt="APCA Lookup Table" src="./images/APCAlookupByFont.jpeg">
-<br>
-<img width="400" alt="APCA Lookup table legend" src="./images/APCAtableLegend.jpeg">
-<br>
-<img width="400" alt="APCA Lookup Table" src="./images/APCAlookupByContrast.jpeg">
+### Resources
+Visit [git.myndex.com](https://git.myndex.com) for a catalog of resources, including articles, third party and peer reviews, additional documentation, white-papers, and more.
+
+### Questions & Comments
+For comments and discussions, please see the main SAPC-APCA repo, [discussion area.]( https://github.com/Myndex/SAPC-APCA/discussions) This is also where we discuss draft guidelines and proposals. Please post all comments or discussions there and not in the satellite repositories so they can be tracked and resolved.
+
+### [LIVE VERSION][APCAsite]
+There is a working version with examples and reference material on [the APCA demo tool site][APCAsite]
+
+[APCAsite]: https://www.myndex.com/APCA/
 
 ------
-## QuickStart
+## _QUICKSTART_
 ### _Install_
 
 ```javascript
@@ -91,23 +56,23 @@ Notes on the lookups:
 ### _Import_
 ```javascript
 
-<script type="module">
+    <script type="module">
 
-import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from './apca-w3.js';
+    import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from 'apca-w3';
 
-import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';  // optional string parsing
+    import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';  // optional string parsing
 
-</script>
+    </script>
 ```
 
 ### _Usage:_
-PARSE:
+#### PARSE:    
 If you need to parse a color string or 24bit number, use the colorParsley() function:
 
 ```javascript
     let rgbaArray = colorParsley('aliceblue');
 ```
-ALPHA BLEND
+#### ALPHA BLEND:     
 Intended for blending the foreground color into the background. Only the foreground has an alpha. There is no conversion to linear space, so blending takes place is the working colorspace, as is standard.
 
 ```javascript
@@ -119,13 +84,15 @@ Intended for blending the foreground color into the background. Only the foregro
     let alphaBlended = alphaBlend([0.7,1.0,1.0,0.33],colorParsley([0,0,0]),false);
 ```
 
-CONVERT TO Ys
+#### CONVERT TO Ys:    
 Send rgba INT array `[123,123,123,1.0] ` to ` sRGBtoY() ` — this is a slightly different luminance Y that the IEC piecewise.
 
 ```javascript
     let Ys = sRGBtoY([123,123,123,1.0]);
 ```
-FIND Lc CONTRAST
+Note that for for sRGB and Adobe98, the values in the array must be 0.0-255.0 per CSS4 specs, but for displayP3toY(), the values must be 0.0-1.0, per Apple and CSS4 specs. 
+
+#### FIND Lc CONTRAST:    
 First color _must_ be text, second color must be the background.
 
 ```javascript
@@ -138,13 +105,13 @@ Example using everything together, including alphaBlend:
 
 ```javascript
 
-  let colorTEXT =  rgb(12,23,34,0.65);
-  let colorBG =  #e6e0dd;
-  
-  let Lc = APCAcontrast(sRGBtoY( alphaBlend(colorParsley(colorTEXT), colorParsley(colorBG)) ),
+    let colorTEXT =  rgb(12,23,34,0.65);
+    let colorBG =  #e6e0dd;
+
+    let Lc = APCAcontrast(sRGBtoY( alphaBlend(colorParsley(colorTEXT), colorParsley(colorBG)) ),
                         sRGBtoY( colorParsley(colorBG) ));
 ```
-#### SHORTCUT ALIAS
+#### SHORTCUT ALIAS:
 The long complete line shown above is aliased into a function ` calcAPCA() `. Alpha for the text is automatically detected, and ignored if 1 or ''. The input type is also auto detected (string, king of string, number, array, object). By default returns a signed float -108.0 to 106.0 (approx)
 
 ```javascript
@@ -158,7 +125,7 @@ New in this version is an interpolated font size array. Send `fontLookupAPCA(con
 
 Example:
 
-	  fontArray = fontLookupAPCA(-68.541);
+    fontArray = fontLookupAPCA(-68.541);
 
     console.log(fontArray) // -68.541,67,40,28,20.5,18.5,16.5,15,416,418
 
@@ -168,45 +135,81 @@ Thus the 400 weight font is indicating 20.5px
 New in this version is a reverse contrast lookup. Specify a contrast, and one color (i.e. bg) and it will try to find a color with that contrast.
 
 #### NOTES:
-1) Currently only returns a greyscale color
-2) If a color can not fit the contrast, or other error, returns false.
+1. Currently only returns a greyscale color
+2. If a color can not fit the contrast, or other error, returns false.
     - A small overrun/underrun of a few percent is permitted.
-3) Can return a hex string (default) or an array of RGBA values, with the fifth element a string indicating if the color is for text or bg.
+3. Can return a hex string (default) or an array of RGBA values, with the fifth element a string indicating if the color is for text or bg.
 
+```javascript
     reverseAPCA (Lc, knownY, knownType = 'bg', returnAs = 'hex')
-
+```
 
 ### _String Theory_
 See the colorparsley package for documentation on the available string inputs.
 
-### colorParsley() string parsing moved to its own package
-The function is called "colorParsley()" because what is that useless leafy thing the restaurant puts on the plate?  Well, most mature software already has good parsing, and you may want to minimize the file leaving all that "parsley" at the restaurant...
-
-So, colorParsley() is removed from the APCA-W3 file, and is now its own package, listed as a dependency here.
-
-**colorParsley() is required for the shorthand ` calcAPCA() `**
+colorParsley() is a dependency for the shorthand ` calcAPCA() `
 
 
-### Two Secret Parameters
+### _Two Bonus Parameters_
 There are two extra parameters for calcAPCA(), and one extra for APCAcontrast.
 
+```javascript
     calcAPCA( text, BG, places, isInt )
     APCAcontrast ( txYs, bgYs, places = -1 )
     alphaBlend( txt, BG, round(bool) )
+```
 
 ` places ` defaults to -1, but you can send it 0 and the Lc is returned as a rounded value, and instead of a minus sign for polarity, 'WoB' for white on black is returned.
 
-` isInt ` defaults to true, as we assume the RGB tuples are 0-255. If you are sending float such as for displayP3, then set ` isInt = false ``
+` isInt ` or `round` defaults to true, as we assume the RGB tuples are 0-255. If you are sending float such as for displayP3, then set ` isInt = false ``
 
 _NOTE: neither of these are "official" and may change, move, or vanish._
 
 -----
-## EXTRAS
-Additional documentation, including a plain language walkthrough, LaTeX math, and more are available [at the main SAPC repo.](https://github.com/Myndex/SAPC-APCA)
+## _APCA-W3 Basic Math (sRGB)_
 
-### Current APCA Constants ( 0.0.98G - W3 last changed Feb 15, 2021 )
+<img width="420" alt="the math for the basic APCA" src="https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAw3_0.1.17_APCA0.0.98G.svg">
+
+---
+## _Accessibility Statement for Beta Sites_
+Beta testers may wish to include the following statement in their site's boilerplate:
+
+### This website is beta testing the APCA guidelines for determining text and non-text contrast. It is well known that WCAG 2 contrast maths are not accurate regarding human perception, and automated testing using WCAG 2 math may incorrectly indicate errors in some color pairs on this site. The APCA guidelines are a substantial improvement in accessibility over WCAG 2 contrast criterions, and therefore compliant with the ADA, and also 508 rules under the alternative methods section. Any automated or manual testing done to determine conformance of this site needs to be conducted using a perceptually accurate method such as APCA.
+
+
+## _VERSION INFORMATION_
+
+### Current Algorithm Version: **0.0.98G-4g** (February 15, 2021) (w3) 
+This is the base algorithm version. The other version numbering as [listed below](#version-history) are for the overall library file, relating to features and functions are added to aide in integration. These added features do not impact the base algorithm which is stable and undergoing public beta validation.
+
+### Current Library Version: **0.1.9** (w3) (98G4g) _beta_
+- See [Version History](#version-history) for details.
+
+
+### Font Lookup Table
+Current as of May 27, 2022
+
+**Notes on the lookups:**
+- This is a basic table for fluent readability of text. Text that is intended to be read (primary content) should meet or exceed the values on the table.
+- For body text, add Lc 15 for any value on the table lower than Lc 75.
+- For instance, if using a 24px font, add Lc 15 to the minimum contrast value
+- For sub-fluent text (i.e. not primary content) Lc values can be lowered by Lc 15, but in no case less than Lc 30.
+- For non-fluent spot text (copyright bug, disabled text, placeholder) Lc values can be lowered by Lc25, but in no case less than Lc 30.
+- Fonts larger than 24px and weight 300 or more have a maximum contrast of Lc 90.
+
+
+<img width="420" alt="APCA Lookup Table" src="https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAlookupByFont.jpeg">
+<br>
+<img width="420" alt="APCA Lookup table legend" src="https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAtableLegend.jpeg">
+<br>
+<img width="420" alt="APCA Lookup Table" src="https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAlookupByContrast.jpeg">
+
+
+### Current APCA Constants
+( 0.0.98G - W3 last changed Feb 15, 2021 )     
 **These constants are for use with the web standard sRGB colorspace.**
-These are the current contrast for use with current library version 0.1.8
+These are the current constants for use with current library version 0.1.9+
+
 
 ```javascript
 /////  0.0.98G - W3 constants (W3 license only):                       /////
@@ -270,21 +273,14 @@ const sRco = 0.2973550227113810,
 ```
 
 ----- 
-### [LIVE VERSION][APCAsite]
-There is a working version with examples and reference material on [the APCA demo tool site][APCAsite]
-
-[APCAsite]: https://www.myndex.com/APCA/
-
-[![](https://raw.githubusercontent.com/Myndex/SAPC-APCA/master/images/Myndex_eye_cielabWide.png)](https://github.com/Myndex)
-
-### APCA Base Math (sRGB)
-    
-<img width="480" alt="the math for the basic APCA" src="./images/APCAw3_0.1.17_APCA0.0.98G.svg">
 
 
----
+### _VERSION HISTORY_
 
-## Version History
+#### 0.1.9 - July 3, 2022
+- Fixed dependent import statement
+- DEV: Added man page and man page generation script
+- Some documentation corrections/additions/organization
 
 #### 0.1.8 • June 5, 2022
 - Corrected the version numbering in the apca-w3.js file

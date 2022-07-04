@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 /** @preserve
 /////    SAPC APCA - Advanced Perceptual Contrast Algorithm
-/////           Beta 0.1.8 W3 • contrast function only
-/////           DIST: W3 • Revision date: May 28, 2022
+/////           Beta 0.1.9 W3 • contrast function only
+/////           DIST: W3 • Revision date: July 3, 2022
 /////    Function to parse color values and determine Lc contrast
 /////    Copyright © 2019-2022 by Andrew Somers. All Rights Reserved.
 /////    LICENSE: W3 LICENSE
@@ -11,45 +11,39 @@
 /////
 ///////////////////////////////////////////////////////////////////////////////
 /////
-/////    IMPORTS:
-/////    import { APCAcontrast, sRGBtoY, displayP3toY,
-/////             calcAPCA, fontLookupAPCA } from 'apca-w3';
-/////    import { colorParsley } from 'colorparsley';
+/////    MINIMAL IMPORTS:
+/////      import { APCAcontrast, sRGBtoY, displayP3toY,
+/////               calcAPCA, fontLookupAPCA } from 'apca-w3';
+/////      import { colorParsley } from 'colorparsley';
 /////
 /////    FORWARD CONTRAST USAGE:
-/////    Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
-/////    Where the colors are sent as an rgba array [0,0,0,255]
+/////      Lc = APCAcontrast( sRGBtoY( TEXTcolor ) , sRGBtoY( BACKGNDcolor ) );
+/////    Where the colors are sent as an rgba array [255,255,255,1]
 /////
 /////    Retrieving an array of font sizes for the contrast:
-/////    fontArray = fontLookupAPCA(Lc);
-/////
+/////      fontArray = fontLookupAPCA(Lc);
 /////
 /////    Live Demonstrator at https://www.myndex.com/APCA/
 // */
 ///////////////////////////////////////////////////////////////////////////////
 
-// ==ClosureCompiler==
-// @compilation_level SIMPLE_OPTIMIZATIONS
-// @output_file_name apca-w3.min.js
-// @code_url https://raw.githubusercontent.com/Myndex/apca-w3/master/src/apca-w3.js
-// ==/ClosureCompiler==
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /////
-/////                      SAPC Method and APCA Algorithm
+/////                  SAPC Method and APCA Algorithm
 /////   W3 Licensed Version: https://github.com/Myndex/apca-w3
 /////   GITHUB MAIN REPO: https://github.com/Myndex/SAPC-APCA
 /////   DEVELOPER SITE: https://git.myndex.com/
 /////
 /////   Acknowledgments and Thanks To:
-/////   • This project references the research and work of Dr.Lovie-Kitchin, 
-/////     Dr.Legge, Dr.Arditi, M.Fairchild, R.Hunt, M.Stone, Dr.Poynton, 
+/////   • This project references the research & work of M.Fairchild, R.W.Hunt,
+/////     Drs. Bailey/Lovie-Kitchin, G.Legge, A.Arditi, M.Stone, C.Poynton, 
 /////     L.Arend, M.Luo, E.Burns, R.Blackwell, P.Barton, M.Brettel, and many 
 /////     others — see refs at https://www.myndex.com/WEB/WCAG_CE17polarity
 /////   • Bruce Bailey of USAccessBoard for his encouragement, ideas, & feedback
+/////   • Chris Lilly of W3C for continued review, examination, & oversight
 /////   • Chris Loiselle of Oracle for getting us back on track in a pandemic
 /////   • The many volunteer test subjects for participating in the studies.
+/////   • The many early adopters, beta testers, and code/issue contributors
 /////   • Principal research conducted at Myndex by A.Somers.
 /////
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,11 +82,11 @@
 /////
 ////////////////////////////////////////////////////////////////////////////////
 
-//////////   APCA 0.1.8  G 4g USAGE  ///////////////////////////////////////////
+//////////   APCA 0.1.9  G 4g USAGE  ///////////////////////////////////////////
 ///
-///  The API for "APCA 0.1.8" is trivially simple.
+///  The API for "APCA 0.1.9" is trivially simple.
 ///  Send text and background sRGB numeric values to the sRGBtoY() function,
-///  and send the resulting text-Y and background-Y to the APCAcontrast function,
+///  and send the resulting text-Y and background-Y to the APCAcontrast function
 ///  it returns a signed float with the numeric Lc contrast result.
 ///  
 ///  The two inputs are TEXT color and BACKGROUND color in that order.
@@ -100,8 +94,8 @@
 ///  no string parsing utilities. EXAMPLE:
 ///  ________________________________________________________________________
 ///
-///     txtColor = 0x123456; // color of the text, as will be rendered
-///     bgColor  = 0xabcdef; // color for the background, as will be rendered
+///     txtColor = colorParsley(0x123456); // color of the text
+///     bgColor  = colorParsley(0xabcdef); // color for the background
 ///
 ///     contrastLc = APCAcontrast( sRGBtoY(txtColor) , sRGBtoY(bgColor) );
 ///  ________________________________________________________________________
@@ -118,27 +112,32 @@
 ///  an absolute value - light text on dark BG should return a negative number.
 ///
 ///     *****  IMPORTANT: Do Not Mix Up Text and Background inputs.  *****
-///     ****************   APCA is polarity dependent!   *****************
+///     ****************   APCA is polarity sensitive!   *****************
 ///  
 ////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-/////    BEGIN APCA  0.1.8  BLOCK       \/////////////////////////////////////
+/////    BEGIN APCA  0.1.9  BLOCK       \/////////////////////////////////////
 ////                                     \///////////////////////////////////
 ///                                       \/////////////////////////////////
 //                                         \///////////////////////////////
 
 
-
-
 /////  DEPENDENCIES  /////
+
 // The following imports are not needed for the main APCA function,
 // but are needed for the shortcut/alias calcAPCA(), and for the
-// inverseAPCA function, which examines hue.
+// future invertAPCA function, which examines hue.
 
-import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';
+       ////  (add slash to line start for local test mode, remove before push)
+/*    ////  LOCAL TESTING SWITCH for using test.html
+    import{colorParsley}from'../node_modules/colorparsley/src/colorparsley.js';
+/*/   //// TOGGLE
+    import { colorParsley } from 'colorparsley';
+// */ //// END LOCAL TESTING SWITCH
+
 
 /////  Module Scope Object Containing Constants  /////
 /////   APCA   0.0.98G - 4g - W3 Compatible Constants
@@ -148,21 +147,21 @@ import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';
 
         mainTRC: 2.4, // 2.4 exponent for emulating actual monitor perception
 
-         // For reverseAPCA
+            // For reverseAPCA
         get mainTRCencode() { return 1 / this.mainTRC },
 
-            // sRGB coefficients
+              // sRGB coefficients
         sRco: 0.2126729, 
         sGco: 0.7151522, 
         sBco: 0.0721750, 
 
-            // G-4g constants for use with 2.4 exponent
+              // G-4g constants for use with 2.4 exponent
         normBG: 0.56, 
         normTXT: 0.57,
         revTXT: 0.62,
         revBG: 0.65,
 
-            // G-4g Clamps and Scalers
+              // G-4g Clamps and Scalers
         blkThrs: 0.022,
         blkClmp: 1.414, 
         scaleBoW: 1.14,
@@ -181,6 +180,9 @@ import { colorParsley, colorToHex, colorToRGB } from 'colorparsley';
         get mExp() { return this.mExpAdj / this.blkClmp},
         mOffsetOut: 0.3128657958707580,
       }
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////  APCA CALCULATION FUNCTIONS \/////////////////////////////////////
@@ -508,7 +510,6 @@ const fontMatrixAscend = [
     ];
 
 
-
 // ASCENDING SORTED  Public Beta 0.1.7 (G) • MAY 28 2022 ////
 
 // DELTA - MAIN FONT LOOKUP May 28 2022 EXPANDED
@@ -602,7 +603,7 @@ const fontDeltaAscend = [
                                                       // (n|0) is bitwise floor
     }
   }
-/////////\  End Interpolation   ////////////////////////////////////////////
+/////////  End Interpolation  ////////////////////////////////////////////
 
   return returnArray
 } // end fontLookupAPCA
@@ -744,6 +745,6 @@ export function alphaBlend (rgbaFG=[0,0,0,1.0], rgbBG=[0,0,0], round = true ) {
 //\                                     ////////////////////////////////////////
 ///\                                   ////////////////////////////////////////
 ////\                                 ////////////////////////////////////////
-/////\  END APCA 0.1.8  G-4g  BLOCK  ////////////////////////////////////////
+/////\  END APCA 0.1.9  G-4g  BLOCK  ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////

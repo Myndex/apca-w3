@@ -62,7 +62,7 @@ This points to the importance of real user personalization, an area where the te
 
 ## Visual Comparison
 In the following chart, we're showing minimum passing contrasts for APCA and for WCAG&nbsp;2. Notice WCAG&nbsp;2 examples become unreadable with dark colors.
-![chart showing a comparison of minimum passing contrasts for both APCA dn WCAG 2. WCAG 2 examples become unreadable in dark colors ](../images/ColumnCompareAll400.png)
+![chart showing a comparison of minimum passing contrasts for both APCA dn WCAG 2. WCAG 2 examples become unreadable in dark colors ](https://raw.githubusercontent.com/Myndex/apca-w3/master/images/ColumnCompareAll400.png)
 
 ## Use-Case Ranges
 These general levels are appropriate for use by themselves, without the need to reference a lookup table. APCA reports contrast as an L<sup>c</sup>&nbsp;value (lightness contrast) from **L<sup>c</sup>&nbsp;0** to **L<sup>c</sup>&nbsp;105+**. For accessibility, consider L<sup>c</sup>&nbsp;15 the point of invisibility for many users, and L<sup>c</sup>&nbsp;90 is preferred for body text.
@@ -107,6 +107,6 @@ _This document was written in plain language to the extent possible, with a targ
 
 ### _THE REVOLUTION WILL BE READABLE_<sup>™</sup>
 
- <img src="../images/APCAcolor4.png" width="640" alt="APCA The Revolution Will Be Readable">
+ <img src="https://raw.githubusercontent.com/Myndex/apca-w3/master/images/APCAcolor4.png" width="640" alt="APCA The Revolution Will Be Readable">
 
 

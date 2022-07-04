@@ -49,8 +49,8 @@ returnArray reference: <code>['LcValue',100,200,300,400,500,600,700,800,900]</co
 </code><br>
 </div>
 
-<div id="test">Enable Javascript
-<!--TEST RESULTS ARE INSERTED HERE --></div>
+<br>
+<div id="test">Enable Javascript<!--TEST RESULTS ARE INSERTED HERE --></div>
 
 
 <h2>TESTING YOUR IMPLEMENTATION</h2>
@@ -82,23 +82,26 @@ These exercise all the important constants.
 
 <script type="module">
 
-import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from './apca-w3.js';
+// NOTE: For local testing, the import toggle in apca-w3 may beed to be switched
+import { APCAcontrast, reverseAPCA, sRGBtoY, displayP3toY, adobeRGBtoY, alphaBlend, calcAPCA, fontLookupAPCA } from '../src/apca-w3.js';
+
 import { colorParsley, colorToHex, colorToRGB } from '../node_modules/colorparsley/src/colorparsley.js';
 
 let outputText = document.getElementById('test');
 
-    outputText.innerHTML = '<h3>TEST COLORS</h3>';
-
-//*  ////   TOGGLE SWITCH
-
+    outputText.innerHTML = '<h3>BEGIN TEST COLORS</h3>';
     outputText.innerHTML += '<p>This is a test with the standardized test values</p> ';
 
-let color = ['#000', '#888', '#FFF', '#000', '#aaa', 
-    '#123', '#def', '#123', '#444', '#0006'], color4rev = '#a4a4a4';
-    
-let colorLength = color.length;
 
+let color = ['#000', '#888', '#FFF', '#000', '#aaa', '#123', '#def',
+             '#123', '#444', '#0006'], color4rev = '#a4a4a4';
+
+let colorLength = color.length;
+let parsedCols = '';
 let contrast = [0,];
+
+
+//*  ////   TOGGLE SWITCH A
 
     for (let eye = 1; eye < colorLength; eye = eye + 2) {
 
@@ -117,9 +120,6 @@ let alpha1 = alphaBlend([221,238,255,0.5],colorParsley(color[3])),
     alpha2 = alphaBlend([0.86667,9.333,1.0,0.25],colorParsley(color[3]),false);
 
 
-let parsedCols = '';
-
-
   for (let eye = 1; eye < colorLength; eye++) {
      parsedCols = parsedCols + 'color '+ eye +': ' + color[eye] + '	 parsed: '
                              + colorParsley(color[eye]) + '<br>';
@@ -133,53 +133,58 @@ let parsedCols = '';
                              + '<br>Colors '+ eyePlus +' & '+ eye + ' sRGB Lc ' + contrast[eyePlus];
   };
   
-outputText.innerHTML +='<pre>' + parsedCols
-/*      color 1: ' + color[1] + '	 parsed: ' + colorParsley(color[1])
-                     + ' <br>color 2: ' + color[2] + '	 parsed: ' + colorParsley(color[2])
-                     + ' <br>color 3: ' + color[3] + '	 parsed: ' + colorParsley(color[3])
-                     + ' <br>color 4: ' + color[4] + '	 parsed: ' + colorParsley(color[4])
-                     + ' <br>color 5: ' + color[5] + '	 parsed: ' + colorParsley(color[5])
-                     + ' <br>color 6: ' + color[6] + '	 parsed: ' + colorParsley(color[6])
-                     + ' <br>color 7: ' + color[7] + '	 parsed: ' + colorParsley(color[7])
-                     + ' <br>color 8: ' + color[8] + '	 parsed: ' + colorParsley(color[8])
-                     + '<br><br>sRGB APCA results • check to match the expected result'
-                     + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast[1] 
-                     + '<br>Colors 2 & 1   sRGB Lc ' + contrast[2] 
-                     + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast[3] 
-                     + '<br>Colors 4 & 3   sRGB Lc ' + contrast[4] 
-                     + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast[5] 
-                     + '<br>Colors 6 & 5   sRGB Lc ' + contrast[6] 
-                     + '<br><br>Colors 7 & 8   sRGB Lc ' + contrast[7] 
-                     + '<br>Colors 8 & 7   sRGB Lc ' + contrast[8] 
-                     
-*/
-                     
-                     
-                     + '<br><br>ALPHA TEST '
-                     + '<br><br>Colors 6 & 3 • 6 @ 50%    A   ' + alpha1 
-                     + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
-                     + '<br><br>Colors 9 & 2   sRGBA Lc ' + contrast[10]
-                     
-                     + '<br><br>calcAPCA(color[9],color[2]) ' + contrast[11]
-                     
-                     + '<br><br>Contrast 1 ' + fontLookupAPCA(contrast[1])
-                     + '<br>Contrast 2 ' + fontLookupAPCA(contrast[2])
-                     + '<br>Contrast 3 ' + fontLookupAPCA(contrast[3])
-                     + '<br>Contrast 4 ' + fontLookupAPCA(contrast[4])
-                     + '<br>Contrast 5 ' + fontLookupAPCA(contrast[5])
-                     + '<br>Contrast 6 ' + fontLookupAPCA(contrast[6])
-                     + '<br>Contrast 7 ' + fontLookupAPCA(contrast[7])
-                     + '<br>Contrast 8 ' + fontLookupAPCA(contrast[8])
-                     + '<br>Contrast 9 ' + fontLookupAPCA(contrast[9])
-                     + '<br>Contrast 10 ' + fontLookupAPCA(contrast[10])
-                     + '<br>Contrast 11 ' + fontLookupAPCA(contrast[11])  
-                     + '<br><br>reverseAPCA() testing'
-                     + '<br><br>Reverse 1bg-txt ' + reverseAPCA(contrast[1],sRGBtoY(colorParsley(color[2])))
-                     + '<br>Reverse 2bg-txt ' + reverseAPCA(contrast[2],sRGBtoY(colorParsley(color[1])))
-                     + '<br>Reverse 3bg-txt ' + reverseAPCA(contrast[3],sRGBtoY(colorParsley(color[4])))
-                     + '<br>Reverse 4bg-txt ' + reverseAPCA(contrast[4],sRGBtoY(colorParsley(color[3])))                     + '<br>Reverse 5bg-txt ' + reverseAPCA(contrast[5],sRGBtoY(colorParsley(color[6])))
-                     + '<br>Reverse 6bg-txt ' + reverseAPCA(contrast[6],sRGBtoY(colorParsley(color[5])))                     + '<br>Reverse 7bg-txt ' + reverseAPCA(contrast[7],sRGBtoY(colorParsley(color[7])))
-                     + '<br>Reverse 8bg-txt ' + reverseAPCA(contrast[8],sRGBtoY(colorParsley(color[5])))
+// */ //// END TOGGLE SWITCH A
+
+outputText.innerHTML +='<pre>BEGIN<br>' + parsedCols
+
+/*  ////   TOGGLE SWITCH B
+         color 1: ' + color[1] + '	 parsed: ' + colorParsley(color[1])
+         + ' <br>color 2: ' + color[2] + '	 parsed: ' + colorParsley(color[2])
+         + ' <br>color 3: ' + color[3] + '	 parsed: ' + colorParsley(color[3])
+         + ' <br>color 4: ' + color[4] + '	 parsed: ' + colorParsley(color[4])
+         + ' <br>color 5: ' + color[5] + '	 parsed: ' + colorParsley(color[5])
+         + ' <br>color 6: ' + color[6] + '	 parsed: ' + colorParsley(color[6])
+         + ' <br>color 7: ' + color[7] + '	 parsed: ' + colorParsley(color[7])
+         + ' <br>color 8: ' + color[8] + '	 parsed: ' + colorParsley(color[8])
+         + '<br><br>sRGB APCA results • check to match the expected result'
+         + '<br><br>Colors 1 & 2   sRGB Lc ' + contrast[1] 
+         + '<br>Colors 2 & 1   sRGB Lc ' + contrast[2] 
+         + '<br><br>Colors 3 & 4   sRGB Lc ' + contrast[3] 
+         + '<br>Colors 4 & 3   sRGB Lc ' + contrast[4] 
+         + '<br><br>Colors 5 & 6   sRGB Lc ' + contrast[5] 
+         + '<br>Colors 6 & 5   sRGB Lc ' + contrast[6] 
+         + '<br><br>Colors 7 & 8   sRGB Lc ' + contrast[7] 
+         + '<br>Colors 8 & 7   sRGB Lc ' + contrast[8] 
+         
+// */ //// END TOGGLE SWITCH B
+
+//*  ////   TOGGLE SWITCH C
+         
+         + '<br><br>ALPHA TEST '
+         + '<br><br>Colors 6 & 3 • 6 @ 50%    A   ' + alpha1 
+         + '<br>Float  6 & 3 • 6 @ 25%    A   ' + alpha2 
+         + '<br><br>Colors 9 & 2   sRGBA Lc ' + contrast[10]
+         
+         + '<br><br>calcAPCA(color[9],color[2]) ' + contrast[11]
+         
+         + '<br><br>Contrast 1 ' + fontLookupAPCA(contrast[1])
+         + '<br>Contrast 2 ' + fontLookupAPCA(contrast[2])
+         + '<br>Contrast 3 ' + fontLookupAPCA(contrast[3])
+         + '<br>Contrast 4 ' + fontLookupAPCA(contrast[4])
+         + '<br>Contrast 5 ' + fontLookupAPCA(contrast[5])
+         + '<br>Contrast 6 ' + fontLookupAPCA(contrast[6])
+         + '<br>Contrast 7 ' + fontLookupAPCA(contrast[7])
+         + '<br>Contrast 8 ' + fontLookupAPCA(contrast[8])
+         + '<br>Contrast 9 ' + fontLookupAPCA(contrast[9])
+         + '<br>Contrast 10 ' + fontLookupAPCA(contrast[10])
+         + '<br>Contrast 11 ' + fontLookupAPCA(contrast[11])  
+         + '<br><br>reverseAPCA() testing'
+         + '<br><br>Reverse 1bg-txt ' + reverseAPCA(contrast[1],sRGBtoY(colorParsley(color[2])))
+         + '<br>Reverse 2bg-txt ' + reverseAPCA(contrast[2],sRGBtoY(colorParsley(color[1])))
+         + '<br>Reverse 3bg-txt ' + reverseAPCA(contrast[3],sRGBtoY(colorParsley(color[4])))
+         + '<br>Reverse 4bg-txt ' + reverseAPCA(contrast[4],sRGBtoY(colorParsley(color[3])))                     + '<br>Reverse 5bg-txt ' + reverseAPCA(contrast[5],sRGBtoY(colorParsley(color[6])))
+         + '<br>Reverse 6bg-txt ' + reverseAPCA(contrast[6],sRGBtoY(colorParsley(color[5])))                     + '<br>Reverse 7bg-txt ' + reverseAPCA(contrast[7],sRGBtoY(colorParsley(color[7])))
+         + '<br>Reverse 8bg-txt ' + reverseAPCA(contrast[8],sRGBtoY(colorParsley(color[5])))
    + '<br><br>Reverse 1txt-bg ' + reverseAPCA(contrast[1],sRGBtoY(colorParsley(color[1])),'txt')
    + '<br>Reverse 2txt-bg ' + reverseAPCA(contrast[2],sRGBtoY(colorParsley(color[2])),'txt')
    + '<br>Reverse 3txt-bg ' + reverseAPCA(contrast[3],sRGBtoY(colorParsley(color[3])),'txt')
@@ -237,8 +242,8 @@ outputText.innerHTML +='<pre>' + parsedCols
    + '<br>Reverse 52.5 	' + reverseAPCA(62.5,sRGBtoY(colorParsley(color4rev)),'txt','color')
    + '<br>Reverse 55 	' + reverseAPCA(65,sRGBtoY(colorParsley(color4rev)),'txt','color')
    + '<br>Reverse 60 	' + reverseAPCA(70,sRGBtoY(colorParsley(color4rev)),'txt','color')
-                     + '<br><br></pre>';
-                    
+// */ //// END TOGGLE SWITCH C
+                     + '<br><br>END</pre>';
 </script>
 
 
