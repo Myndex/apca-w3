@@ -4,17 +4,19 @@ Code and documentation in this repositiory is copyright © 2019-2022 by Andrew S
 
 ## _W3 License for Compliant Code Only_
 ### The Short Summary, TL;DR:
-Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-delivered and web-based content only, and not for any other use.
+Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-delivered and web-based content only, and not for any other use. Certain limitations do apply.
 
 Use of the terms "SAPC", "SACAM", "APCA", "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", to describe any contrast method, app, or device, is only permitted for code that is correctly implemented, maintained, and up to date.
 
-Code or implementations found to be non-compliant with the correct operation and methodology as defined for APCA contrast, including but not limited to the correct indication of polarity, and use of the current approved constants, shall be deemed in breech of license and a copyright violation.
+Code or implementations found to be non-compliant with APCA, meaning they are incorrect in operation or methodology as defined for APCA contrast, including but not limited to the indication of polarity, and use of the current approved constants, **shall be deemed in breech of license and a copyright violation.**
+
+All code instantiations where are public facing in any way are required to follow the base algorithm as defined. Current base reference algorithm is 0.0.98G-4g (for reference, this is the underlying algorithm for apca-w3 versions 0.1.9)
 
 ______________
 
 ## W3 VERSION LICENSE:
 
-All Files in this Repository are licensed to the W3.org under their cooperative license agreement(s), but subject to the further limitations as defined in this license agreement.
+Files in this Repository are licensed to the W3.org under their cooperative license agreement(s), but subject to the further limitations as defined in this license agreement.
 
 - Reports in this Repository are licensed under the
 [W3C Software and Document License](http://www.w3.org/Consortium/Legal/2015/copyright-software-and-document).
