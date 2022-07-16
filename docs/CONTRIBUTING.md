@@ -31,7 +31,7 @@ The following is a set of guidelines for contributing to APCA and its packages, 
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Myndex Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are entereing a "safe space" for exploration and development. Please keep that in mind.
+This project and everyone participating in it is governed by the [Myndex Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are entering a "safe space" for exploration and development. Please keep that in mind.
 
 ## I don't want to read this whole thing I just have a question!!!
 

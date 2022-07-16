@@ -25,7 +25,7 @@ APCA is the **Accessible Perceptual Contrast Algorithm**, a new way to predict c
 ## _WHAT IS IT?_
 APCA is a contrast assessment method for predicting the perceived contrast between sRGB colors on a computer monitor. It has been developed as an assessment method for W3 Silver/WCAG3 accessibility standards relating to content for computer displays and mobile devices, with a focus on readability and understandability.
 
-The APCA version in this repositiory is licensed to the W3/AGWG per the collaborative agreement with specific limitations and exclusions. Please see the license file for details. 
+The APCA version in this repository is licensed to the W3/AGWG per the collaborative agreement with specific limitations and exclusions. Please see the license file for details. 
 
 ### Current Library Version: **0.1.9** (w3) (98G4g) _beta_
 - See [Version Information](#version-information) for details.

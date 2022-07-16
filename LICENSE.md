@@ -1,4 +1,4 @@
-Code and documentation in this repositiory is copyright © 2019-2022 by Andrew Somers and/or Myndex™. All Rights Reserved. Patent(s) pending.
+Code and documentation in this repository is copyright © 2019-2022 by Andrew Somers and/or Myndex™. All Rights Reserved. Patent(s) pending.
 
 # — LICENSE —
 
@@ -7,7 +7,7 @@ IMPORTANT: please see the [APCA integration compliance doc.](https://git.apcacon
 ### The Short Summary, TL;DR:
 Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-delivered and web-based content only, and not for any other use. Certain limitations do apply.
 
-Use of the terms "SAPC", "SACAM", "APCA", "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", to describe any contrast method, app, or device, is only permitted for code that is correctly implemented, maintained, and up to date.
+Use of the terms "SAPC", "SACAM", "APCA", "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", to describe any contrast method, app, or device, is only permitted for code that is correctly implemented, maintained, and up to date, per the [APCA integration compliance](https://git.apcacontrast.com/documentation/minimum_compliance) page.
 
 Code or implementations found to be non-compliant with APCA, meaning they are incorrect in operation or methodology as defined for APCA contrast, including but not limited to the indication of polarity, and use of the current approved constants, **shall be deemed in breech of license and a copyright violation.**
 
@@ -49,6 +49,9 @@ aerospace, transportation, military applications,
 and uses which are not specific to web-based content
 presented on self-illuminated displays or devices.
 
+_**RIGHT TO AUDIT CODE**_     
+Any integration of APCA, SAPC, or SACAM which is in a commercial app or behind a paywall, free access must be provided to Myndex Research, or their assigns, on request, for the purpose of evaluating and verifying correct operations and implementation of the APCA/SAPC/SACAM functions.
+
 _**NO ALTERATION; KEEP CURRENT**_     
 Any **apca-w3** files in this repository may be used or incorporated only in tools for web-based content or web related content in support of the WCAG accessibility guidelines, and such use must be without modification to the essential elements of the code or specific approved constants, except as required to port to a given language.
 
@@ -62,21 +65,21 @@ Any **apca-w3** files in this repository may be used or incorporated only in too
     - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
 
 _**USE OF APCA TERMINOLOGY**_     
-- Use of the acronyms APCA or SAPC, or the terms "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", or "Readability Contrast", to describe any embodyment or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm version 0.0.98G-4g or later. **
+- Use of the acronyms APCA™, SAPC™, or SACAM, or the terms "Advanced Perceptual Contrast Algorithm"™, "Accessible Perceptual Contrast Algorithm"™, or "Readability Contrast"™, to describe any embodiment, integration, or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm formula is version 0.0.98G-4g or later. **
 
 _**USE OF THE APCA LOGO AND TRADEMARK**_     
-- Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademearks, **are prohibited without written consent** from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
-- Developers wishing to use the APCA or "Powered by APCA" logos or trademearks **must submit their application or tools for qualification** to be granted a limited license to use the APCA or "Powered by APCA" logos or trademearks in acssociation with their tools.
+- Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademarks, **are prohibited without written consent** from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
+- Developers wishing to use the APCA or "Powered by APCA" logos or trademarks **must submit their application or tools for qualification** to be granted a limited license to use the APCA or "Powered by APCA" logos or trademarks in association with their tools.
 - Formal details on the APCA and "Powered by APCA" qualification process are pending. In the interim, make a qualification request in the discussion tab of this repo.
 
 
 ## GENERAL DISCLAIMER
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 **_DISCLAIMER AND LIMITATIONS OF USE:_**
 
-APCA is an embodiment of certain suprathreshold contrast
+APCA is an embodiment of certain supra-threshold contrast
 prediction technologies. Versions marked as licensed to 
 the W3 are strictly limited to web content use only for 
 supporting certain accessibility guidelines.
@@ -110,7 +113,7 @@ All Files _in this Repository_ that do not fall under the W3 cooperative agreeme
 ## WITHDRAWN ASSETS
 ONLY files that are currently in this repository are available for use under these license terms.
 
-As some code herein is early beta, and there is a clear interest to prevent obsolete verions from propagating, license for use is revoked when any such asset is removed from this repositiory. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a limited period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
+As some code herein is early beta, and there is a clear interest to prevent obsolete versions from propagating, license for use is revoked when any such asset is removed from this repository. Prior to revocation, files will be placed in the OBSOLETE/PENDING_DELETE folder for a limited period to allow time for revision. Please replace any stale assets with the revised assets herein as soon as practical.
 
 #### The current assets shall be in:
     /dist/    
@@ -128,13 +131,14 @@ Any files that do not fall under the above categories are per the license as ind
 
 
 -----
+## THE FOLLOWING LIMITED LICENSE IS SUBJECT TO THE ABOVE LISTED LIMITATIONS AND EXCLUSIONS.
 
 ## W3C SOFTWARE AND DOCUMENT NOTICE AND LICENSE
 This work is being provided by the copyright holders under the following license.
 
 ### License
 By obtaining and/or copying this work, you (the licensee) agree that you have read, understood, and will comply with the following terms and conditions.
-Permission to copy, modify, and distribute this work, with or without modification, for any purpose and without fee or royalty is hereby granted, provided that you include the following on ALL copies of the work or portions thereof, including modifications:
+Permission to copy this work without modification, except as needed for integration to a specific language or environment, for any purpose other than those specifically excluded, and thereafter without fee or royalty is hereby granted, provided that you include the following on ALL copies of the work or portions thereof, including modifications:
 - The full text of this NOTICE in a location viewable to users of the redistributed or derivative work.
 - Any pre-existing intellectual property disclaimers, notices, or terms and conditions. If none exist, the W3C Software and Document Short Notice should be included.
 - Notice of any changes or modifications, through a copyright statement on the new code or document such as "This software or document includes material copied from or derived from [title and URI of the W3C document]. Copyright © [YEAR] W3C® (MIT, ERCIM, Keio, Beihang)."
