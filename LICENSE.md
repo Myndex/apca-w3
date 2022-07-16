@@ -3,6 +3,7 @@ Code and documentation in this repositiory is copyright © 2019-2022 by Andrew S
 # — LICENSE —
 
 ## _W3 License for Compliant Code Only_
+IMPORTANT: please see the [APCA integration compliance doc.](https://git.apcacontrast.com/documentation/minimum_compliance)
 ### The Short Summary, TL;DR:
 Files in this repository are licensed to the W3/AGWG under their cooperative agreement for use with WCAG accessibility guidelines for web-delivered and web-based content only, and not for any other use. Certain limitations do apply.
 
