@@ -1,3 +1,7 @@
+---
+layout: simple
+---
+
 # APCA-W3 Current Functions & Abstractions 
 
 ## Ys SCREEN LUMINANCE abstraction
