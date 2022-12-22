@@ -12,7 +12,7 @@
 <a href="https://www.myndex.com/APCA/"><img src="https://badgen.net/badge/APCA/Live Tool/db6b0b" alt="APCA/Live Tool/" /></a>&nbsp;
 </p>
 
-# [APC<span class="flipH">A</span>](https://github.com/Myndex/apca-w3)<sup>™</sup> [for W3C & WCAG3](https://github.com/Myndex/apca-w3)
+# [APC<span class="flipH">A</span>](https://github.com/Myndex/apca-w3) [for W3C & WCAG3](https://github.com/Myndex/apca-w3)
 
 ## _Welcome!_ 
 APCA is the **Accessible Perceptual Contrast Algorithm**, a new way to predict contrast for text and non-text content on self illuminated displays.
@@ -321,7 +321,7 @@ This moved over the base APCA and G4g constants (from Feb. 15th, 2021) to an npm
 
 ---
 ### APCA is the _Accessible Perceptual Contrast Algorithm_
-## THE REVOLUTION WILL BE READABLE<sup>™</sup>
+## THE REVOLUTION WILL BE READABLE
 
 ---
 

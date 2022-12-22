@@ -106,7 +106,7 @@ Would you like to help create a more readable world for all? Please let us know!
 
 _This document was written in plain language to the extent possible, with a target readability age of about a high school senior. Readability evaluations were made using the https://wooorm.com/readability/ tool. If you found any part of this essay difficult or confusing, please [file an issue or discuss here](https://github.com/Myndex/SAPC-APCA/discussions) so we can improve._
 
-## _THE WORLD IS READING_<sup>™</sup>
+## _THE WORLD IS READING_
 
  <img src="/images/APCAcolor4.png" width="640" alt="APCA The Revolution Will Be Readable">
 

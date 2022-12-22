@@ -1,4 +1,4 @@
-Code and documentation in this repository is copyright © 2019-2022 by Andrew Somers and/or Myndex™. All Rights Reserved. Patent(s) pending.
+Code and documentation in this repository is copyright © 2019-2022 by Andrew Somers and/or Myndex. All Rights Reserved. Patent(s) pending.
 
 # — LICENSE —
 
@@ -65,10 +65,10 @@ Any **apca-w3** files in this repository may be used or incorporated only in too
     - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
 
 _**USE OF APCA TERMINOLOGY**_     
-- Use of the acronyms APCA™, SAPC™, or SACAM, or the terms "Advanced Perceptual Contrast Algorithm"™, "Accessible Perceptual Contrast Algorithm"™, or "Readability Contrast"™, to describe any embodiment, integration, or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm formula is version 0.0.98G-4g or later. **
+- Use of the acronyms APCA, SAPC, or SACAM, or the terms "Advanced Perceptual Contrast Algorithm", "Accessible Perceptual Contrast Algorithm", or "Readability Contrast", to describe any embodiment, integration, or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm formula is version 0.0.98G-4g or later. **
 
 _**USE OF THE APCA LOGO AND TRADEMARK**_     
-- Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademarks, **are prohibited without written consent** from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
+- Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademarks, **are prohibited without written consent** from Myndex Technologies, Myndex Research, Andrew Somers, and/or the authorized agents or assigns.
 - Developers wishing to use the APCA or "Powered by APCA" logos or trademarks **must submit their application or tools for qualification** to be granted a limited license to use the APCA or "Powered by APCA" logos or trademarks in association with their tools.
 - Formal details on the APCA and "Powered by APCA" qualification process are pending. In the interim, make a qualification request in the discussion tab of this repo.
 

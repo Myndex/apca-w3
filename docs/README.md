@@ -358,7 +358,7 @@ _For giggles:_
 ### More glossary of confusing terms and "bonus sciencey stuff" in [The Lighter Side of Light](https://gist.github.com/Myndex/b956e5320f77cfd5c3cf451f4ce0acb5#the-lighter-side-of-light)
 
 
-### _THE REVOLUTION WILL BE READABLE_<sup>™</sup>
+### _THE REVOLUTION WILL BE READABLE_
 
  <img src="../images/APCAcolor4.png" width="640" alt="APCA The Revolution Will Be Readable">
 
