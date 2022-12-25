@@ -62,3 +62,4 @@ For more on APCA, please see: [git.myndex.com](https://git.myndex.com) for more.
 
 Copyright © 2019-2022 by Andrew Somers. All Rights Reserved.
   
+NOTICE: "APCA is a method for predicting text contrast on self-illuminated displays for web-based content. Some use-cases are prohibited by license, including the following: use in medical, clinical evaluation, human safety related, aerospace, transportation, military applications, are strictly prohibited without a specific license in writing granting such use."
