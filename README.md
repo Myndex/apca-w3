@@ -17,6 +17,14 @@
 ## _Welcome!_ 
 APCA is the **Accessible Perceptual Contrast Algorithm**, a new way to predict contrast for text and non-text content on self illuminated displays.
 
+The correct code to use is right here ***apca-w3*** in this satellite repository, and is also available at `npm i apca-w3` code here is the only code that should be used for any development purposes. Please post _issues_ at the [main repository](https://github.com/Myndex/SAPC-APCA/issues).
+
+The draft [**APCA Readability Criterion**](https://readtech.org/ARC/) is up as a work in progress, still sections to be added and/or adjusted.
+
+For comments or questions on the _guidelines_, use the [ARC forum](https://github.com/A11yReadTech/ARC/discussions), that is where we discuss the draft standards & guidelines, and discuss legal & conformance issues. 
+
+For comments or questions on _theory, math, or the APCA algorithm_ itself, use the [SAPC-APCA forum](https://github.com/Myndex/SAPC-APCA/discussions) here, please post all comments, questions, or discussions regarding theory, math, code, third-party tools,third-party tools, and so forth, here and not in the satellite repositories, so they can be tracked and resolved.
+
 <p align="center">
 <img width='220' alt="Poster: a picture of crash test dummies crashing out of a car, and text that says don't be a dummy! Stop using low contrast text. At the bottom it says APCA the world is reading" src='https://user-images.githubusercontent.com/42009457/161151275-7c4feea7-888a-43f1-a9c0-7504afaac258.png'>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img  width='207' alt='Smokey the bear saying  ONLY YOU CAN STOP LOW CONTRAST' src='https://user-images.githubusercontent.com/42009457/161151536-a0add333-161e-482d-a99a-d1d076c75daf.png'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img  width='193' alt='Uncle Sam saying I want you to use high contrast text' src='https://user-images.githubusercontent.com/42009457/161151222-74fb81af-f87b-4d7c-a41c-756e1ee3056f.png'> 
 <br>
