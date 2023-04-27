@@ -16,7 +16,7 @@ Code or implementations found to be non-compliant with APCA, meaning they are in
 All code instantiations where are public facing in any way are required to follow the base algorithm as defined. Current base reference algorithm is 0.0.98G-4g WITH an output clamp at approximately ±Lc10 (for reference, this is the underlying algorithm for apca-w3 versions 0.1.9)
 
 ## DEPENDENCIES
-Any dependencies provided by Myndex Research or Andrew Somers as part of the apca-w3 package @ npm, or this repository, are hereby included by reference within this license, including but not limited to the Color Parsley package, when these dependencies are used with APCA – W3.
+Any dependencies created by and provided by Myndex Research or Andrew Somers as part of the apca-w3 package @ npm, or this repository, are hereby included by reference within this license, including but not limited to the Color Parsley package, when these dependencies are used with APCA–W3.
 ______________
 
 ## W3 VERSION LICENSE:
