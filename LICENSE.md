@@ -1,4 +1,6 @@
-Code and documentation in this repository is copyright © 2019-2022 by Andrew Somers and/or Myndex™. All Rights Reserved. Patent(s) pending.
+Code and documentation in this repository is copyright © 2019-2023 by Andrew Somers and/or Myndex™. All Rights Reserved.
+
+Patent(s) pending.
 
 # — LICENSE —
 
@@ -11,8 +13,10 @@ Use of the terms "SAPC", "SACAM", "APCA", "Advanced Perceptual Contrast Algorith
 
 Code or implementations found to be non-compliant with APCA, meaning they are incorrect in operation or methodology as defined for APCA contrast, including but not limited to the indication of polarity, and use of the current approved constants, **shall be deemed in breech of license and a copyright violation.**
 
-All code instantiations where are public facing in any way are required to follow the base algorithm as defined. Current base reference algorithm is 0.0.98G-4g (for reference, this is the underlying algorithm for apca-w3 versions 0.1.9)
+All code instantiations where are public facing in any way are required to follow the base algorithm as defined. Current base reference algorithm is 0.0.98G-4g WITH an output clamp at approximately ±Lc10 (for reference, this is the underlying algorithm for apca-w3 versions 0.1.9)
 
+## DEPENDENCIES
+Any dependencies provided by Myndex Research or Andrew Somers as part of the apca-w3 package @ npm, or this repository, are hereby included by reference within this license, including but not limited to the Color Parsley package, when these dependencies are used with APCA – W3.
 ______________
 
 ## W3 VERSION LICENSE:
@@ -65,7 +69,7 @@ Any **apca-w3** files in this repository may be used or incorporated only in too
     - developers with a major revision per semantic versioning are obligated to use the most recent stable **apca-w3**.
 
 _**USE OF APCA TERMINOLOGY**_     
-- Use of the acronyms APCA™, SAPC™, or SACAM, or the terms "Advanced Perceptual Contrast Algorithm"™, "Accessible Perceptual Contrast Algorithm"™, or "Readability Contrast"™, to describe any embodiment, integration, or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm formula is version 0.0.98G-4g or later. **
+- Use of the acronyms APCA™, SAPC™, or SACAM, or the terms "Advanced Perceptual Contrast Algorithm"™, "Accessible Perceptual Contrast Algorithm"™, or "Readability Contrast"™, to describe any embodiment, integration, or instantiation of contrast determination, method, or math, including the APCA code base or libraries, **is only permitted for code that is properly implementing the APCA algorithm, and maintaining sync with the current version. At this writing, current base algorithm formula is version 0.0.98G-4g or later.**
 
 _**USE OF THE APCA LOGO AND TRADEMARK**_     
 - Use of the APCA logo as shown at this repo to describe any contrast app, use, or method, or the "Powered by APCA" logo, and/or any related official logos or trademarks, **are prohibited without written consent** from Myndex™ Technologies, Myndex™ Research, Andrew Somers, and/or the authorized agents or assigns.
