@@ -432,13 +432,17 @@ export function calcAPCA (textColor, bgColor, places = -1, round = true) {
         // Note that this function requires colorParsley !!
 	let bgClr = colorParsley(bgColor);
 	let txClr = colorParsley(textColor);
+  return calcAPCAFromRGBA(txClr, bgClr, places, round);
+} // End calcAPCA()
+
+//////////  ƒ  calcAPCAFromRGBA()  /////////////////////////////////////////////
+export function calcAPCAFromRGBA (txClr, bgClr, places = -1, round = true) {
 	let hasAlpha = (txClr[3] == '' || txClr[3] == 1) ? false : true ;
 
 	if (hasAlpha) { txClr = alphaBlend( txClr, bgClr, round); };
 
 	return APCAcontrast( sRGBtoY(txClr), sRGBtoY(bgClr), places)
-} // End calcAPCA()
-
+} // End calcAPCAFromRGBA()
 
 
 
